@@ -1,1 +1,6 @@
-site_name: My Docs
+site_name: party-paper
+theme:
+    name: material
+
+plugins:
+    - macros
