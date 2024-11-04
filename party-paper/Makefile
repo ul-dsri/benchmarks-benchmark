@@ -15,12 +15,6 @@ ifeq ($(LATEXMK),)
     $(error "Error: 'latexmk' not found. Please install 'latexmk' to continue.")
 endif
 
-# Check for latexmk
-LATEXMK := $(shell command -v latexmk)
-ifeq ($(LATEXMK),)
-    $(error "Error: 'latexmk' not found. Please install 'latexmk' to continue.")
-endif
-
 ENVIRON_PKG := $(shell kpsewhich environ.sty)
 ifeq ($(ENVIRON_PKG),)
     $(info ===============================================)
