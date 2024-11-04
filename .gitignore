@@ -8,6 +8,7 @@ party-paper/latex/*.toc
 party-paper/latex/*.fls
 party-paper/latex/*.fdb_latexmk
 party-paper/latex/*.synctex.gz
+party-paper/latex/*.pdf
 
 party-paper/__pycache__
 party-paper/site
