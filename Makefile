@@ -58,12 +58,6 @@ $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
 	@echo "Copying PDF to '$(PDF_DIR)/$*.pdf'"
 	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/"
 
-# Clean up auxiliary files
-.PHONY: clean
-clean:
-	@echo "Cleaning up..."
-	latexmk -C -output-directory=$(LATEX_DIR) $(LATEX_SRC)
-
 .PHONY: setup
 setup: $(VENV)/requirements.txt
 
@@ -79,6 +73,7 @@ $(VENV):
 
 .PHONY: clean
 clean:
+	latexmk -C -output-directory=$(LATEX_DIR) $(LATEX_SRC)
 	find -name __pycache__ -type d -exec rm -rf '{}' \;
 	find -name \*.pyc -type f -exec rm -f '{}' \;
 
@@ -86,5 +81,6 @@ clean:
 distclean:
 	rm -rf node_modules/ $(VENV)
 
-docs:
+.PHONY: serve
+serve:
 	$(VENV)/bin/mkdocs serve -a localhost:8888
