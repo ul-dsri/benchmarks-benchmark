@@ -24,6 +24,3 @@ Assuming that completes successfully you can view the site by running `mkdocs se
 ## Adding LaTeX Files
 
 Place the `.tex` files that will be made available on the site in the `party-paper/latex` directory.
-
-
-

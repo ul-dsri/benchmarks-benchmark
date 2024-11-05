@@ -1,4 +1,7 @@
-venv
+# python
+venv/
+*.pyc
+__pycache__/
 
 # latex auxiliary files
 latex/*.aux
@@ -12,5 +15,3 @@ latex/*.pdf
 
 __pycache__
 site
-
-

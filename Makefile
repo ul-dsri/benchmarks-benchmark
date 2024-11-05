@@ -1,3 +1,9 @@
+MAKEFLAGS += -j auto
+
+VENV ?= venv
+PYTHON ?= $(VENV)/bin/python3
+PYTHON_VERSION ?= 3.11
+
 # Define directories
 LATEX_DIR := latex
 PDF_DIR := docs/pdf
@@ -35,12 +41,14 @@ ifeq ($(ENVIRON_PKG),)
 endif
 
 # Default target
+.PHONY: all
 all: build
 
 # Build target: compile LaTeX files and build MkDocs site
-build: $(PDFS)
+.PHONY: build
+build: $(PDFS) $(VENV)/requirements.txt
 	@echo "Building MkDocs site..."
-	mkdocs build
+	$(VENV)/bin/mkdocs build
 
 # Rule to build PDFs from LaTeX files
 $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
@@ -51,8 +59,32 @@ $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
 	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/"
 
 # Clean up auxiliary files
+.PHONY: clean
 clean:
 	@echo "Cleaning up..."
 	latexmk -C -output-directory=$(LATEX_DIR) $(LATEX_SRC)
 
-.PHONY: all build clean
+.PHONY: setup
+setup: $(VENV)/requirements.txt
+
+requirements.txt: requirements.in | $(VENV)
+	uv pip compile --python-version $(PYTHON_VERSION) --upgrade -o requirements.txt requirements.in
+
+$(VENV)/requirements.txt: requirements.txt | $(VENV)
+	VIRTUAL_ENV=$(VENV) uv pip install -r requirements.txt
+	cp -f requirements.txt $(VENV)/requirements.txt
+
+$(VENV):
+	uv venv $(VENV)
+
+.PHONY: clean
+clean:
+	find -name __pycache__ -type d -exec rm -rf '{}' \;
+	find -name \*.pyc -type f -exec rm -f '{}' \;
+
+.PHONY: distclean
+distclean:
+	rm -rf node_modules/ $(VENV)
+
+docs:
+	$(VENV)/bin/mkdocs serve -a localhost:8888
