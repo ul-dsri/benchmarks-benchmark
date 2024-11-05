@@ -32,3 +32,9 @@ container-docker:
 
 mkdocs-build:
   image: registry.gitlab.com/ul-dsri/party-paper
+  script:
+    - apt-get update -y
+    - apt-get install -y --no-install-recommends git
+    - $PYTHON -m pip install $MKDOCS_REQUIREMENTS
+    - mkdocs --version
+    - mkdocs build --site-dir public
