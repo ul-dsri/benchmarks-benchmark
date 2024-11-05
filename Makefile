@@ -1,8 +1,7 @@
-MAKEFLAGS += -j auto
-
 VENV ?= venv
 PYTHON ?= $(VENV)/bin/python3
 PYTHON_VERSION ?= 3.11
+IMAGE ?= party-paper
 
 # Define directories
 LATEX_DIR := latex
@@ -73,14 +72,23 @@ $(VENV):
 
 .PHONY: clean
 clean:
-	latexmk -C -output-directory=$(LATEX_DIR) $(LATEX_SRC)
-	find -name __pycache__ -type d -exec rm -rf '{}' \;
-	find -name \*.pyc -type f -exec rm -f '{}' \;
+	-latexmk -C -output-directory=$(LATEX_DIR) $(LATEX_SRC)
+	-find -name __pycache__ -type d -exec rm -rf '{}' \;
+	-find -name \*.pyc -type f -exec rm -f '{}' \;
+	-find -name \*.pdf -type f -exec rm -f '{}' \;
 
 .PHONY: distclean
-distclean:
+distclean: clean
 	rm -rf node_modules/ $(VENV)
 
 .PHONY: serve
 serve:
 	$(VENV)/bin/mkdocs serve -a localhost:8888
+
+.PHONY: docker-build
+docker-build:
+	docker build -t $(IMAGE) .
+
+.PHONY: docker-bash
+docker-bash:
+	docker run --rm -it -v `pwd`:/build -u `id -u` -e HOME=/build $(IMAGE) bash

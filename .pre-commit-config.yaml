@@ -8,6 +8,11 @@ repos:
       - id: fix-byte-order-marker
       - id: trailing-whitespace
 
+  - repo: https://gitlab.com/buildgarden/tools/cici-tools
+    rev: "0.7.0"
+    hooks:
+      - id: cici-update
+
   - repo: https://gitlab.com/buildgarden/pipelines/detect-secrets
     rev: "0.2.1"
     hooks:

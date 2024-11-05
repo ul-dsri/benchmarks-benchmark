@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2024 UL Research Institutes
+# SPDX-License-Identifier: Apache-2.0
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  MKDOCS_REQUIREMENTS: -r requirements.txt
+
+include:
+  - project: buildgarden/pipelines/container
+    ref: 0.3.1
+    file:
+      - container-docker.yml
+  - project: buildgarden/pipelines/detect-secrets
+    ref: 0.2.1
+    file:
+      - detect-secrets.yml
+  - project: buildgarden/pipelines/mkdocs
+    ref: 0.2.0
+    file:
+      - mkdocs-build.yml
+  - project: buildgarden/pipelines/pages
+    ref: 0.1.1
+    file:
+      - pages.yml
+
+container-docker:
+  stage: test
+
+mkdocs-build:
+  image: registry.gitlab.com/ul-dsri/party-paper
