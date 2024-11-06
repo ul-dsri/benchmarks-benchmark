@@ -13,3 +13,9 @@ def define_env(env):
             pdf_link = f"{pdf_dir}/{pdf}"
             markdown_links += f"- [{pdf}]({pdf_link})\n"
         return markdown_links
+
+
+    @env.macro
+    def read_file(filepath):
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return f.read()

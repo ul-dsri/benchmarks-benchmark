@@ -5,8 +5,12 @@ IMAGE ?= party-paper
 
 # Define directories
 LATEX_DIR := latex
-PDF_DIR := docs/pdf
 MKDOCS_DIR := docs
+PDF_DIR := $(MKDOCS_DIR)/pdf
+DATA_DIR := $(MKDOCS_DIR)/data
+TABLE_MD := $(DATA_DIR)/table.md
+SCRIPTS_DIR := scripts
+TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 
 # Get list of LaTeX source files
 LATEX_SRC := $(wildcard $(LATEX_DIR)/*.tex)
@@ -45,9 +49,18 @@ all: build
 
 # Build target: compile LaTeX files and build MkDocs site
 .PHONY: build
-build: $(PDFS) $(VENV)/requirements.txt
+build: $(PDFS) $(TABLE_MD) $(VENV)/requirements.txt
 	@echo "Building MkDocs site..."
 	$(VENV)/bin/mkdocs build
+
+# Rule to generate the markdown table
+$(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt
+	@echo "Generating markdown table..."
+	$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --format markdown > $(TABLE_MD)
+
+# Ensure the data directory exists
+$(DATA_DIR):
+	mkdir -p $(DATA_DIR)
 
 # Rule to build PDFs from LaTeX files
 $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
@@ -76,6 +89,7 @@ clean:
 	-find -name __pycache__ -type d -exec rm -rf '{}' \;
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
+	-rm -f $(TABLE_MD)
 
 .PHONY: distclean
 distclean: clean
