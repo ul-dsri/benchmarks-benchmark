@@ -13,7 +13,7 @@ SCRIPTS_DIR := scripts
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 
 # Get list of LaTeX source files
-LATEX_SRC := $(wildcard $(LATEX_DIR)/*.tex)
+LATEX_SRC := $(shell find $(LATEX_DIR) -name '*.tex' ! -name '*table.tex')
 
 # Define PDF targets
 PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/%.pdf)
