@@ -19,26 +19,16 @@ def fetch_data(google_sheet_id='1TBwja07SuVgp3I9MB95MLdjKtrTqsQ-tFe7GFfLhmYw', g
     # parse csv data
     reader = csv.DictReader(csv_data.splitlines())
 
-    # init dict to store return value
-    data_dict = {}
+    # create list of dictionaries, one dict per row and column headers as keys
+    data_list = [row for row in reader]
 
-    # assumes first column is the row header, used as primary key in dict
-    row_header = reader.fieldnames[0]
-
-    for row in reader:
-        key = row.pop(row_header)
-        data_dict[key] = row
-
-    return data_dict
+    return data_list
 
 
 # Function to generate a Markdown table
 def generate_markdown_table(data):
-    # Get all unique column headers
-    headers = set()
-    for row in data.values():
-        headers.update(row.keys())
-    headers = ['Name'] + sorted(headers)  # 'Name' as the primary key
+
+    headers = list(data[0].keys())
 
     # Create the header row
     header_row = '| ' + ' | '.join(headers) + ' |'
@@ -46,8 +36,8 @@ def generate_markdown_table(data):
 
     # Create data rows
     data_rows = []
-    for key, row in data.items():
-        row_data = [key] + [row.get(h, '') for h in headers[1:]]
+    for row in data:
+        row_data = [row.get(h, '') for h in headers]
         data_row = '| ' + ' | '.join(row_data) + ' |'
         data_rows.append(data_row)
 
@@ -57,13 +47,11 @@ def generate_markdown_table(data):
     return markdown_table
 
 
+
 # Function to generate a LaTeX table
 def generate_latex_table(data):
-    # Get all unique column headers
-    headers = set()
-    for row in data.values():
-        headers.update(row.keys())
-    headers = ['Name'] + sorted(headers)  # 'Name' as the primary key
+
+    headers = list(data[0].keys())
 
     # Begin LaTeX table
     column_format = ' | '.join(['l'] * len(headers))
@@ -74,8 +62,8 @@ def generate_latex_table(data):
     latex_table += header_row
 
     # Add data rows
-    for key, row in data.items():
-        row_data = [key] + [row.get(h, '') for h in headers[1:]]
+    for row in data:
+        row_data = [row.get(h, '') for h in headers]
         data_row = ' & '.join(row_data) + ' \\\\ \\hline\n'
         latex_table += data_row
 
