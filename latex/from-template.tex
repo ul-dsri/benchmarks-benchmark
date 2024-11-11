@@ -10,6 +10,8 @@
 \usepackage{tcolorbox}
 \usepackage{graphicx}
 \usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{rotating}
 
 
 % to compile a preprint version, e.g., for submission to arXiv, add add the
@@ -336,14 +338,14 @@ The complete set of risks and mitigations are available in Appendix A, but to pr
   \centering
   \begin{tabular}{p{12cm}}
     \toprule
-    %\begin{itemize} 
-      1. A researcher or benchmark provider identifies a threat to benchmark reliability, specifically, that "Prompt writers [will] produce prompts with LLMs."
-      2. The threat is added to the threat registry and assigned the next available threat number (\#002), along with a severity of 1.0, which is the maximum value. The severity is so high because the severity is not currently known to benchmarking science. All threats, including \#002, are assigned an assumed probability of 1. Both the probability and severity will be addressed through the development of threat responses.
-      3. A researcher develops an analysis (see Appendix \_), which shows the "correctness" of the benchmark is called into question by this threat. This means any mitigation adopted by a benchmark will accrue to the "correctness" category. 
-      4. Next, researchers list potential responses to the threat, which include those found in Table X.
-      5. Benchmarked benchmarks can now self-identify which response measures, if any, they have adopted for the threat.
-      6. A benchmark may indicate they contractually prohibited the use of LLMs in the production of test data, which scores a risk reduction proportionate to a decrease in likelihood of 80 percent (see Table X). Alternatively, the benchmark may choose to require a formal statement of the toolchain used in the production of prompts, which decreases the severity by 30 percent (and scores points), but this has only shifted the risk from one that cannot be addressed to one that can subsequently be analyzed by running a study to check whether certain SUTs are incidentally privileged by the data source. Thus, the likelihood of the risk remains unchanged. The severity is only substantially addressed by also deploying the final response of running a study to empirically check for privileged or disadvantaged SUTs by LLM-originated prompt generation. \\
-    %\end{itemize}
+    \begin{itemize} 
+      \item[1.] A researcher or benchmark provider identifies a threat to benchmark reliability, specifically, that "Prompt writers [will] produce prompts with LLMs."
+      \item[2.] The threat is added to the threat registry and assigned the next available threat number (\#002), along with a severity of 1.0, which is the maximum value. The severity is so high because the severity is not currently known to benchmarking science. All threats, including \#002, are assigned an assumed probability of 1. Both the probability and severity will be addressed through the development of threat responses.
+      \item[3.] A researcher develops an analysis (see Appendix \_), which shows the "correctness" of the benchmark is called into question by this threat. This means any mitigation adopted by a benchmark will accrue to the "correctness" category. 
+      \item[4.] Next, researchers list potential responses to the threat, which include those found in Table X.
+      \item[5.] Benchmarked benchmarks can now self-identify which response measures, if any, they have adopted for the threat.
+      \item[6.] A benchmark may indicate they contractually prohibited the use of LLMs in the production of test data, which scores a risk reduction proportionate to a decrease in likelihood of 80 percent (see Table X). Alternatively, the benchmark may choose to require a formal statement of the toolchain used in the production of prompts, which decreases the severity by 30 percent (and scores points), but this has only shifted the risk from one that cannot be addressed to one that can subsequently be analyzed by running a study to check whether certain SUTs are incidentally privileged by the data source. Thus, the likelihood of the risk remains unchanged. The severity is only substantially addressed by also deploying the final response of running a study to empirically check for privileged or disadvantaged SUTs by LLM-originated prompt generation.
+    \end{itemize} \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -386,6 +388,29 @@ The following benchmarks have been benchmarked.
 \item Weak performing points
 \item Open Research Questions (areas requiring additional analysis)
 \end{itemize}
+
+\section{Acknowledgments}
+\subsection{Pending Authors}
+The following people have declared an intention to contribute
+\begin{itemize}
+\item Armstrong Foundjem, Polytechnique Montréal 
+\item Rebecca Weiss
+\item Victor Lu
+\item Ryan Tovcimak, UL Solutions
+\item <Your name here>
+\end{itemize}
+\subsection{Contributors}
+The following people have given significant feedback to this document.
+\begin{itemize}
+\item Heather Frase
+\item Jesse Hostetler
+\item <Your name here>
+\end{itemize}
+
+\appendix 
+\input{appendices/appendixA.tex}
+\input{appendices/appendixB.tex}
+\input{appendices/appendixD.tex}
 
 % -----------------------------------------------------------------------------------------------
 
