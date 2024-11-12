@@ -66,7 +66,7 @@ $(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_
 	done < $(TABLE_INPUT_FILE)
 
 # Rule to generate the latex tables
-$(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+$(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
 	@echo "Generating LaTeX tables..."
 	# Iterate through each line in the input file
 	@while IFS=',' read -r doc_id gid output_file; do \
@@ -77,6 +77,10 @@ $(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE
 # Ensure the data directory exists
 $(DATA_DIR):
 	mkdir -p $(DATA_DIR)
+
+# Ensure the latex table directory exists
+$(LATEX_TABLE_DIR):
+	mkdir -p $(LATEX_TABLE_DIR)
 
 # Rule to build PDFs from LaTeX files
 $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
