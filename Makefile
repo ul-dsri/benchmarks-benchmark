@@ -13,6 +13,7 @@ TABLE_MD := $(DATA_DIR)/table.md
 TABLE_TEX := $(LATEX_DIR)/table.tex
 SCRIPTS_DIR := scripts
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
+TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
 TABLE_INPUT_FILE := table_list.csv
 
 # Get list of LaTeX source files
@@ -62,8 +63,9 @@ $(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_
 	# Iterate through each line in the input file
 	@while IFS=',' read -r doc_id gid output_file; do \
 		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
-		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format markdown > $(DATA_DIR)/$$output_file.md; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format markdown --filename $(SCRIPTS_DIR)/$$output_file > $(DATA_DIR)/$$output_file.md; \
 	done < $(TABLE_INPUT_FILE)
+	$(VENV)/bin/python $(TABLE_COLOR_SCRIPT) $(SCRIPTS_DIR)/thresholds-table.csv $(SCRIPTS_DIR)/absolute-risk-summary-table.csv $(TABLE_MD)
 
 # Rule to generate the latex tables
 $(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
@@ -71,8 +73,9 @@ $(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt 
 	# Iterate through each line in the input file
 	@while IFS=',' read -r doc_id gid output_file; do \
 		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
-		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format latex > $(LATEX_TABLE_DIR)/$$output_file.tex; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format latex --filename $(SCRIPTS_DIR)/$$output_file > $(LATEX_TABLE_DIR)/$$output_file.tex; \
 	done < $(TABLE_INPUT_FILE)
+
 
 # Ensure the data directory exists
 $(DATA_DIR):
@@ -110,6 +113,7 @@ clean:
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
 	-rm -rf $(DATA_DIR)
+	-rm -rf $(SCRIPTS_DIR)/*.csv
 
 .PHONY: distclean
 distclean: clean
