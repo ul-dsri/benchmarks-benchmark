@@ -5,12 +5,15 @@ IMAGE ?= party-paper
 
 # Define directories
 LATEX_DIR := latex
+LATEX_TABLE_DIR := $(LATEX_DIR)/tables
 MKDOCS_DIR := docs
 PDF_DIR := $(MKDOCS_DIR)/pdf
 DATA_DIR := $(MKDOCS_DIR)/data
 TABLE_MD := $(DATA_DIR)/table.md
+TABLE_TEX := $(LATEX_DIR)/table.tex
 SCRIPTS_DIR := scripts
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
+TABLE_INPUT_FILE := table_list.csv
 
 # Get list of LaTeX source files
 LATEX_SRC := $(shell find $(LATEX_DIR) -name '*.tex' ! -name '*table.tex' ! -name 'appendix*.tex')
@@ -49,14 +52,27 @@ all: build
 
 # Build target: compile LaTeX files and build MkDocs site
 .PHONY: build
-build: $(PDFS) $(TABLE_MD) $(VENV)/requirements.txt
+build: $(PDFS) $(TABLE_MD) $(TABLE_TEX) $(VENV)/requirements.txt
 	@echo "Building MkDocs site..."
 	$(VENV)/bin/mkdocs build
 
-# Rule to generate the markdown table
-$(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt
-	@echo "Generating markdown table..."
-	$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --format markdown > $(TABLE_MD)
+# Rule to generate the markdown tables
+$(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+	@echo "Generating markdown tables..."
+	# Iterate through each line in the input file
+	@while IFS=',' read -r doc_id gid output_file; do \
+		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format markdown > $(DATA_DIR)/$$output_file.md; \
+	done < $(TABLE_INPUT_FILE)
+
+# Rule to generate the latex tables
+$(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+	@echo "Generating LaTeX tables..."
+	# Iterate through each line in the input file
+	@while IFS=',' read -r doc_id gid output_file; do \
+		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format latex > $(LATEX_TABLE_DIR)/$$output_file.tex; \
+	done < $(TABLE_INPUT_FILE)
 
 # Ensure the data directory exists
 $(DATA_DIR):
@@ -89,7 +105,7 @@ clean:
 	-find -name __pycache__ -type d -exec rm -rf '{}' \;
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
-	-rm -f $(TABLE_MD)
+	-rm -rf $(DATA_DIR)
 
 .PHONY: distclean
 distclean: clean

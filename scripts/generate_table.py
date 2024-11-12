@@ -2,6 +2,8 @@ import csv
 import requests
 import argparse
 
+from pylatex.utils import escape_latex
+
 
 # Function to fetch table data from google sheet
 def fetch_data(google_sheet_id='1TBwja07SuVgp3I9MB95MLdjKtrTqsQ-tFe7GFfLhmYw', gid=0):
@@ -46,16 +48,20 @@ def generate_markdown_table(data):
     markdown_table = '\n'.join(table)
     return markdown_table
 
-
-
 # Function to generate a LaTeX table
 def generate_latex_table(data):
 
     headers = list(data[0].keys())
 
-    # Begin LaTeX table
     column_format = ' | '.join(['l'] * len(headers))
-    latex_table = '\\begin{tabular}{' + column_format + '}\n\\hline\n'
+
+    # Begin LaTeX table
+    if len(data) >= 15: # then use longtable
+        latex_table = '\\begin{longtable}{' + column_format + '}\n\\hline\n'
+        latex_table_end = '\\end{longtable}'
+    else:
+        latex_table = '\\begin{tabular}{' + column_format + '}\n\\hline\n'
+        latex_table_end = '\\end{tabular}'
     
     # Add header row
     header_row = ' & '.join(headers) + ' \\\\ \\hline\n'
@@ -63,12 +69,12 @@ def generate_latex_table(data):
 
     # Add data rows
     for row in data:
-        row_data = [row.get(h, '') for h in headers]
+        row_data = [escape_latex(row.get(h, '')) for h in headers]
         data_row = ' & '.join(row_data) + ' \\\\ \\hline\n'
         latex_table += data_row
 
     # End LaTeX table
-    latex_table += '\\end{tabular}'
+    latex_table += latex_table_end
     return latex_table
 
 
