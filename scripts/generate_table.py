@@ -1,7 +1,8 @@
-import csv
-import requests
 import argparse
+import csv
 import os
+import requests
+import time
 
 from pylatex.utils import escape_latex
 
@@ -9,23 +10,33 @@ from pylatex.utils import escape_latex
 # Function to fetch table data from google sheet
 def fetch_data(google_sheet_id='1TBwja07SuVgp3I9MB95MLdjKtrTqsQ-tFe7GFfLhmYw', gid=0):
 
+    retries = 20
+    delay = 2
+
     # build URL
     csv_url = f'https://docs.google.com/spreadsheets/d/{google_sheet_id}/export?format=csv&gid={gid}'
 
-    # Make request & check status
-    response = requests.get(csv_url)
-    response.raise_for_status()
+    for attempt in range(retries):
 
-    # decode response
-    csv_data = response.content.decode('utf-8')
+        # Make request & check status
+        response = requests.get(csv_url)
+        response.raise_for_status()
 
-    # parse csv data
-    reader = csv.DictReader(csv_data.splitlines())
+        # decode response
+        csv_data = response.content.decode('utf-8')
 
-    # create list of dictionaries, one dict per row and column headers as keys
-    data_list = [row for row in reader]
+        if '#NAME?' not in csv_data: # make sure calculated fields have loaded
+            # parse csv data
+            reader = csv.DictReader(csv_data.splitlines())
 
-    return data_list
+            # create list of dictionaries, one dict per row and column headers as keys
+            data_list = [row for row in reader]
+
+            return data_list
+
+        time.sleep(delay)
+
+    raise Exception(f"Failed to fetch sheet data after {retries} retries")
 
 
 # Function to generate a Markdown table
@@ -112,7 +123,6 @@ def main():
     data_dict = load_data_from_csv(args.filename)
 
     if not data_dict:
-        #print("No local CSV found. Fetching data from Google Sheets...")
         data_dict = fetch_data(args.sheet_id, args.gid)
         # Write the fetched data to a CSV for future use
         write_to_csv(data_dict, args.filename)

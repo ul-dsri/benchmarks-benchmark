@@ -15,6 +15,9 @@ site/
 *.fdb_latexmk
 *.synctex.gz
 
+# temporary csv files used by scripts
+scripts/*.csv
+
 # container
 .bash_history
 .cache/
