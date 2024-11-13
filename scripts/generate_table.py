@@ -112,7 +112,7 @@ def main():
     data_dict = load_data_from_csv(args.filename)
 
     if not data_dict:
-        print("No local CSV found. Fetching data from Google Sheets...")
+        #print("No local CSV found. Fetching data from Google Sheets...")
         data_dict = fetch_data(args.sheet_id, args.gid)
         # Write the fetched data to a CSV for future use
         write_to_csv(data_dict, args.filename)
