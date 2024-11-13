@@ -89,7 +89,7 @@ $(LATEX_TABLE_DIR):
 	mkdir -p $(LATEX_TABLE_DIR)
 
 # Rule to build PDFs from LaTeX files
-$(PDF_DIR)/$(DATE_PREFIX)-%.pdf: $(LATEX_DIR)/%.tex
+$(PDF_DIR)/$(DATE_PREFIX)-%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	@echo "Compiling $<..."
 	mkdir -p $(PDF_DIR)
 	mkdir -p $(IMAGES_DIR)
