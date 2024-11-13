@@ -9,18 +9,21 @@ LATEX_TABLE_DIR := $(LATEX_DIR)/tables
 MKDOCS_DIR := docs
 PDF_DIR := $(MKDOCS_DIR)/pdf
 DATA_DIR := $(MKDOCS_DIR)/data
+IMAGES_DIR := $(MKDOCS_DIR)/images
 TABLE_MD := $(DATA_DIR)/table.md
 TABLE_TEX := $(LATEX_DIR)/table.tex
 SCRIPTS_DIR := scripts
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
 TABLE_INPUT_FILE := table_list.csv
+FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
 
 # Get list of LaTeX source files
 LATEX_SRC := $(shell find $(LATEX_DIR) -name '*.tex' ! -name '*table.tex' ! -name 'appendix*.tex')
 
 # Define PDF targets
-PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/%.pdf)
+DATE_PREFIX := $(shell date +%Y-%m-%d)
+PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/$(DATE_PREFIX)-%.pdf)
 
 # Check for latexmk
 LATEXMK := $(shell command -v latexmk)
@@ -86,12 +89,16 @@ $(LATEX_TABLE_DIR):
 	mkdir -p $(LATEX_TABLE_DIR)
 
 # Rule to build PDFs from LaTeX files
-$(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
+$(PDF_DIR)/$(DATE_PREFIX)-%.pdf: $(LATEX_DIR)/%.tex
 	@echo "Compiling $<..."
 	mkdir -p $(PDF_DIR)
+	mkdir -p $(IMAGES_DIR)
 	latexmk -pdf -interaction=nonstopmode -output-directory=$(LATEX_DIR) $<
-	@echo "Copying PDF to '$(PDF_DIR)/$*.pdf'"
-	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/"
+	@echo "Generating first page image $<..."
+	$(VENV)/bin/python $(FIRST_PAGE_SCRIPT) $(LATEX_DIR)/$*.pdf
+	mv $(LATEX_DIR)/$*.pdf_first_page.png $(IMAGES_DIR)/first_page.png
+	@echo "Copying PDF to '$(PDF_DIR)/$(DATE_PREFIX)-$*.pdf'"
+	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$(DATE_PREFIX)-$*.pdf"
 
 .PHONY: setup
 setup: $(VENV)/requirements.txt

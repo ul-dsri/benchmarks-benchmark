@@ -61,6 +61,10 @@ pathspec==0.12.1
     # via
     #   mkdocs
     #   mkdocs-macros-plugin
+pdf2image==1.17.0
+    # via -r requirements.in
+pillow==11.0.0
+    # via pdf2image
 platformdirs==4.3.6
     # via mkdocs-get-deps
 pygments==2.18.0

@@ -14,7 +14,6 @@ site/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
-*.pdf
 
 # container
 .bash_history
