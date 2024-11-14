@@ -26,6 +26,10 @@ include:
     ref: 0.1.1
     file:
       - pages.yml
+  - project: buildgarden/pipelines/s3
+    ref: 0.2.0
+    file:
+      - s3-sync-latest.yml
 
 container-docker:
   stage: test
@@ -37,3 +41,20 @@ mkdocs-build:
     - apt-get install -y --no-install-recommends git make
     - make
     - mv site/ public/
+
+s3-sync-latest:
+  script:
+    - apk add --no-cache curl
+    - curl -o /tmp/mc https://dl.min.io/client/mc/release/linux-amd64/mc
+    - install /tmp/mc /usr/local/bin/mc
+    - rm /tmp/mc
+    - mc --version
+    - mc alias set "$S3_ALIAS" "$S3_HOSTNAME" "$S3_ACCESS_KEY" "$S3_SECRET_KEY"
+    - export S3_TARGET="${S3_ALIAS}/${S3_BUCKET}/papers/party-papers/"
+    - |-
+      for file in ./docs/pdf/*.pdf
+      do
+        newfile="$(basename "$file" | sed -e 's/\.pdf$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.pdf/g')"
+        mv "$file" "$newfile"
+        mc cp "$newfile" "$S3_TARGET" $S3_SYNC_OPTS
+      done
