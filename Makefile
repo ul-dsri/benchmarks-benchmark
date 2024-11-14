@@ -5,14 +5,25 @@ IMAGE ?= party-paper
 
 # Define directories
 LATEX_DIR := latex
-PDF_DIR := docs/pdf
+LATEX_TABLE_DIR := $(LATEX_DIR)/tables
 MKDOCS_DIR := docs
+PDF_DIR := $(MKDOCS_DIR)/pdf
+DATA_DIR := $(MKDOCS_DIR)/data
+IMAGES_DIR := $(MKDOCS_DIR)/images
+TABLE_MD := $(DATA_DIR)/table.md
+TABLE_TEX := $(LATEX_DIR)/table.tex
+SCRIPTS_DIR := scripts
+TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
+TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
+TABLE_INPUT_FILE := table_list.csv
+FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
 
 # Get list of LaTeX source files
-LATEX_SRC := $(wildcard $(LATEX_DIR)/*.tex)
+LATEX_SRC := $(shell find $(LATEX_DIR) -name '*.tex' ! -name '*table.tex' ! -name 'appendix*.tex')
 
 # Define PDF targets
-PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/%.pdf)
+DATE_PREFIX := $(shell date +%Y-%m-%d)
+PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/$(DATE_PREFIX)-%.pdf)
 
 # Check for latexmk
 LATEXMK := $(shell command -v latexmk)
@@ -45,17 +56,49 @@ all: build
 
 # Build target: compile LaTeX files and build MkDocs site
 .PHONY: build
-build: $(PDFS) $(VENV)/requirements.txt
+build: $(PDFS) $(TABLE_MD) $(TABLE_TEX) $(VENV)/requirements.txt
 	@echo "Building MkDocs site..."
 	$(VENV)/bin/mkdocs build
 
+# Rule to generate the markdown tables
+$(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+	@echo "Generating markdown tables..."
+	# Iterate through each line in the input file
+	@while IFS=',' read -r doc_id gid output_file; do \
+		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format markdown --filename $(SCRIPTS_DIR)/$$output_file > $(DATA_DIR)/$$output_file.md; \
+	done < $(TABLE_INPUT_FILE)
+	$(VENV)/bin/python $(TABLE_COLOR_SCRIPT) $(SCRIPTS_DIR)/thresholds-table.csv $(SCRIPTS_DIR)/absolute-risk-summary-table.csv $(TABLE_MD)
+
+# Rule to generate the latex tables
+$(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+	@echo "Generating LaTeX tables..."
+	# Iterate through each line in the input file
+	@while IFS=',' read -r doc_id gid output_file; do \
+		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format latex --filename $(SCRIPTS_DIR)/$$output_file > $(LATEX_TABLE_DIR)/$$output_file.tex; \
+	done < $(TABLE_INPUT_FILE)
+
+
+# Ensure the data directory exists
+$(DATA_DIR):
+	mkdir -p $(DATA_DIR)
+
+# Ensure the latex table directory exists
+$(LATEX_TABLE_DIR):
+	mkdir -p $(LATEX_TABLE_DIR)
+
 # Rule to build PDFs from LaTeX files
-$(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex
+$(PDF_DIR)/$(DATE_PREFIX)-%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	@echo "Compiling $<..."
 	mkdir -p $(PDF_DIR)
+	mkdir -p $(IMAGES_DIR)
 	latexmk -pdf -interaction=nonstopmode -output-directory=$(LATEX_DIR) $<
-	@echo "Copying PDF to '$(PDF_DIR)/$*.pdf'"
-	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/"
+	@echo "Generating first page image $<..."
+	$(VENV)/bin/python $(FIRST_PAGE_SCRIPT) $(LATEX_DIR)/$*.pdf
+	mv $(LATEX_DIR)/$*.pdf_first_page.png $(IMAGES_DIR)/first_page.png
+	@echo "Copying PDF to '$(PDF_DIR)/$(DATE_PREFIX)-$*.pdf'"
+	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$(DATE_PREFIX)-$*.pdf"
 
 .PHONY: setup
 setup: $(VENV)/requirements.txt
@@ -76,6 +119,8 @@ clean:
 	-find -name __pycache__ -type d -exec rm -rf '{}' \;
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
+	-rm -rf $(DATA_DIR)
+	-rm -rf $(SCRIPTS_DIR)/*.csv
 
 .PHONY: distclean
 distclean: clean

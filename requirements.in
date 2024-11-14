@@ -1,3 +1,6 @@
 mkdocs
 mkdocs-material
 mkdocs-macros-plugin
+pdf2image
+pylatex
+

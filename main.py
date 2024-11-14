@@ -1,5 +1,7 @@
 import os
 
+from datetime import datetime
+
 def define_env(env):
     @env.macro
     def list_pdfs(pdf_dir='pdf'):
@@ -13,3 +15,15 @@ def define_env(env):
             pdf_link = f"{pdf_dir}/{pdf}"
             markdown_links += f"- [{pdf}]({pdf_link})\n"
         return markdown_links
+
+
+    @env.macro
+    def read_file(filepath):
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return f.read()
+
+
+    @env.macro
+    def current_date():
+        return datetime.now().strftime('%Y-%m-%d')
+

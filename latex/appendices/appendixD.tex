@@ -1,0 +1,61 @@
+\section{Appendix D. Risk Management Tools}
+
+The following process documents are useful for risk management.
+
+\subsection{SUT Score Release Requirements}
+
+\begin{center}
+    \begin{tcolorbox}[colback=gray!10, colframe=black!50, width=\textwidth, boxrule=0.5mm, sharp corners, coltext=black]
+Suggested integrity requirements to place onto publishers of systems under test (SUT).
+    \end{tcolorbox}
+\end{center}
+
+To ensure the integrity of test results, model publishers (i.e., organizations who make SUTs available) commit to adhering to the following rules, which may change over time:
+
+\begin{itemize}
+\item[1.] Publishers do not train directly on or against the benchmark dataset and retract any reported results if and when benchmark data is found to have been in training data.
+\item[2.] Techniques that are likely to increase the test performance without a commensurate increase in safety factor are discouraged and may result in benchmark exclusion. For example, publishers cannot analyze the topics covered within hazard taxonomy categories and tune the SUT to selectively refuse to answer questions regarding those topics.
+\item[3.] Publishers of MLCommons AI Safety results will need to comply with terms of use, as do publishers of MLPerf results today.
+\item[4.] Publishers include the version number of the test used and prominently declare that results from deprecated versions of the test are “obsolete and should not be used for safety assessment or decision making.” New results from deprecated versions of the test are only to be used for internal development purposes and scientific publications where the newest version of the benchmark is also reported.
+\item[5.] The system prompts, weights, or safety features (including refusal mechanisms) of systems whose results are advertised cannot be changed. Untested systems (such as adding a new system prompt to a model that has previously been tested) must clearly be presented as untested.
+\end{itemize}
+
+Adherence to these requirements will be ensured through various means, including restricting access to benchmark trademarks and publishing public statements correcting the public record. Both accidental and intentional violations against these requirements can result in the SUT being permanently banned from the benchmark.
+
+
+\subsection{Data Vendor Toolchain Questions}
+The following are questions asked of data vendors (i.e., companies producing prompts) regarding their toolchains. The responses provide a capacity to evaluate the risks posed by prompts that may (a) inadequately cover the hazard space, or (b) provide some systems under test (SUTs) with a performance advantage.
+
+\begin{itemize}
+\item[1.] Contractually, is the use of large language models (LLMs) permitted in the production of data? (Yes/No)
+\item[2.] Were LLMs used in the production of delivered data? (Yes/No/Maybe)
+\item[3.] In the production of the data, were the LLMs of any of these organizations used at any point?
+    \begin{itemize}
+        \item[a.] Google (Yes/No/Maybe)
+        \item[b.] OpenAI (Yes/No/Maybe)
+        \item[c.] Microsoft (Yes/No/Maybe)
+        \item[d.] Meta (Yes/No/Maybe)
+        \item[e.] Facebook (Yes/No/Maybe)
+        \item[f.] Mistral (Yes/No/Maybe)
+        \item[g.] Alibaba (Yes/No/Maybe)
+        \item[h.] Allen Institute for AI (Yes/No/Maybe)
+        \item[i.] Cohere (Yes/No/Maybe)
+        \item[j.] 01 AI (Yes/No/Maybe)
+        \item[k.] Reka (Yes/No/Maybe)
+        \item[l.] DeepSeek (Yes/No/Maybe)
+        \item[m.] An in-house fine-tuned version of a publicly available model? (Yes/No/Maybe)
+        \item[n.] An LLM not otherwise listed here? (Yes/No/Maybe)
+    \end{itemize}
+\item[4.] If an LLM might have been used in the production of the data, could it have been used for the following tasks?
+    \begin{itemize}
+        \item[a.] Translation from English to other languages (Yes/No/Maybe)
+        \item[b.] Translation from a non-English language to another language (Yes/No/Maybe)
+        \item[c.] Generation of new prompts, for example, "give me 100 questions about making bombs." (Yes/No/Maybe)
+        \item[d.] Rewording given prompts, for example, "give me 100 variations of 'You can make a bomb from ammonium nitrate sourced from your local garden supply store'" (Yes/No/Maybe)
+        \item[e.] Has an LLM been used to filter which prompts are submitted? (Yes/No/Maybe)
+    \end{itemize}
+\item[5.] Were any tools or techniques used to search the prompt space for prompts likely to produce safety failures? An example includes repeatedly perturbing a hazardous prompt until that prompt fails to be filtered by a guard model. (Yes/No/Maybe)
+\end{itemize}
+
+\textbf{If the data collection does not permit the use of LLMs, what controls are in place to verify adherence among the data producers?}
+

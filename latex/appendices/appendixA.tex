@@ -1,0 +1,128 @@
+\section{Appendix A. Definitions and Criteria}
+Threats to reliability and responses may be submitted for inclusion in the benchmark by opening an issue on the associated repository. Discussion will follow to seek consensus on the risk and mitigations inclusion, whereupon the benchmark may be updated. Currently adopted threats and mitigations may also be adopted in this manner.
+
+\subsection{Threat Registry}
+\begin{longtable}{|p{1cm}|p{3.5cm}|p{3cm}|p{4.5cm}|p{1.5cm}|}
+\caption{Threats to Reliability}
+\label{tab:threats-to-reliability} \\
+    \hline
+    \textbf{ID} & \textbf{Stage} & \textbf{Category} & \textbf{Threat to Reliability} & \textbf{Severity}\\
+    \hline
+    \endfirsthead
+    \hline
+    \textbf{ID} & \textbf{Stage} & \textbf{Category} & \textbf{Threat to Reliability} & \textbf{Severity}\\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    \hline
+    \#001 & (1) Task Definition & Intelligibility & Specified task does not match task performed for user & 1.0 \\
+    \#002 & (2) Prompt Generation & Correctness & Prompt writers produce prompts with LLMs & 1.0\\
+    \#003 & (2) Prompt Generation & Correctness & Prompts are collected from publicly available sources and presented as novel & 0.9\\
+    \#004 & (2) Prompt Generation & Correctness & Prompt vendor licenses private data that is available to other parties & 1.0\\
+    \#005 & (2) Prompt Generation & Correctness & Prompt vendor sells same prompts to multiple organizations & 1.0\\
+    \#006 & (2) Prompt Generation & Comprehensiveness & Singular prompts without a distributional tie lack a capacity for detecting distributional harms & 0.9\\
+    \#007 & (2) Prompt Generation & Comprehensiveness & Prompt writers produce prompts with inadequate variability & 0.9\\
+    \#008 & (2) Prompt Generation & Comprehensiveness & Adversarial prompt bulking (increasing the number of prompts by taking cross product with tactics) & 0.9\\
+    \#009 & (2) Prompt Generation & Comprehensiveness & Prompt perturbation bulking (increasing the number of prompts by making small changes to root prompts) & 0.9\\
+    \#010 & (2) Prompt Generation & Comprehensiveness & Overreliance on adversarial prompts & 1.0\\
+    \#011 & (2) Prompt Generation & Correctness & Adversarial prompts are a guide to bad actors and increase risks & 1.0\\
+    \#012 & (2) Prompt Generation & Comprehensiveness & Ambiguous prompts are not present within the test set to make grading easier & 0.2\\
+    \#013 & (2) Prompt Generation & Comprehensiveness & No prompts sourced from production systems & 0.6\\
+    \#014 & (2) Prompt Generation & Correctness & Prompts have known properties allowing for artificial segmentation during test (e.g., prompts are of particular and known lengths) & 0.5\\
+    \#015 & (2) Prompt Generation & Comprehensiveness & An inadequate number of prompts are produced to identify rare critical events & 1.0\\
+    \#016 & (2) Prompt Generation & Consistency & Prompts are ambiguous and thus don’t produce responses that are “easy” to grade & 0.4\\
+    \#017 & (2) Prompt Generation & Comprehensiveness & No coverage for target language slang/idiomatic expressions & 0.7\\
+    \#018 & (2) Prompt Generation & Comprehensiveness & Cultural norms do not translate between cultural contexts (languages, geographies, etc.) & 0.7\\
+    \#019 & (2) Prompt Generation & Correctness & Machine translation introduces errors & 1.0\\
+    \#020 & (3) Prompt Inferencing & Correctness & Prompts are sent to model vendors when inferencing & 1.0\\
+    \#021 & (3) Prompt Inferencing & Correctness & SUT is tested under conditions not matching deployment conditions & 1.0\\
+    \#022 & (3) Prompt Inferencing & Correctness & SUT developer trains against validation prompt set & 1.0\\
+    \#023 & (4) Output Evaluation & Correctness & SUT developers place evaluator within system chain & 1.0\\
+    \#024 & (4) Output Evaluation & Correctness & Evaluator tuned on translated outputs with substantial errors & 1.0\\
+    \#025 & (4) Output Evaluation & Consistency & Low interrater reliability of ground truth data used to tune the evaluator model & 1.0\\
+    \#026 & (4) Output Evaluation & Correctness & Evaluator tuned to SUT unsafe outputs and cannot generalize to new SUTs & 1.0\\
+    \#027 & (4) Output Evaluation & Correctness & SUT developers produce training data from evaluator & 1.0\\
+    \#028 & (5) Scoring & Consistency & Inadequate sample size for identifying performance & 1.0\\
+    \#029 & (5) Scoring & Intelligibility & Failure to propagate uncertainty or confidence from lower level measures to higher level grades & 0.7\\
+    \#030 & (6) Grade Presentation & Intelligibility & Presentation without uncertainty or confidence of the scores & 0.7\\
+    \#031 & (6) Grade Presentation & Intelligibility & User does not read disclaimers & 0.8\\
+    \#032 & (6) Grade Presentation & Intelligibility & User does not understand visual representation of scores & 0.7\\
+    \#033 & (6) Grade Presentation & Intelligibility & User misunderstands the scope of the benchmark & 1.0\\
+    \#034 & (7) Maintenance & Longevity & SUT developer tunes safety program to benchmark sample set & 0.7\\
+    \#035 & (7) Maintenance & Longevity & SUT developer trains SUT against test set & 1.0\\
+    \#036 & (7) Maintenance & Longevity & User behavior shifts through time & 0.8\\
+    \#037 & (7) Maintenance & Longevity & Test set leaks out to the general internet & 1.0\\
+    \#038 & (1) Task Definition & Comprehensiveness & The task is defined too broadly to achieve any reasonable degree of coverage over the use case & 1.0\\
+    \#039 & (7) Maintenance & Longevity & SUT developers update the SUT without changing the name or version of the SUT & 1.0\\
+    \#040 &   (3) Prompt Inferencing & Correctness & Temperature of SUT does not match the default temperature presented to users & 0.7\\
+    \#041 &   (6) Grade Presentation & Intelligibility & Different cultures viewing the benchmark have different interpretations of the information conveyed & 0.6\\
+\end{longtable}
+
+\subsection{Risk Response Measures}
+\begin{longtable}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{4cm}|p{4cm}}
+\caption{Risk Response Measures}
+\label{tab:risk-response-measures} \\
+    \hline
+    \rotatebox{75}{\textbf{Risk ID Mitigated}} & \rotatebox{75}{\textbf{Mitigation Number}} & \rotatebox{75}{\textbf{Reduction in Likelihood (Percent)}} & \rotatebox{75}{\textbf{Reduction in Severity (Percent)}} & \textbf{Risk Short Description} & \textbf{Response Measure Description}\\
+    \hline
+    \endfirsthead
+    \hline
+    \rotatebox{75}{\textbf{Risk ID Mitigated}} & \rotatebox{75}{\textbf{Mitigation Number}} & \rotatebox{75}{\textbf{Reduction in Likelihood (Percent)}} & \rotatebox{75}{\textbf{Reduction in Severity (Percent)}} & \textbf{Risk Short Description} & \textbf{Response Measure Description}\\
+    \hline
+    \endhead
+    \hline
+    \endfoot
+    \hline
+\#001 & 1 & 70 & 0 & Specified task does not match task performed for user & Clearly and publicly state the user task associated with the safety evaluation\\
+\#002 & 2 & 80 & 0 & Prompt writers produce prompts with LLMs & Contractually prohibit use of LLMs in the production of test data\\
+\#002 & 3 & 0 & 30 & Prompt writers produce prompts with LLMs & "Require formal statement of toolchain used in the production of the prompt (i.e. \&  fully detail methods)"\\
+\#002 & 4 & 0 & 95 & Prompt writers produce prompts with LLMs & Run a study on any potentially privileged SUT via prompt generation and compare to those SUTs not involved in prompt generation. Drop LLM-generated instances if unfair advantage conferred\\
+\#003 & 5 & 70 & 0 & Prompts are collected from publicly available sources and presented as novel & Prohibit sourcing from publicly available information\\
+\#003 & 6 & 90 & 0 & Prompts are collected from publicly available sources and presented as novel & Search the web for data in the prompt set\\
+\#004 & 7 & 90 & 0 & Prompt vendor licenses private data that is available to other parties & Prohibit licensing of data by data vendor\\
+\#004 & 8 & 90 & 0 & Prompt vendor licenses private data that is available to other parties & Prohibit reselling licensed data contractually\\
+\#005 & 9 & 90 & 0 & Prompt vendor sells same prompts to multiple organizations & Prohibit vendor licensing data to multiple parties contractually\\
+\#006 & 10 & 50 & 0 & Singular prompts without a distributional tie lack a capacity for detecting distributional harms & State the limitations of the current benchmark\\
+\#007 & 11 & 50 & 50 & Prompt writers produce prompts with inadequate variability & Run a study of prompt variability and fill in gaps\\
+\#008 & 12 & 70 & 0 & Adversarial prompt bulking (increasing the number of prompts by taking cross product with tactics) & State sample count in terms of root samples and templates\\
+\#009 & 13 & 70 & 0 & Prompt perturbation bulking (increasing the number of prompts by making small changes to root prompts) & State sample count in terms of root samples and templates\\
+\#010 & 14 & 0 & 50 & Overreliance on adversarial prompts & Clarify focus on adversarial benchmark or broaden sampling beyond adversarial cases\\
+\#011 & 15 & 95 & 0 & Adversarial prompts are a guide to bad actors and increase risks & Do not release any adversarial prompts publicly\\
+\#012 & 16 & 100 & 0 & Ambiguous prompts are not present within the test set to make grading easier & Include ambiguous prompts in the test set\\
+\#013 & 17 & 100 & 0 & No prompts sourced from production systems & Update benchmark through time with prompt sharing agreements\\
+\#014 & 18 & 90 & 0 & "Prompts have known properties allowing for artificial segmentation during test (e.g. \&  prompts are of particular and known lengths)" & Do not release representative sample prompts to SUT vendors\\
+\#015 & 19 & 80 & 0 & An inadequate number of prompts are produced to identify rare critical events & Calibrate prompt count to statistical analysis\\
+\#016 & 20 & 70 & 0 & Prompts are ambiguous and thus don’t produce responses that are “easy” to grade & Separately evaluate ambiguous prompts when validating grader model\\
+\#017 & 21 & 0 & 50 & No coverage for target language slang/idiomatic expressions & State limitation prominently within benchmark presentation\\
+\#018 & 22 & 0 & 50 & "Cultural norms do not translate between cultural contexts (languages \&  geographies \&  etc.)" & State limitation prominently within benchmark presentation\\
+\#019 & 23 & 90 & 20 & Machine translation introduces errors & Validate all machine-translated prompts with highly qualified speaker of both languages\\
+\#020 & 24 & 100 & 0 & Prompts are sent to model vendors when inferencing & Don't send prompts to SUT developers when inferencing\\
+\#020 & 25 & 80 & 0 & Prompts are sent to model vendors when inferencing & Contractually prohibit logging of test runs and human review of any test prompts\\
+\#021 & 26 & 50 & 0 & SUT is tested under conditions not matching deployment conditions & Perform characteristic analysis of prompts collected from a production system versus prompts in the test set\\
+\#022 & 27 & 70 & 0 & SUT developer trains against validation prompt set & Require SUT developers to filter validation prompts from their training set\\
+\#023 & 28 & 80 & 50 & SUT developers place evaluator within system chain & Do not make evaluator publicly available\\
+\#024 & 29 & 90 & 0 & Evaluator tuned on translated outputs with substantial errors & Validate all machine-translated prompts with highly qualified speaker of both languages\\
+\#025 & 30 & 100 & 0 & Low interrater reliability of ground truth data used to tune the evaluator model & Measure and iterate on methods until high interrater reliability is achieved\\
+\#026 & 31 & 95 & 0 & Evaluator tuned to SUT unsafe outputs and cannot generalize to new SUTs & Confirm performance for every new SUT\\
+\#027 & 32 & 100 & 0 & SUT developers produce training data from evaluator & Do not make evaluator publicly available\\
+\#028 & 33 & 95 & 0 & Inadequate sample size for identifying performance & Increase sample size until statistical analysis indicates the count is sufficiently large\\
+\#029 & 34 & 80 & 20 & Failure to propagate uncertainty or confidence from lower level measures to higher level grades & Prominently display uncertainty estimates in composition with the benchmark results\\
+\#030 & 35 & 90 & 40 & Presentation without uncertainty or confidence of the scores & Prominently display uncertainty estimates in composition with the benchmark results\\
+\#031 & 36 & 50 & 0 & User does not read disclaimers & Prominently display relevant disclaimers everywhere benchmarks are presented\\
+\#032 & 37 & 60 & 0 & User does not understand visual representation of scores & Perform user evaluation with target user group and iterate design\\
+\#033 & 38 & 40 & 0 & User misunderstands the scope of the benchmark & Prominently display the scope of the benchmark in terms of what the user should or should not rely on\\
+\#034 & 39 & 70 & 0 & SUT developer tunes safety program to benchmark sample set & Prominently display relevant disclaimers everywhere benchmarks are presented\\
+\#035 & 42 & 100 & 0 & SUT developer trains SUT against test set & Do not provide a representative sample set\\
+\#036 & 43 & 90 & 0 & User behavior shifts through time & Do not provide the test set\\
+\#037 & 44 & 90 & 0 & Test set leaks out to the general internet & Actively update the tests in response to changing user behaviors\\
+\#037 & 45 & 0 & 90 & Test set leaks out to the general internet & Actively monitor the internet for test set samples\\
+\#023 & 46 & 100 & 0 & SUT developers place evaluator within system chain & Use 100 percent human evaluators\\
+\#024 & 47 & 100 & 0 & Evaluator tuned on translated outputs with substantial errors & Use 100 percent human evaluators\\
+\#025 & 48 & 40 & 20 & Low interrater reliability of ground truth data used to tune the evaluator model & Use 100 percent human evaluators\\
+\#026 & 49 & 80 & 20 & Evaluator tuned to SUT unsafe outputs and cannot generalize to new SUTs & Use 100 percent human evaluators\\
+\#027 & 50 & 95 & 80 & SUT developers produce training data from evaluator & Use 100 percent human evaluators\\
+\#029 & 51 & 50 & 50 & Failure to propagate uncertainty or confidence from lower level measures to higher level grades & Callout qualities of prompt subpopulations for scores are systematically worse\\
+\#039 & 52 & 0 & 95 & SUT developers update the SUT without changing the name or version of the SUT & Periodically re-test all SUTs\\
+\#040 & 53 & 95 & 0 & Temperature of SUT does not match the default temperature presented to users & Require consistency between SUT temperature and default user-presented temperature\\
+\end{longtable}
