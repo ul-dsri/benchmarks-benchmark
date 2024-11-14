@@ -60,5 +60,5 @@ s3-sync-latest:
       do
         newfile="$(basename "$file" | sed -e 's/\.pdf$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.pdf/g')"
         mv "$file" "$newfile"
-        mc cp "$newfile" "$S3_TARGET" $S3_SYNC_OPTS
+        mc cp "$newfile" "$S3_TARGET"
       done
