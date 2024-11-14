@@ -41,6 +41,10 @@ mkdocs-build:
     - apt-get install -y --no-install-recommends git make
     - make
     - mv site/ public/
+  artifacts:
+    paths:
+      - public
+      - docs/pdf
 
 s3-sync-latest:
   script:
