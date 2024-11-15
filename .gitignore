@@ -22,3 +22,6 @@ scripts/*.csv
 .bash_history
 .cache/
 .texlive2022/
+
+# outputs
+*.pdf

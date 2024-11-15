@@ -22,8 +22,7 @@ FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
 LATEX_SRC := $(shell find $(LATEX_DIR) -name '*.tex' ! -name '*table.tex' ! -name 'appendix*.tex')
 
 # Define PDF targets
-DATE_PREFIX := $(shell date +%Y-%m-%d)
-PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/$(DATE_PREFIX)-%.pdf)
+PDFS := $(LATEX_SRC:$(LATEX_DIR)/%.tex=$(PDF_DIR)/%.pdf)
 
 # Check for latexmk
 LATEXMK := $(shell command -v latexmk)
@@ -89,7 +88,7 @@ $(LATEX_TABLE_DIR):
 	mkdir -p $(LATEX_TABLE_DIR)
 
 # Rule to build PDFs from LaTeX files
-$(PDF_DIR)/$(DATE_PREFIX)-%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
+$(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	@echo "Compiling $<..."
 	mkdir -p $(PDF_DIR)
 	mkdir -p $(IMAGES_DIR)
@@ -97,8 +96,8 @@ $(PDF_DIR)/$(DATE_PREFIX)-%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	@echo "Generating first page image $<..."
 	$(VENV)/bin/python $(FIRST_PAGE_SCRIPT) $(LATEX_DIR)/$*.pdf
 	mv $(LATEX_DIR)/$*.pdf_first_page.png $(IMAGES_DIR)/first_page.png
-	@echo "Copying PDF to '$(PDF_DIR)/$(DATE_PREFIX)-$*.pdf'"
-	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$(DATE_PREFIX)-$*.pdf"
+	@echo "Copying PDF to '$(PDF_DIR)/$*.pdf'"
+	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$*.pdf"
 
 .PHONY: setup
 setup: $(VENV)/requirements.txt
