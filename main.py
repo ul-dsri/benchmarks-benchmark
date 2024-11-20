@@ -1,4 +1,6 @@
+import csv
 import os
+import requests
 
 from datetime import datetime
 
@@ -15,6 +17,32 @@ def define_env(env):
             pdf_link = f"{pdf_dir}/{pdf}"
             markdown_links += f"- [{pdf}]({pdf_link})\n"
         return markdown_links
+
+    @env.macro
+    def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
+
+        response = requests.get(csv_url)
+        response.raise_for_status()  # Raise an error if the request fails
+
+        # Decode the CSV content
+        content = response.text
+        markdown_list = []
+
+        # Parse the CSV content
+        reader = csv.reader(content.splitlines())
+
+        # Skip header in CSV content
+        next(reader)
+
+        for row in reader:
+            if len(row) != 2:
+                continue  # Skip rows that don't have exactly two columns
+            filename, file_url = row
+            if filename == "index.csv":
+                continue # Skip listing the index in the output
+            markdown_list.append(f"- [{filename}]({file_url})")
+
+        return "\n".join(markdown_list)
 
 
     @env.macro

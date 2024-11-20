@@ -33,7 +33,8 @@ The following are versioned releases of the research paper associated with this 
 Current paper as of {{ current_date() }}.
 
 Paper History:
-{{ list_pdfs() }}
+
+{{ get_pdf_list_from_s3() }}
 
 Contributions to the research paper are welcome via email (sean.mcgregor-at-ul.org), or on the [Github respository](https://github.com/ul-dsri/party-paper).
 
