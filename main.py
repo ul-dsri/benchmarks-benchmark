@@ -18,6 +18,25 @@ def define_env(env):
             markdown_links += f"- [{pdf}]({pdf_link})\n"
         return markdown_links
 
+
+    @env.macro
+    def get_latest_pdf_url(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
+        response = requests.get(csv_url)
+        response.raise_for_status()  # Raise an error if the request fails
+
+        # Decode the CSV content
+        content = response.text
+        markdown_list = []
+
+        # Parse the CSV content
+        reader = csv.reader(content.splitlines())
+        rows = list(reader)
+
+        if len(rows) >= 2:
+            _, file_url = rows[-2]
+            return file_url
+
+
     @env.macro
     def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
 

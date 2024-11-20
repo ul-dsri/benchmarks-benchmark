@@ -2,6 +2,24 @@ site_name: Benchmarks' Benchmark
 
 theme:
     name: material
+    features:
+        - toc.integrate
 
 plugins:
     - macros
+
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js
+
+markdown_extensions:
+  - pymdownx.tilde
+  - attr_list
+
+nav:
+  - "Home": index.md
+  - "Results":
+    - "Absolute Risk Summary": data/absolute-risk-summary-table.md
+    - "Relative Risk Summary": data/relative-risk-summary-table.md
+    - "Risk Response Table": data/risk-response-table.md
+    - "Threat Registry Table": data/threat-registry-table.md
