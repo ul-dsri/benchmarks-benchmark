@@ -25,7 +25,7 @@ def fetch_data(google_sheet_id='1TBwja07SuVgp3I9MB95MLdjKtrTqsQ-tFe7GFfLhmYw', g
         # decode response
         csv_data = response.content.decode('utf-8')
 
-        if '#NAME?' not in csv_data: # make sure calculated fields have loaded
+        if '#NAME?' not in csv_data and "Loading..." not in csv_data: # make sure calculated fields have loaded
             # parse csv data
             reader = csv.DictReader(csv_data.splitlines())
 
