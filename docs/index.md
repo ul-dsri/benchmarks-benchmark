@@ -3,11 +3,6 @@
 !!! warning
     You are viewing pre-release benchmark documentation. Please return after the benchmark is made broadly available and do not share this URL.
 
-
-Benchmarking LLM Benchmark Practices
-
-## About B~2~
-
 Large language model (LLM) benchmarks enable system use decisions informed by LLM properties, but benchmarks may be rendered unreliable for real world decision making by a variety of threats to benchmark longevity, correctness, coverage, consistency, and intelligibility. Motivated by emerging LLM safety benchmarks, on whose scores people rely on to make decisions impacting real world safety, this work presents a benchmark for LLM benchmarks inspired by National Institute of Standards and Technology risk management processes. High scores indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark.
 
 ## B~2~ Results
