@@ -1,5 +1,9 @@
 # Benchmarks' Benchmark (B~2~)
 
+!!! warning
+    You are viewing pre-release benchmark documentation. Please return after the benchmark is made broadly available and do not share this URL.
+
+
 Benchmarking LLM Benchmark Practices
 
 ## About B~2~

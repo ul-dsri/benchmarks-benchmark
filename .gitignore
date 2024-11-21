@@ -5,6 +5,10 @@ __pycache__/
 
 # mkdocs
 site/
+docs/data/
+docs/images/
+docs/pdf/
+
 
 # latex
 *.aux
@@ -14,6 +18,8 @@ site/
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+*.bbl
+*.blg
 
 # temporary csv files used by scripts
 scripts/*.csv
