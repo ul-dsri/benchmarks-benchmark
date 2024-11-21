@@ -41,7 +41,7 @@ Current paper as of {{ current_date() }}.
 
 ## Paper History
 
-{{ get_pdf_list_from_s3() }}
+{{ get_latest_pdf_anchor() }}{{ get_pdf_list_from_s3() }}
 
 Contributions to the research paper are welcome via email (sean.mcgregor-at-ul.org), or on the [Github respository](https://github.com/ul-dsri/party-paper). Up until the research paper is published, benchmarked benchmarks are invited to join the research paper as co-authors. You can find the current list of co-authors on the latest paper.
 

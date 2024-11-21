@@ -20,22 +20,41 @@ def define_env(env):
 
 
     @env.macro
-    def get_latest_pdf_url(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
-        response = requests.get(csv_url)
-        response.raise_for_status()  # Raise an error if the request fails
+    def get_latest_pdf_anchor(pdf_dir='pdf'):
+        pdf_path = os.path.join('./docs', pdf_dir)
+        pdf_full_path = os.path.abspath(pdf_path)
+        pdf_files = [f for f in os.listdir(pdf_full_path) if f.endswith('.pdf')]
 
-        # Decode the CSV content
-        content = response.text
-        markdown_list = []
+        if not pdf_files:
+            return None  # Return None if no PDF files are found
 
-        # Parse the CSV content
-        reader = csv.reader(content.splitlines())
-        rows = list(reader)
+        # Get the full path for sorting by creation time
+        pdf_files_full_path = [os.path.join(pdf_full_path, f) for f in pdf_files]
+        newest_pdf = max(pdf_files_full_path, key=os.path.getctime)  # Sort by creation time
 
-        if len(rows) >= 2:
-            _, file_url = rows[-2]
-            return file_url
+        # Return the newest PDF in the desired format
+        newest_pdf_name = os.path.basename(newest_pdf)
+        newest_pdf_link = f"{pdf_dir}/{newest_pdf_name}"
+        return f"- [Latest paper version]({newest_pdf_link})\n"
 
+
+    @env.macro
+    def get_latest_pdf_url(pdf_dir='pdf'):
+        pdf_path = os.path.join('./docs', pdf_dir)
+        pdf_full_path = os.path.abspath(pdf_path)
+        pdf_files = [f for f in os.listdir(pdf_full_path) if f.endswith('.pdf')]
+
+        if not pdf_files:
+            return None  # Return None if no PDF files are found
+
+        # Get the full path for sorting by creation time
+        pdf_files_full_path = [os.path.join(pdf_full_path, f) for f in pdf_files]
+        newest_pdf = max(pdf_files_full_path, key=os.path.getctime)  # Sort by creation time
+
+        # Return the newest PDF in the desired format
+        newest_pdf_name = os.path.basename(newest_pdf)
+        newest_pdf_link = f"{pdf_dir}/{newest_pdf_name}"
+        return newest_pdf_link
 
     @env.macro
     def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
