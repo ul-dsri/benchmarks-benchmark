@@ -35,15 +35,11 @@ Current paper as of {{ current_date() }}.
 
 {{ get_pdf_list_from_s3() }}
 
-Contributions to the research paper are welcome via email (sean.mcgregor-at-ul.org), or on the [Github respository](https://github.com/ul-dsri/party-paper).
+Contributions to the research paper are welcome via email (sean.mcgregor-at-ul.org), or on the [Github respository](https://github.com/ul-dsri/party-paper). Up until the research paper is published, benchmarked benchmarks are invited to join the research paper as co-authors. You can find the current list of co-authors on the latest paper.
 
-## Authors
+## Independence
 
-- Sean McGregor ([seanbmcgregor.com](https://seanbmcgregor.com)), UL Research Institutes
-- \<Your name here\> join the author list by contributing to the threat registry, mitigations, or the research paper.
-- Daniel Reichert, Independent
-
-## Disclaimer
+- This research is the product of a large number of independent individuals engaged in benchmarking large language models (LLMs), including contributors to all the benchmarks herein presented. Researchers from the Digital Safety Research Institute (DSRI) of the UL Research Institutes maintain the independence of this work by "holding the pen" on the work. DSRI's funding arises from Underwriter's Laboratories more than 100 years of running safety testing and certification and has not received external funding for the production of this work.
 - **Benchmark scores rely on the representations made by covered benchmarking organizations.**
 - The benchmark benchmark is intended to serve as a guide for producing and adopting best-in-class LLM benchmarks, but this work and its associated scores are not a substitute for learning more about the covered benchmarks and developing an independent sense for their reliability.
 
