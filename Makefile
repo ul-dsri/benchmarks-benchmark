@@ -17,6 +17,7 @@ TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
 TABLE_INPUT_FILE := table_list.csv
 FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
+FIRST_PAGE_PNG := $(IMAGES_DIR)/first_page.png
 
 # Get list of LaTeX source files
 LATEX_SRC := $(shell find $(LATEX_DIR) -name '*.tex' ! -name '*table.tex' ! -name 'appendix*.tex')
@@ -95,7 +96,7 @@ $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	latexmk -pdf -interaction=nonstopmode -output-directory=$(LATEX_DIR) $<
 	@echo "Generating first page image $<..."
 	$(VENV)/bin/python $(FIRST_PAGE_SCRIPT) $(LATEX_DIR)/$*.pdf
-	mv $(LATEX_DIR)/$*.pdf_first_page.png $(IMAGES_DIR)/first_page.png
+	mv $(LATEX_DIR)/$*.pdf_first_page.png $(FIRST_PAGE_PNG)
 	@echo "Copying PDF to '$(PDF_DIR)/$*.pdf'"
 	cp "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$*.pdf"
 
@@ -119,6 +120,7 @@ clean:
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
 	-rm -rf $(DATA_DIR)
+	-rm -f $(FIRST_PAGE_PNG)
 	-rm -rf $(SCRIPTS_DIR)/*.csv
 
 .PHONY: distclean
