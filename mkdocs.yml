@@ -15,6 +15,7 @@ extra_javascript:
 markdown_extensions:
   - pymdownx.tilde
   - attr_list
+  - admonition
 
 nav:
   - "Home": index.md
@@ -23,3 +24,4 @@ nav:
     - "Relative Risk Summary": data/relative-risk-summary-table.md
     - "Risk Response Table": data/risk-response-table.md
     - "Threat Registry Table": data/threat-registry-table.md
+  - "Questionnaire": questionnaire.md
