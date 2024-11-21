@@ -32,7 +32,11 @@ def fetch_data(google_sheet_id='1TBwja07SuVgp3I9MB95MLdjKtrTqsQ-tFe7GFfLhmYw', g
             # create list of dictionaries, one dict per row and column headers as keys
             data_list = [row for row in reader]
 
-            return data_list
+            # filter out nearly empty rows
+            filtered_data = [
+                row for row in data_list if len([value for value in row.values() if value and value.strip() not in ["", "#N/A", "null"]]) >= 3
+            ]
+            return filtered_data
 
         time.sleep(delay)
 
