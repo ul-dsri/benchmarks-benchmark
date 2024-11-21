@@ -4,7 +4,7 @@ from pdf2image import convert_from_path
 # Function to generate an image from the first page of a PDF
 def generate_first_page_image(pdf_path):
     # Convert the first page of the PDF to an image
-    images = convert_from_path(pdf_path, first_page=1, last_page=1, size=800)
+    images = convert_from_path(pdf_path, first_page=1, last_page=1, size=400)
     
     # Save the first page as an image
     image_path = f'{pdf_path}_first_page.png'
