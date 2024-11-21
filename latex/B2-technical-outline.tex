@@ -208,33 +208,57 @@ Per NIST guidance, preparing for a risk assessment involves the following steps,
     \item {\bf Identify the sources of information to be used as inputs to the assessment:} insider knowledge about the operations of the benchmarking organization and the properties of the benchmark.
 \end{itemize}
 
-The final step is to, {\bf identify the risk model and analytic approaches (i.e., assessment and analysis approaches) to be employed during the assessment.}. Table \ref{tab:definitions-terms} presents the collection of terms upon which \bb develops its analytic frame.
+The final step is to, {\bf identify the risk model and analytic approaches (i.e., assessment and analysis approaches) to be employed during the assessment.}. The analytic approach adopted by \bb is to populate threats to reliability from the ground up through the identification of threats and their responses within prominent benchmarking efforts. As a combination of techniques from several typically disjunct communities \bb requires the statement of a large number of definitions to produce a shared understanding. These include the following.
 
+\begin{dfn}
+{\bf (Benchmark) User.} A person who makes decisions on whether to apply an LLM for a particular purpose on the basis of information conveyed by a benchmark and its associated documentation.
+\end{dfn}
+\begin{dfn}
+{\bf System Under Test (SUT).} The system being benchmarked.
+\end{dfn}
+\begin{dfn}
+{\bf Threat.} ``Any circumstance or event with the potential to adversely impact organizational operations (including mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation through an information system via unauthorized access, destruction, disclosure, or modification of information, and/or denial of service." \cite{cnssi4009}\\
+\end{dfn}
+\begin{dfn}
+{\bf Threat to Reliability.} A threat that may lead a person to believe the benchmark is substantiating a claim (e.g., ``the system has been benchmarked as safe according to <name>") that is unsubstantiated or incorrect.
+\end{dfn}
+\begin{dfn}
+{\bf Severity.} ``An assessment of the relative importance of mitigating/remediating the vulnerability." \cite{nist80030r1}
+\end{dfn}
+
+For the purpose of \bb, we graduate severities according to the levels of table \ref{tab:threats-to-reliability}.
 \begin{table}[h!]
-  \caption{Definitions of Relevant Terms}
-  \label{table:defs}
-  \label{tab:definitions-terms}
+  \caption{The severity levels assigned to every threat to reliability in the threat register.}
+  \label{tab:benchmark-reliability-dimensions}
+\label{tab:severity}
   \centering
-  \begin{tabular}{p{12cm}}
+  \begin{tabular}{lp{10cm}}
     \toprule
-    \textbf{1. (Benchmark) User:} A person who makes decisions on whether to apply an LLM for a particular purpose on the basis of information conveyed by a benchmark and its associated documentation. \\
+    & \textbf{Severity Interpretation} \\
+    & The identified threat severity may render the benchmark... \\
     \midrule
-    \textbf{2. System Under Test (SUT):} The system being benchmarked. \\
-    \midrule
-    \textbf{3. Threat:} ``Any circumstance or event with the potential to adversely impact organizational operations (including mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation through an information system via unauthorized access, destruction, disclosure, or modification of information, and/or denial of service." \cite{cnssi4009}\\
-    \midrule
-    \textbf{4. Threat to Reliability:} A threat that may lead a person to believe the benchmark is substantiating a claim (e.g., ``the system has been benchmarked as safe according to <name>") that is unsubstantiated or incorrect. \\
-    \midrule
-    \textbf{5. Severity:} ``An assessment of the relative importance of mitigating/remediating the vulnerability." \cite{nist80030r1} \\
-    \midrule
-    \textbf{6. Likelihood:} ``A weighted factor based on a subjective analysis of the probability that a given threat is capable of exploiting a given vulnerability or a set of vulnerabilities."\cite{cnssi4009} The term likelihood ``...is not likelihood in the strict sense of the term; rather, it is a likelihood score. Risk assessors do not define a likelihood function in the statistical sense. Instead, risk assessors assign a score (or likelihood assessment) based on available evidence, experience, and expert judgment. Combinations of factors such as targeting, intent, and capability thus can be used to produce a score representing the likelihood of threat initiation; combinations of factors such as capability and vulnerability severity can be used to produce a score representing the likelihood of adverse impacts; and combinations of these scores can be used to produce an overall likelihood score." \cite{nist80030r1} \\
-    \midrule
-    \textbf{7. Risk:} ``A measure of the extent to which an entity is threatened by a potential circumstance or event, and is typically a function of: (i) the adverse impacts that would arise if the circumstance or event occurs; and (ii) the likelihood of occurrence." \cite{nist80030r1} \\
-    \midrule
-    \textbf{8. Risk Response and Mitigation:} ``Accepting, avoiding, mitigating, sharing, or transferring risk to organizational operations (i.e., mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation." \cite{joint2011sp} with a mitigation ``Prioritizing, evaluating, and implementing the appropriate risk-reducing controls/countermeasures recommended from the risk management process. A subset of Risk Response." \cite{cnssi4009} \\
+    \textbf{1.0} & completely unreliable \\
+    \textbf{0.8} & unreliable \\
+    \textbf{0.5} & substantially degraded in reliability  \\
+    \textbf{0.2} & degraded in reliability \\
+    \textbf{0.0} & non-impacted by the threat \\
     \bottomrule
   \end{tabular}
 \end{table}
+
+\begin{dfn}
+{\bf Likelihood.} ``A weighted factor based on a subjective analysis of the probability that a given threat is capable of exploiting a given vulnerability or a set of vulnerabilities."\cite{cnssi4009} The term likelihood ``...is not likelihood in the strict sense of the term; rather, it is a likelihood score. Risk assessors do not define a likelihood function in the statistical sense. Instead, risk assessors assign a score (or likelihood assessment) based on available evidence, experience, and expert judgment. Combinations of factors such as targeting, intent, and capability thus can be used to produce a score representing the likelihood of threat initiation; combinations of factors such as capability and vulnerability severity can be used to produce a score representing the likelihood of adverse impacts; and combinations of these scores can be used to produce an overall likelihood score." \cite{nist80030r1}
+\end{dfn}
+
+For the purposes of \bb, all threats to reliability are assigned an initial likelihood of $1.0$. Benchmark authors can then score points within \bb by reducing either severity or likelihood, which jointly determine ``risk."
+
+\begin{dfn}
+{\bf Risk.} ``A measure of the extent to which an entity is threatened by a potential circumstance or event, and is typically a function of: (i) the adverse impacts that would arise if the circumstance or event occurs; and (ii) the likelihood of occurrence" \cite{nist80030r1}. \bb expresses risk as $(severity*likelihood)$.
+\end{dfn}
+
+\begin{dfn}
+{\bf Risk Response and Mitigation.} ``Accepting, avoiding, mitigating, sharing, or transferring risk to organizational operations (i.e., mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation." \cite{joint2011sp} with a mitigation ``Prioritizing, evaluating, and implementing the appropriate risk-reducing controls/countermeasures recommended from the risk management process. A subset of Risk Response." \cite{cnssi4009}
+\end{dfn}
 
 In information security, these terms are associated with outcomes such as exposed user data, service outages, or worse. For LLM benchmarks, reliability may be impaired along several distinct dimensions.
 \section{\texorpdfstring{\bb}{B2} Dimensions}
@@ -320,8 +344,6 @@ The initial set of threats were produced by examining each of the stages of benc
   \label{fig:benchmark-production}
 \end{figure}
 
-Figure X. The chain of benchmark and assessment production follows a series of steps identified above. 
-
 {\bf Step 1. Task Definition.} At this stage the benchmarking organization defines the task that the LLM is expected to perform and the desirable (or undesirable) behaviors against which it is being measured. Risk \#001, which indicates there is a disconnect between the user's understanding of the benchmark and what the benchmark is actually measuring is a risk to the intelligibility of the benchmark. This categorization implies a critique of many common benchmarks that cover a vast array of capabilities without a definite scope to the benchmark. Such benchmarks greatly advance the capabilities of LLMs through their generality, but they do not provide a means for forming a mental model of what the benchmark is indicating. Analogously, the user may know an engine's horsepower, but not know whether it is in a car or a boat.
 
 \begin{center}
@@ -332,7 +354,7 @@ Figure X. The chain of benchmark and assessment production follows a series of s
     \end{tcolorbox}
 \end{center}
 
-{\bf Step 2. Prompt Generation.} Having defined the task the LLM is expected to perform, the next step is to produce data related to that task. Since many LLM developers work with publicly available internet data, one major risk to the correctness of a benchmark is that the benchmark uses publicly available data that is in the training set of the model. Worse yet, data vendors providing prompts consistent with a testing specification may charge the benchmarking organization for data that is publicly available and part of the training program for the benchmarked systems. This particular risk can be mitigated by searching for a select sample of test data within common datasets (e.g., common crawl \cite{commoncrawl}).
+{\bf Step 2. Prompt Generation.} Having defined the task the LLM is expected to perform, the next step is to produce data related to that task. Since many LLM developers work with publicly available internet data, one major risk to the correctness of a benchmark is that the benchmark uses publicly available data that is in the training set of the model. Worse yet, data vendors providing prompts consistent with a testing specification may charge the benchmarking organization for data that is publicly available and part of the training program for the benchmarked systems. This particular risk can be mitigated by searching for a select sample of test data within common datasets (e.g., \cite{commoncrawl}).
 
 \begin{center}
     \begin{tcolorbox}[colback=gray!10, colframe=black!50, width=\textwidth, boxrule=0.5mm, sharp corners, coltext=black]
