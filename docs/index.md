@@ -7,21 +7,29 @@ Large language model (LLM) benchmarks enable system use decisions informed by LL
 
 ## B~2~ Results
 
+!!! warning
+    These are filler results pending updates from the benchmarked benchmarks.
+
 {{ read_file('docs/data/table.md') }}
 
 ## Threat Registry
-There are many threats to reliability of benchmarks.
+There are many threats to reliability of benchmarks. For example,
 
-example threat goes here
+**Threat \#020:** `Machine translation introduces errors`
 
-View the complete list of [threats](data/threat-registry-table.md). Submit a threat by opening a Github issue or emailing sean.mcgregor-at-ul.org.
+View the complete list of [threats](data/threat-registry-table.md). Submit a threat by opening a [Github issue](https://github.com/ul-dsri/party-paper/issues) or emailing sean.mcgregor-at-ul.org.
 
-## Mitigations
-Benchmarks score points by mitigating threats to benchmark reliability.
+## Responses and Mitigations
+Benchmarks score points by mitigating threats to benchmark reliability. For example,
 
-example mitigation goes here
+**Response Number:** 23
+```
+Response: Validate all machine-translated prompts with highly qualified speaker of both languages
+90 Reduction in Likelihood (Percent)
+70 Reduction in Severity (Percent)
+```
 
-View the complete list of [mitigations](data/risk-response-table.md). Submit a mitigation by opening a Github issue or emailing sean.mcgregor-at-ul.org.
+View the complete list of [mitigations](data/risk-response-table.md). Submit a mitigation by [opening a Github issue](https://github.com/ul-dsri/party-paper/issues) or emailing sean.mcgregor-at-ul.org.
 
 ## Research Paper
 
