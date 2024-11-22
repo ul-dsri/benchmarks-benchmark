@@ -41,6 +41,9 @@
 \usepackage{amsthm}
 \newtheorem{dfn}{Definition}[section]
 \newcommand\bb{$B_2$ }
+\usepackage{amsmath}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
 
 \title{Benchmarks' Benchmark}
 
@@ -284,17 +287,29 @@ The analytic frame for ``reliability" is broader than statistical measures since
 
 These dimensions are determined by operational, statistical, and communication factors that jointly inform whether a user may rely on a benchmark when making decisions. High scores on \bb are achieved by means of mitigating or controlling risk and indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark.
 
-Calculating a dimension score:
-\begin{equation}
-todo
-\end{equation}
+Let $d$ be a reliability dimension within the set of reliability dimensions defined in Table \ref{tab:dimensions}. A dimension $d$ is degraded by threat $t$ in the set of threats $T_d$. Each threat has a severity $t_s\in{[0,1]}$ and an assumed likelihood $t_l$ of $1.0$ prior to mitigation. Mitigation $m$ is among the set of adopted responses $R_{d,t}$ to threat $t$ and it reduces threat likelihood by $m_l$ and severity by $m_s$ for the associated threat. Each response stacks, such if you mitigate threat likelihood by $0.5$ for two different mitigations, the resulting likelihood is $0.25$. The calculation for \bb is now given in \ref{alg:b2}.
 
-Calculating \bb
-\begin{equation}
-todo
-\end{equation}
+\begin{algorithm}
+\label{alg:b2}
+\caption{\bb for a single dimension $d$}
+\begin{algorithmic}[1]
+\State Initialize $T_d \gets [ \{ threats to dimension d \} ]$
+\State Initialize $R_d \gets [ \{ responses to T_d \} ]$
+\State Initialize $score \gets 0.0$
+\ForAll{$t \in T_d$}
+    \State $likelihood \gets 1.0$
+    \State $severity \gets t_s$
+    \ForAll{$m \in R_{d,t}$}
+        \State $likelihood \gets likelihood - likelihood \times m_l$
+        \State $severity \gets severity - severity \times m_s$
+    \EndFor
+    \State $score \gets score + |(likelihood\times severity) - (t_l\times t_s)|$
+\EndFor
+\State \Return $score$
+\end{algorithmic}
+\end{algorithm}
 
-The final \bb value is then reported as the minimum across all the dimensions rather than the average. If the benchmarked benchmark scores poorly for a single dimension, it is deemed non-reliable because each dimension can singularly compromise the benchmark.
+If the benchmarked benchmark scores poorly for a single dimension, it is deemed non-reliable because each dimension can singularly compromise the benchmark. The final \bb value is then reported as the minimum across all the dimensions rather than the average.
 
 The complete set of risks and mitigations are available in Appendix A, but to present how they are rolled up into scores we will demonstrate next.
 \section{Example New Threat}
@@ -436,6 +451,7 @@ The following benchmarks have been benchmarked.
 
 \section{Results}
 todo
+
 \section{Conclusion}
 
 LLM benchmarking is an evolving science with threats to reliability being identified, characterized, and mitigated through time. As such, \bb is designed to track progress in developing highly-reliable benchmarks, whose adopted mitigations against threats to reliability provide the means for benchmark developers to increase their scores. As unknown risks are identified along with mitigations, the maximum score increases along with the sophistication of LLM benchmarking as a reliable practice. The current list of threats to reliability and their candidate responses are given in Appendix A. We expect the list to grow through time.
