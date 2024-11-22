@@ -18,7 +18,7 @@ Maintainers of LLM benchmarks score points within B~2~ by registering responses 
 
 The benchmark maintainer sources prompts from an English language dataset and machine translates them to French. Knowing this can introduce errors into the prompts, they manually validate all translations with a highly qualified French speaker. Getting credit for this validation activity involves:
 
-**(1) Register the Threat:** _Threat \#020_ `Machine translation introduces errors`. `Severity: 1.0`  
+**(1) Register the Threat:** _Threat \#020_ `Machine translation introduces errors`. `Severity: 1.0` `Likelihood: 1.0`  
 **(2) Register the Response:** _Response Number: 23_
 ```
 Response: Validate all machine-translated prompts with highly qualified speaker of both languages
@@ -26,9 +26,20 @@ Response: Validate all machine-translated prompts with highly qualified speaker 
 70 Reduction in Severity (Percent)
 ```
 
-Now by affirming response number 23 is in place, all benchmark maintainers can score points proportionate to the reduced risk as determined by `likelihood*severity`.
+Now by affirming response number 23 is in place, all benchmark maintainers can score points proportionate to the reduced risk as determined by `likelihood*severity` (post response) - `likelihood*severity` (before). So response 23 provides `(0.1*0.3) - (1.0*1.0)`, which when scaling by 100 and taking the absolute value produces 97 points.
 
-View the complete list of [mitigations](data/risk-response-table.md). Submit a mitigation by [opening a Github issue](https://github.com/ul-dsri/party-paper/issues) or emailing sean.mcgregor-at-ul.org.
+Now all other benchmarks can similarly score these points by either affirming they have response 23 in place. Alternatively, they can also register their own response, such as,
+
+**(2) Register the Response:** _Response Number: 24_
+```
+Response: Do not translate any prompts. Source prompts exclusively within the target languages.
+100 Reduction in Likelihood (Percent)
+0 Reduction in Severity (Percent)
+```
+
+Now a benchmark that affirms response 24 will score 100 points by driving the likelihood of that threat materializing to zero.
+
+You can view the complete list of [mitigations](data/risk-response-table.md) and submit new mitigations by [opening a Github issue](https://github.com/ul-dsri/party-paper/issues) or emailing sean.mcgregor-at-ul.org.
 
 ## Research Paper
 
