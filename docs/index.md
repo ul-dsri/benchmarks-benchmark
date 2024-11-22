@@ -5,13 +5,6 @@
 
 Large language model (LLM) benchmarks enable system use decisions informed by LLM properties, but benchmarks may be rendered unreliable for real world decision making by a variety of threats to benchmark longevity, correctness, coverage, consistency, and intelligibility. Motivated by emerging LLM safety benchmarks, on whose scores people rely on to make decisions impacting real world safety, this work presents a benchmark for LLM benchmarks inspired by National Institute of Standards and Technology risk management processes. **High scores indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark.**
 
-## B~2~ Results
-
-!!! warning
-    These are filler results pending updates from the benchmarked benchmarks.
-
-{{ read_file('docs/data/table.md') }}
-
 ## Scoring Points in B~2~
 
 Maintainers of LLM benchmarks score points within B~2~ by registering responses against threats to the benchmark's reliability. Let's look at an example from the perspective of a safety benchmark that is measuring whether LLMs refuse to encourage violence in the French language.
