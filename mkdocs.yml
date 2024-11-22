@@ -18,7 +18,7 @@ nav:
   - "B2 Results":
     - "Scores (Relative)": data/relative-risk-summary-table.md
     - "Scores (Absolute)": data/absolute-risk-summary-table.md
-  - "Submitting a Benchmark to be Benchmarked"
+  - "Submitting a Benchmark to be Benchmarked":
     - "Threat Registry": data/threat-registry-table.md
     - "Available Threat Responses": data/risk-response-table.md
     - "Questionnaire": questionnaire.md
