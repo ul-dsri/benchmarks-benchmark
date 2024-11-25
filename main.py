@@ -23,7 +23,7 @@ def define_env(env):
     def get_latest_pdf_anchor(pdf_dir='pdf'):
         pdf_path = os.path.join('./docs', pdf_dir)
         pdf_full_path = os.path.abspath(pdf_path)
-        pdf_files = [f for f in os.listdir(pdf_full_path) if f.endswith('.pdf')]
+        pdf_files = [f for f in os.listdir(pdf_full_path) if f.endswith('.pdf') and "_normalized.pdf" not in f]
 
         if not pdf_files:
             return None  # Return None if no PDF files are found
@@ -42,7 +42,7 @@ def define_env(env):
     def get_latest_pdf_url(pdf_dir='pdf'):
         pdf_path = os.path.join('./docs', pdf_dir)
         pdf_full_path = os.path.abspath(pdf_path)
-        pdf_files = [f for f in os.listdir(pdf_full_path) if f.endswith('.pdf')]
+        pdf_files = [f for f in os.listdir(pdf_full_path) if f.endswith('.pdf') and "_normalized.pdf" not in f]
 
         if not pdf_files:
             return None  # Return None if no PDF files are found
