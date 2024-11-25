@@ -41,6 +41,11 @@ def get_color_for_value(category, value, thresholds, color_mapping):
     category_thresholds = thresholds.get(category, [])
     if not category_thresholds:
         return None  # Return None if the category is not in the table
+
+    try:
+        category_thresholds = [float(threshold) for threshold in category_thresholds]
+    except:
+        raise TypeError(f"Unable to typecast an entry in {category_thresholds} to float")
     
     # Determine the color based on the value and thresholds
     if value >= category_thresholds[0]:
