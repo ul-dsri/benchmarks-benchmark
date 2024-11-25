@@ -9,6 +9,7 @@ RUN apt-get update -y \
         texlive-fonts-recommended \
         texlive-latex-recommended \
         texlive-latex-extra \
+        texlive-science \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python3 -m pip install --no-cache-dir uv
