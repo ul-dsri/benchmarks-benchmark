@@ -2,8 +2,12 @@ site_name: Benchmarks' Benchmark
 
 theme:
     name: material
+    custom_dir: overrides
     features:
         - toc.integrate
+
+extra_css:
+    - css/footer.css
 
 plugins:
     - macros
