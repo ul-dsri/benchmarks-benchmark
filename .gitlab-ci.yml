@@ -55,53 +55,15 @@ s3-sync-latest:
     - mc --version
     - mc alias set "$S3_ALIAS" "$S3_HOSTNAME" "$S3_ACCESS_KEY" "$S3_SECRET_KEY"
     - export S3_TARGET="${S3_ALIAS}/${S3_BUCKET}/papers/party-papers/"
-    - export HASH_FILE="hashes.txt"
 
-    # Download hash list or create an empty one if it doesn't exist
-    - |
-      if mc ls "$S3_TARGET$HASH_FILE" > /dev/null 2>&1; then
-        mc cp "$S3_TARGET$HASH_FILE" .
-      else
-        echo "No existing hash list found. Creating a new one."
-        touch $HASH_FILE
-      fi
-
-    # Keep a copy of the original hash list for comparison
-    - cp $HASH_FILE ${HASH_FILE}.bak
-
-    # Compute sha1sum for normalized PDFs and decide whether to upload
+    # publish new PDFs
     - |-
-      for file in ./docs/pdf/*_normalized.pdf; do
-        # Compute the sha1 hash of the normalized PDF
-        hash=$(sha1sum "$file" | awk '{print $1}')
-
-        # Check if the hash already exists in the hash list
-        if grep -q "$hash" $HASH_FILE; then
-          echo "PDF '$file' already exists in S3. Skipping upload."
-        else
-          echo "New PDF '$file'. Uploading to S3..."
-
-          # Remove the `_normalized` suffix from the filename for the non-normalized version
-          original_file=$(echo "$file" | sed 's/_normalized\.pdf$/\.pdf/')
-
-          # Rename the file with commit info and upload to S3
-          newfile="$(basename "$original_file" | sed -e 's/\.pdf$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.pdf/g')"
-          cp "$original_file" "$newfile"
-          mc cp "$newfile" "$S3_TARGET"
-
-          # Add the new hash to the hash list
-          echo "$hash" >> $HASH_FILE
-        fi
+      for file in ./docs/pdf/*.pdf
+      do
+        newfile="$(basename "$file" | sed -e 's/\.pdf$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.pdf/g')"
+        mv "$file" "$newfile"
+        mc cp "$newfile" "$S3_TARGET"
       done
-
-    # Check if the hash file was modified
-    - |
-      if ! cmp -s $HASH_FILE ${HASH_FILE}.bak; then
-        echo "Hash list updated. Uploading to S3..."
-        mc cp $HASH_FILE "$S3_TARGET"
-      else
-        echo "Hash list unchanged. Skipping upload."
-      fi
 
     # publish index file
     - echo 'filename,url' > index.csv
