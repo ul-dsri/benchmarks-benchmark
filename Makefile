@@ -14,6 +14,7 @@ TABLE_MD := $(DATA_DIR)/table.md
 TABLE_TEX := $(LATEX_DIR)/table.tex
 SCRIPTS_DIR := scripts
 NORMALIZER := $(SCRIPTS_DIR)/insert-normalization-lines.sh
+DENORMALIZER := $(SCRIPTS_DIR)/remove-normalization-lines.sh
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
 TABLE_INPUT_FILE := table_list.csv
@@ -106,6 +107,8 @@ $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	latexmk -pdf -interaction=nonstopmode -output-directory=$(LATEX_DIR) $<
 	@echo "Renaming and copying normalized PDF to $(PDF_DIR)"
 	mv "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$*_normalized.pdf"
+	@echo "Undoing normalize changes $<"
+	bash $(DENORMALIZER) $<
 
 .PHONY: setup
 setup: $(VENV)/requirements.txt
