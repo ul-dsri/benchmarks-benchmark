@@ -37,7 +37,7 @@ echo "Computed sha1sum for normalized file: $COMPUTED_SHA1"
 
 # Step 2: Try downloading the sha1sum list from S3
 echo "Attempting to download sha1sum list from S3..."
-if mc cp "$REMOTE_PATH" "$LOCAL_SHA1_LIST"; then
+if mc get "$REMOTE_PATH" "$LOCAL_SHA1_LIST"; then
   echo "Successfully downloaded sha1sum list."
 else
   echo "SHA1 list not found in S3. Proceeding with an empty list."
