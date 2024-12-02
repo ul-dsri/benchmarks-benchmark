@@ -67,7 +67,9 @@ echo "Uploading updated sha1sum list to S3..."
 mc cp "$LOCAL_SHA1_LIST" "$REMOTE_PATH"
 
 # Create uploaded flag file
+echo $FLAG_FILE
 touch $FLAG_FILE
+ls
 
 echo "File uploaded and sha1sum list updated successfully."
 exit 0
