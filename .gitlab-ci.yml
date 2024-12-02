@@ -64,7 +64,7 @@ s3-sync-latest:
     - |-
       for normalized_file in ./docs/pdf/*_normalized.pdf
       do
-        bash scripts/conditional-upload.sh "$normalized_file"
+        ./scripts/conditional-upload.sh "$normalized_file"
       done
 
     # publish index file if uploads happened
