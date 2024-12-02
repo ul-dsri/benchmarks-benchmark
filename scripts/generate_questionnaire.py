@@ -1,12 +1,6 @@
 import csv
 import sys
 
-#from googleapiclient.discovery import build
-#from google.oauth2 import service_account
-
-DOC_ID = ""
-CREDENTIALS_FILE = ""
-
 def read_csv_as_dicts(filename):
     """
     Reads a CSV file and returns a list of dictionaries, 
@@ -113,6 +107,7 @@ def set_top_border_width(row_index, col_span, border_width=3):
 
     Args:
         row_index (int): The row index (zero-based) within the table.
+        col_span (int): The number of columns to span within the table.
         width (int): The desired border width in points (default is 3).
 
     Returns:
@@ -145,7 +140,7 @@ def set_top_border_width(row_index, col_span, border_width=3):
 
 def build_table_header():
     '''
-    Returns the table header as a dict
+    Returns the table header as a list of request dicts
     '''
     requests = []
     headers = ["ID", "Stage", "Category", "Threat to Reliability", "Affirming Status"]
@@ -204,7 +199,7 @@ def build_table_header():
 
 def build_table_rows(data):
     '''
-    Returns the table rows as a dict
+    Returns the table rows as a list of request dicts. Takes the table row data as input
     '''
     requests = []
     row_index = 1   # Start after the header row
@@ -301,6 +296,91 @@ def build_table_rows(data):
     return requests
 
 
+def build_html_table_header():
+    '''
+    Returns the table header as a list of html strings
+    '''
+    html = ["<tr>"]
+    headers = ["ID", "Stage", "Category", "Threat to Reliability", "Affirming Status"]
+    for i, header in enumerate(headers):
+        if i != len(headers) -1:
+            html.append(f"<th style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
+        else:
+            html.append(f"<th colspan=\"4\" style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
+
+    html.append("</tr>")
+
+    return html
+
+
+def build_html_table_rows(data):
+    '''
+    Returns the table rows as a list of request dicts. Takes the table row data as input
+    '''
+    html = []
+
+    for threat in data:
+        # Add threat row
+        html.append("<tr style=\"border-top: 9px solid black;\">")
+        threat_cells = [
+            threat["ID"],
+            threat["Stage"],
+            threat["Category"],
+            threat["Threat to Reliability"],
+            "[your name here]",
+            "Adopted",
+            "Date"
+        ]
+        for col_index, cell_content in enumerate(threat_cells):
+            if col_index == 0: 
+                html.append(f"<td colspan=\"2\">{cell_content}</td>")
+            elif col_index >= 5:
+                html.append(f"<td style=\"font-weight: bold; text-decoration: underline;\">{cell_content}</td>")
+            else:
+                html.append(f"<td>{cell_content}</td>")
+        html.append("</tr>")
+
+        # Add mitigations sub-rows
+        mitigation_count = len(threat.get("Mitigations", []))
+        #print(threat.get("Mitigations"))
+        mitigation_progress = 0
+        for mitigation in threat.get("Mitigations", []):
+            html.append("<tr>")
+            mitigation_cells = [
+                "mitigations",
+                mitigation['Mitigation Number'] + ": " + mitigation['Response Measure Description'],
+                "",
+                ""
+            ]
+            for col_index, cell_content in enumerate(mitigation_cells):
+                if col_index == 0 and mitigation_progress == 0 and mitigation_count > 1:
+                    html.append(f"<td rowspan=\"{mitigation_count}\">{cell_content}</td>")
+                elif col_index == 0 and mitigation_progress != 0:
+                    pass
+                elif col_index == 1:
+                    html.append(f"<td colspan=\"5\">{cell_content}</td>")
+                else:
+                    html.append(f"<td>{cell_content}</td>")
+            html.append("</tr>")
+            mitigation_progress += 1
+
+    return html
+
+def build_html_table(data):
+    '''
+    Returns a list of html table elements
+    '''
+    html = ["<table border='1'>"]
+
+    # Add table header
+    html.extend(build_html_table_header())
+    # Add table rows
+    html.extend(build_html_table_rows(data))
+
+    html.append("</table>")
+    return "\n".join(html)
+
+
 def build_table(data):
     '''
     Returns a list of requests to build a gdocs table
@@ -323,12 +403,6 @@ def build_table(data):
 
     return requests
 
-
-#def send_to_google_docs(doc_id, requests):
-#    credentials = service_account.Credentials.from_service_account_file(CREDENTIALS_FILE)
-#    service = build("docs", "V1", credentials=credentials)
-#
-#    service.documents().bactchUpdate(documentId=doc_id, body={"requests": requests}).execute()
 
 def main():
     # Check if the correct number of arguments is provided
@@ -359,12 +433,10 @@ def main():
 
     # translate refined data into a gdocs table
     requests = build_table(refined)
-    
-    # send request to gdocs api
-    #send_to_google_docs(DOC_ID, requests)
 
-    print(requests)
-    print("okay")
+    table = build_html_table(refined)
+    
+    print(table)
 
 if __name__ == "__main__":
     main()
