@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Ensure the script is called with a filename
 if [ "$#" -ne 1 ]; then

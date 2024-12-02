@@ -102,13 +102,13 @@ $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
 	@echo "Copying PDF to '$(PDF_DIR)/$*.pdf'"
 	mv "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$*.pdf"
 	@echo "Normalizing $<"
-	bash $(NORMALIZER) $<
+	$(NORMALIZER) $<
 	@echo "Compiling normalized PDF for $<..."
 	latexmk -pdf -interaction=nonstopmode -output-directory=$(LATEX_DIR) $<
 	@echo "Renaming and copying normalized PDF to $(PDF_DIR)"
 	mv "$(LATEX_DIR)/$*.pdf" "$(PDF_DIR)/$*_normalized.pdf"
 	@echo "Undoing normalize changes $<"
-	bash $(DENORMALIZER) $<
+	$(DENORMALIZER) $<
 
 .PHONY: setup
 setup: $(VENV)/requirements.txt
