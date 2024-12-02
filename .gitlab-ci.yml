@@ -64,11 +64,7 @@ s3-sync-latest:
     - |-
       for normalized_file in ./docs/pdf/*_normalized.pdf
       do
-        echo "$(pwd)"
-        ls -la
-        ls -la scripts/
-        ls -la scripts/conditional-upload.sh
-        /builds/ul-dsri/party-paper/scripts/conditional-upload.sh "$normalized_file"
+        bash scripts/conditional-upload.sh "$normalized_file"
       done
 
     # publish index file if uploads happened
