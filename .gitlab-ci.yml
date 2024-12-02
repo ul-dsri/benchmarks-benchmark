@@ -67,7 +67,8 @@ s3-sync-latest:
         echo "$(pwd)"
         ls -la
         ls -la scripts/
-        ./scripts/conditional-upload.sh "$normalized_file"
+        ls -la scripts/conditional-upload.sh
+        scripts/conditional-upload.sh "$normalized_file"
       done
 
     # publish index file if uploads happened
