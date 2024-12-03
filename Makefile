@@ -87,6 +87,7 @@ $(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt 
 
 # Rule to generate the HTML questionnaire table
 $(QUESTIONNAIRE_HTML): $(TABLE_MD) $(DATA_DIR)
+	@echo "Generating questionnaire.html file..."
 	python3 $(QUESTIONNAIRE_SCRIPT) $(QUESTIONNAIRE_INPUT1) $(QUESTIONNAIRE_INPUT2) > $(QUESTIONNAIRE_HTML)
 
 # Ensure the data directory exists
