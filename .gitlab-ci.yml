@@ -59,7 +59,6 @@ s3-sync-latest:
     # Conditionally upload the questionnaire html
     - pwd
     - ls -la ./docs
-    - ls -la ./docs/data
     - find . -name "questionnaire.html"
     - ./scripts/conditional-upload-questionnaire.sh ./docs/data/questionnaire.html
 
