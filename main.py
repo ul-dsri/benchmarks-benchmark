@@ -76,10 +76,6 @@ def define_env(env):
             if len(row) != 2:
                 continue  # Skip rows that don't have exactly two columns
             filename, file_url = row
-            if filename == "index.csv":
-                continue # Skip listing the index in the output
-            if filename == "sha1sums.txt":
-                continue # Skip listing the sha1sums in the output
             markdown_list.append(f"- [{filename}]({file_url})")
 
         return "\n".join(markdown_list)

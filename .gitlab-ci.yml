@@ -56,7 +56,7 @@ s3-sync-latest:
     - mc alias set "$S3_ALIAS" "$S3_HOSTNAME" "$S3_ACCESS_KEY" "$S3_SECRET_KEY"
     - export S3_TARGET="${S3_ALIAS}/${S3_BUCKET}/papers/party-papers/"
 
-    # Initialize upload flag
+    # Initialize pdf upload flag
     - UPLOAD_FLAG_FILE="uploaded_true"
     - rm -f "$UPLOAD_FLAG_FILE"  # Ensure no leftover flag file exists
 
@@ -76,5 +76,6 @@ s3-sync-latest:
     - >
       mc ls "$S3_TARGET" -r
       | awk '{print $6}'
+      | grep ".pdf$"
       | sed -e 's@.*@"&","https://dl.dsri.org/papers/party-papers/&"@g' >> index.csv
     - mc cp index.csv "$S3_TARGET"
