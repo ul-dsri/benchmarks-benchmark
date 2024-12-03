@@ -17,6 +17,10 @@ NORMALIZER := $(SCRIPTS_DIR)/insert-normalization-lines.sh
 DENORMALIZER := $(SCRIPTS_DIR)/remove-normalization-lines.sh
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
+QUESTIONNAIRE_SCRIPT := $(SCRIPTS_DIR)/generate_questionnaire.py
+QUESTIONNAIRE_HTML := $(DATA_DIR)/questionnaire.html
+QUESTIONNAIRE_INPUT1:= $(SCRIPTS_DIR)/threat-registry-table.csv
+QUESTIONNAIRE_INPUT2:= $(SCRIPTS_DIR)/risk-response-table.csv
 TABLE_INPUT_FILE := table_list.csv
 FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
 FIRST_PAGE_PNG := $(IMAGES_DIR)/first_page.png
@@ -56,9 +60,9 @@ endif
 .PHONY: all
 all: build
 
-# Build target: compile LaTeX files and build MkDocs site
+# Build target: compile LaTeX files, build MkDocs site, create HTML questionnaire
 .PHONY: build
-build: $(PDFS) $(TABLE_MD) $(TABLE_TEX) $(VENV)/requirements.txt
+build: $(PDFS) $(TABLE_MD) $(TABLE_TEX) $(QUESTIONNAIRE_HTML) $(VENV)/requirements.txt
 	@echo "Building MkDocs site..."
 	$(VENV)/bin/mkdocs build
 
@@ -81,6 +85,9 @@ $(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt 
 		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format latex --filename $(SCRIPTS_DIR)/$$output_file > $(LATEX_TABLE_DIR)/$$output_file.tex; \
 	done < $(TABLE_INPUT_FILE)
 
+# Rule to generate the HTML questionnaire table
+$(QUESTIONNAIRE_HTML): $(TABLE_MD) $(DATA_DIR)
+	python3 $(QUESTIONNAIRE_SCRIPT) $(QUESTIONNAIRE_INPUT1) $(QUESTIONNAIRE_INPUT2) > $(QUESTIONNAIRE_HTML)
 
 # Ensure the data directory exists
 $(DATA_DIR):

@@ -306,7 +306,7 @@ def build_html_table_header():
         if i == 0:
             html.append(f"<th colspan=\"1\" style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
         elif i == len(headers) -1:
-            html.append(f"<th colspan=\"4\" style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
+            html.append(f"<th colspan=\"3\" style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
         else:
             html.append(f"<th style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
 
@@ -360,7 +360,7 @@ def build_html_table_rows(data):
                 elif col_index == 0 and mitigation_progress != 0:
                     pass
                 elif col_index == 1:
-                    html.append(f"<td colspan=\"5\">{cell_content}</td>")
+                    html.append(f"<td colspan=\"4\">{cell_content}</td>")
                 else:
                     html.append(f"<td>{cell_content}</td>")
             html.append("</tr>")
