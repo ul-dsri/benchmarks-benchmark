@@ -57,7 +57,10 @@ s3-sync-latest:
     - export S3_TARGET="${S3_ALIAS}/${S3_BUCKET}/papers/party-papers/"
 
     # Conditionally upload the questionnaire html
-    - ls -la ./docs/data/questionnaire.html
+    - pwd
+    - ls -la ./docs
+    - ls -la ./docs/data
+    - find . -name "questionnaire.html"
     - ./scripts/conditional-upload-questionnaire.sh ./docs/data/questionnaire.html
 
     # Initialize pdf upload flag
