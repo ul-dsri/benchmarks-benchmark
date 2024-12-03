@@ -138,7 +138,6 @@ clean:
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
 	-rm -rf ./tmp
-	-rm -rf $(DATA_DIR)
 	-rm -f $(FIRST_PAGE_PNG)
 	-rm -rf $(SCRIPTS_DIR)/*.csv
 
