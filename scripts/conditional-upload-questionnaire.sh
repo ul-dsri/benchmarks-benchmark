@@ -16,6 +16,9 @@ fi
 
 # Ensure the html file exists
 if [ ! -f "$NEW_HTML_FILE" ]; then
+  echo "conditional matched"
+  ls -l "$NEW_HTML_FILE"
+  ls -l $(realpath "$NEW_HTML_FILE")
   echo "Error: HTML file '$NEW_HTML_FILE' not found."
   exit 1
 fi
