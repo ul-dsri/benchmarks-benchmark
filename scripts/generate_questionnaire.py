@@ -303,10 +303,12 @@ def build_html_table_header():
     html = ["<tr>"]
     headers = ["ID", "Stage", "Category", "Threat to Reliability", "Affirming Status"]
     for i, header in enumerate(headers):
-        if i != len(headers) -1:
-            html.append(f"<th style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
-        else:
+        if i == 0:
+            html.append(f"<th colspan=\"1\" style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
+        elif i == len(headers) -1:
             html.append(f"<th colspan=\"4\" style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
+        else:
+            html.append(f"<th style=\"font-weight: bold; text-decoration: underline;\">{header}</th>")
 
     html.append("</tr>")
 
@@ -333,11 +335,11 @@ def build_html_table_rows(data):
         ]
         for col_index, cell_content in enumerate(threat_cells):
             if col_index == 0: 
-                html.append(f"<td colspan=\"2\">{cell_content}</td>")
+                html.append(f"<td style=\"border-top: 5px solid black;\" colspan=\"1\">{cell_content}</td>")
             elif col_index >= 5:
-                html.append(f"<td style=\"font-weight: bold; text-decoration: underline;\">{cell_content}</td>")
+                html.append(f"<td style=\"border-top: 5px solid black; font-weight: bold; text-decoration: underline;\">{cell_content}</td>")
             else:
-                html.append(f"<td>{cell_content}</td>")
+                html.append(f"<td style=\"border-top: 5px solid black;\">{cell_content}</td>")
         html.append("</tr>")
 
         # Add mitigations sub-rows
