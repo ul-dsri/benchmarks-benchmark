@@ -1,0 +1,145 @@
+digraph {
+    graph [splines=true];
+    // Node styling for scripts
+    node [shape=ellipse, style=filled, fillcolor=lightblue];
+    "Makefile"
+    "./main.py"
+    "./scripts/generate_first_page_image.py"
+    "./scripts/generate_questionnaire.py"
+    "./scripts/generate_table.py"
+    "./scripts/color_md_table.py"
+    "./scripts/conditional-upload-questionnaire.sh"
+    "./scripts/remove-normalization-lines.sh"
+    "./scripts/conditional-upload.sh"
+    "./scripts/insert-normalization-lines.sh"
+    "./.gitlab-ci.yml"
+
+    // Node styling for installed scripts
+    node [shape=ellipse, style=filled, fillcolor=green];
+    "latexmk"
+    "mkdocs"
+
+    // Node styling for generated files
+    node [shape=box, style=filled, fillcolor=lightgreen];
+    "./scripts/relative-risk-summary-table.csv"
+    "./scripts/thresholds-table.csv"
+    "./scripts/threat-registry-table.csv"
+    "./scripts/absolute-risk-summary-table.csv"
+    "./scripts/risk-response-table.csv"
+    "S3/index.csv"
+    "S3/sha1sums.txt"
+    "S3/questionnaire.html"
+    "S3/B2-technical-outline.pdf"
+    "./docs/data/table.md"
+    "./docs/data/risk-response-table.md"
+    "./docs/data/threat-registry-table.md"
+    "./docs/data/thresholds-table.md"
+    "./docs/data/relative-risk-summary-table.md"
+    "./docs/data/absolute-risk-summary-table.md"
+    "./latex/absolute_risk_table.tex"
+    "./latex/tables/thresholds-table.tex"
+    "./latex/tables/risk-response-table.tex"
+    "./latex/tables/relative-risk-summary-table.tex"
+    "./latex/tables/threat-registry-table.tex"
+    "./latex/tables/absolute-risk-summary-table.tex"
+    "./docs/images/first_page.png"
+    "./docs/pdf/B2-technical-outline.pdf"
+    "./docs/pdf/B2-technical-outline_normalized.pdf"
+    "./docs/data/questionnaire.html"
+    "The Website"
+
+
+    // Node styling for input files
+    node [shape=oval, style=filled, fillcolor=cyan];
+    "./table_list.csv"
+    "./docs/questionnaire.md"
+    "./docs/index.md"
+    "./docs/risk-response.md"
+    "./docs/scores-relative.md"
+    "./docs/threat-registry.md"
+    "./docs/scores-absolute.md"
+    "./latex/B2-technical-outline.tex"
+    "./latex/appendices/appendixA.tex"
+    "./latex/appendices/appendixB.tex"
+    "./latex/appendices/appendixD.tex"
+    "./latex/references.bib"
+    "./mkdocs.yml"
+    "./overrides/partials.footer.html"
+    "./docs/css/footer.css"
+
+    // Edges
+    "Makefile" -> "./scripts/generate_table.py" [style=dotted, color=black];
+    "Makefile" -> "./scripts/color_md_table.py" [style=dotted, color=black];
+    "Makefile" -> "./scripts/generate_first_page_image.py" [style=dotted, color=black];
+    "Makefile" -> "./scripts/generate_questionnaire.py" [style=dotted, color=black];
+    "Makefile" -> "mkdocs" [style=dotted, color=black];
+    "Makefile" -> "latexmk" [style=dotted, color=black];
+
+    "./scripts/color_md_table.py" -> "./docs/data/table.md" [style=solid, color=black];
+    "./scripts/absolute-risk-summary-table.csv" -> "./scripts/color_md_table.py" [style=solid, color=black];
+    "./scripts/thresholds-table.csv" -> "./scripts/color_md_table.py" [style=solid, color=black];
+
+    "./main.py"-> "mkdocs" [style=solid, color=black];
+    "S3/index.csv" -> "./main.py" [style=solid, color=black];
+    "./docs/questionnaire.md" -> "mkdocs" [style=solid, color=black];
+    "./docs/index.md" -> "mkdocs" [style=solid, color=black];
+    "./docs/risk-response.md" -> "mkdocs" [style=solid, color=black];
+    "./docs/scores-relative.md" -> "mkdocs" [style=solid, color=black];
+    "./docs/threat-registry.md" -> "mkdocs" [style=solid, color=black];
+    "./docs/scores-absolute.md" -> "mkdocs" [style=solid, color=black];
+    "./overrides/partials.footer.html" -> "mkdocs" [style=solid, color=black];
+    "./docs/css/footer.css" -> "mkdocs" [style=solid, color=black];
+    "./mkdocs.yml" -> "mkdocs" [style=solid, color=black];
+    "mkdocs" -> "The Website" [style=solid, color=black];
+
+    "./table_list.csv" -> "./scripts/generate_table.py" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./docs/data/risk-response-table.md" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./docs/data/threat-registry-table.md" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./docs/data/thresholds-table.md" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./docs/data/relative-risk-summary-table.md" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./docs/data/absolute-risk-summary-table.md" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./scripts/risk-response-table.csv" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./scripts/threat-registry-table.csv" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./scripts/thresholds-table.csv" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./scripts/relative-risk-summary-table.csv" [style=solid, color=black];
+    "./scripts/generate_table.py" -> "./scripts/absolute-risk-summary-table.csv" [style=solid, color=black];
+
+    "latexmk" -> "./docs/pdf/B2-technical-outline.pdf" [style=solid, color=black];
+    "./latex/B2-technical-outline.tex" -> "./docs/pdf/B2-technical-outline.pdf" [style=solid, color=black];
+    "./latex/appendices/appendixA.tex" -> "./docs/pdf/B2-technical-outline.pdf" [style=solid, color=black];
+    "./latex/appendices/appendixB.tex" -> "./docs/pdf/B2-technical-outline.pdf" [style=solid, color=black];
+    "./latex/appendices/appendixD.tex" -> "./docs/pdf/B2-technical-outline.pdf" [style=solid, color=black];
+    "./latex/references.bib" -> "./docs/pdf/B2-technical-outline.pdf" [style=solid, color=black];
+    
+    "./scripts/generate_first_page_image.py" -> "./docs/images/first_page.png" [style=solid, color=black];
+    "./docs/pdf/B2-technical-outline.pdf" -> "./scripts/generate_first_page_image.py" [style=solid, color=black];
+    "./docs/images/first_page.png" ->  "./docs/index.md" [style=solid, color=black];
+
+    "./.gitlab-ci.yml" -> "S3/index.csv" [style=solid, color=black];
+    "./.gitlab-ci.yml" -> "S3/sha1sums.txt" [style=solid, color=black];
+    "./.gitlab-ci.yml" -> "./scripts/conditional-upload-questionnaire.sh" [style=solid, color=black];
+    "./scripts/conditional-upload-questionnaire.sh" -> "S3/questionnaire.html" [style=solid, color=black];
+    "./docs/data/questionnaire.html" -> "./scripts/conditional-upload-questionnaire.sh" [style=solid, color=black];
+
+    "latexmk" -> "./docs/pdf/B2-technical-outline_normalized.pdf" [style=solid, color=black];
+    "./latex/B2-technical-outline.tex" -> "./docs/pdf/B2-technical-outline_normalized.pdf" [style=solid, color=black];
+    "./scripts/insert-normalization-lines.sh" -> "./latex/B2-technical-outline.tex" [style=solid, color=black];
+    "./scripts/remove-normalization-lines.sh" -> "./latex/B2-technical-outline.tex" [style=solid, color=black];
+     "./docs/pdf/B2-technical-outline_normalized.pdf" -> "./scripts/conditional-upload.sh" [style=solid, color=black];
+     "./docs/pdf/B2-technical-outline.pdf" -> "./scripts/conditional-upload.sh" [style=solid, color=black];
+     "./scripts/conditional-upload.sh" -> "S3/B2-technical-outline.pdf" [style=solid, color=black];
+     "./docs/pdf/B2-technical-outline_normalized.pdf" -> "S3/sha1sums.txt" [style=solid, color=black];
+    "S3/sha1sums.txt" -> "./scripts/conditional-upload.sh" [style=solid, color=black];
+
+    "./docs/data/risk-response-table.md" ->  "./docs/risk-response.md" [style=solid, color=black];
+    "./docs/data/threat-registry-table.md" ->  "./docs/threat-registry.md" [style=solid, color=black];
+    "./docs/data/relative-risk-summary-table.md" -> "./docs/scores-relative.md" [style=solid, color=black];
+    "./docs/data/absolute-risk-summary-table.md" -> "./docs/scores-absolute.md" [style=solid, color=black];
+
+    
+    "./scripts/generate_questionnaire.py" -> "./docs/data/questionnaire.html" [style=solid, color=black];
+
+    "./scripts/threat-registry-table.csv" -> "./scripts/generate_questionnaire.py" [style=solid, color=black];
+    "./scripts/risk-response-table.csv" -> "./scripts/generate_questionnaire.py" [style=solid, color=black];
+    
+}
