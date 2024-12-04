@@ -64,7 +64,7 @@ digraph {
     "./latex/appendices/appendixD.tex"
     "./latex/references.bib"
     "./mkdocs.yml"
-    "./overrides/partials.footer.html"
+    "./overrides/partials/footer.html"
     "./docs/css/footer.css"
 
     // Edges
@@ -87,7 +87,8 @@ digraph {
     "./docs/scores-relative.md" -> "mkdocs" [style=solid, color=black];
     "./docs/threat-registry.md" -> "mkdocs" [style=solid, color=black];
     "./docs/scores-absolute.md" -> "mkdocs" [style=solid, color=black];
-    "./overrides/partials.footer.html" -> "mkdocs" [style=solid, color=black];
+    "./docs/data/table.md" -> "mkdocs" [style=solid, color=black];
+    "./overrides/partials/footer.html" -> "mkdocs" [style=solid, color=black];
     "./docs/css/footer.css" -> "mkdocs" [style=solid, color=black];
     "./mkdocs.yml" -> "mkdocs" [style=solid, color=black];
     "mkdocs" -> "The Website" [style=solid, color=black];
@@ -117,7 +118,8 @@ digraph {
 
     "./.gitlab-ci.yml" -> "S3/index.csv" [style=solid, color=black];
     "./.gitlab-ci.yml" -> "S3/sha1sums.txt" [style=solid, color=black];
-    "./.gitlab-ci.yml" -> "./scripts/conditional-upload-questionnaire.sh" [style=solid, color=black];
+    "./.gitlab-ci.yml" -> "./scripts/conditional-upload-questionnaire.sh" [style=dotted, color=black];
+    "./.gitlab-ci.yml" -> "./scripts/conditional-upload.sh" [style=dotted, color=black];
     "./scripts/conditional-upload-questionnaire.sh" -> "S3/questionnaire.html" [style=solid, color=black];
     "./docs/data/questionnaire.html" -> "./scripts/conditional-upload-questionnaire.sh" [style=solid, color=black];
 
@@ -130,6 +132,7 @@ digraph {
      "./scripts/conditional-upload.sh" -> "S3/B2-technical-outline.pdf" [style=solid, color=black];
      "./docs/pdf/B2-technical-outline_normalized.pdf" -> "S3/sha1sums.txt" [style=solid, color=black];
     "S3/sha1sums.txt" -> "./scripts/conditional-upload.sh" [style=solid, color=black];
+    "./scripts/conditional-upload.sh" -> "S3/sha1sums.txt" [style=solid, color=black];
 
     "./docs/data/risk-response-table.md" ->  "./docs/risk-response.md" [style=solid, color=black];
     "./docs/data/threat-registry-table.md" ->  "./docs/threat-registry.md" [style=solid, color=black];
