@@ -141,5 +141,21 @@ digraph {
 
     "./scripts/threat-registry-table.csv" -> "./scripts/generate_questionnaire.py" [style=solid, color=black];
     "./scripts/risk-response-table.csv" -> "./scripts/generate_questionnaire.py" [style=solid, color=black];
-    
+
+    // Subgraph for legend
+    subgraph cluster_legend {
+        label="Legend";
+        style=dashed;
+
+        // Legend items
+        generated [label="Generated Files", shape=box, style=filled, fillcolor=lightgreen];
+        scripts [label="Scripts", shape=ellipse, style=filled, fillcolor=lightblue];
+        installed [label="Installed Scripts", shape=box, style=filled, fillcolor=green];
+        input [label="Input Files", shape=ellipse, style=filled, fillcolor=cyan];
+
+        // Invisible edge for spacing
+        generated -> scripts [style=invis];
+        scripts -> installed [style=invis];
+        installed -> input [style=invis];
+    }
 }
