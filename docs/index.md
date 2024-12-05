@@ -55,3 +55,7 @@ You can find the current list of co-authors on the latest paper. Contributions t
 - The benchmark benchmark is intended to serve as a guide for producing and adopting best-in-class LLM benchmarks, but this work and its associated scores are not a substitute for learning more about the covered benchmarks and developing an independent sense for their reliability.
 - Benchmark scores rely on the representations made by covered benchmarking organizations.
 - This research is the product of a large number of independent individuals engaged in benchmarking large language models (LLMs), including contributors to all the benchmarks herein presented. Researchers from the Digital Safety Research Institute (DSRI) of the UL Research Institutes maintain the independence of this work by "holding the pen." DSRI's funding arises from Underwriter's Laboratories more than 100 years of running safety testing and certification and has not received external funding for the production of this work.
+
+## License
+
+ {% include "copyright.html" %}
