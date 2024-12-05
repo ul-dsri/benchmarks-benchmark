@@ -47,6 +47,13 @@ mc cp "$NEWFILEPATH" "$REMOTE_UPLOAD_PATH"
 # Replace questionnaire.html with the latest version
 mc cp "$NEW_HTML_FILE" "$MC_ALIAS/$S3_BUCKET/papers/party-papers/questionnaire.html"
 
-echo "Questionnaire uploaded successfully."
+# Step 5: Update questionnaire.csv
+echo "Updating csv file in S3: $REMOTE_PATH/questionnaire.csv"
+echo 'filename,url' > questionnaire.csv
+mc ls "$REMOTE_PATH" -r | awk '{print $6}' | grep ".html$" | sed -e 's@.*@"&","https://dl.dsri.org/papers/party-papers/&"@g' >> questionnaire.csv
+mc cp questionnaire.csv "$REMOTE_PATH/questionnaire.csv"
+echo "questionnaire.csv uploaded successfully."
+
+echo "questionnaire.html uploaded successfully."
 exit 0
 

@@ -56,6 +56,12 @@ def define_env(env):
         newest_pdf_link = f"{pdf_dir}/{newest_pdf_name}"
         return newest_pdf_link
 
+
+    @env.macro
+    def get_questionnaire_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/questionnaire.csv"):
+        return get_pdf_list_from_s3(csv_url)
+
+
     @env.macro
     def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
 

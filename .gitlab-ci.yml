@@ -56,7 +56,7 @@ s3-sync-latest:
     - mc alias set "$S3_ALIAS" "$S3_HOSTNAME" "$S3_ACCESS_KEY" "$S3_SECRET_KEY"
     - export S3_TARGET="${S3_ALIAS}/${S3_BUCKET}/papers/party-papers/"
 
-    # Conditionally upload the questionnaire html
+    # Conditionally upload the questionnaire html and update questionnaire.csv
     - ./scripts/conditional-upload-questionnaire.sh ./public/data/questionnaire.html
 
     # Initialize pdf upload flag

@@ -5,9 +5,13 @@ theme:
     custom_dir: overrides
     features:
         - toc.integrate
+    palette:
+        primary: custom
+        accent: custom
 
 extra_css:
     - css/footer.css
+    - css/extra.css
 
 plugins:
     - macros
