@@ -31,3 +31,4 @@ scripts/*.csv
 
 # outputs
 *.pdf
+latex/tables
