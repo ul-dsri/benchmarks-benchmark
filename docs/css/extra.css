@@ -1,5 +1,6 @@
-:root {
+:root>* {
   --md-primary-fg-color:    rgb(18, 44, 73);
-  --md-accent-fg-color:     rgb(18, 44, 73);
+  --md-accent-fg-color:     rgb(255, 255, 255);
+  --md-typeset-a-color:     rgb(29, 98, 145);
 }
 

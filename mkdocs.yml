@@ -6,8 +6,12 @@ theme:
     features:
         - toc.integrate
     palette:
+        scheme: slate
         primary: custom
         accent: custom
+    favicon: images/favicon-32x32.png
+    logo: images/ulresearchinst_logo_horz_wht_rgb.png
+
 
 extra_css:
     - css/footer.css
