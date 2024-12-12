@@ -27,11 +27,13 @@ echo "Computed sha1sum for new HTML file: $COMPUTED_SHA1"
 # Step 2: Try downloading all HTML files from s3
 mkdir -p ./tmp # make tmp dir if it doesn't already exist
 echo "Downloading all HTML files from S3..."
-mc find $REMOTE_PATH --name "*.html" --exec "mc get {} ./tmp"
-echo "Successfully downloaded HTML files"
+if ! mc find $REMOTE_PATH --name "*.html" --exec "mc get {} ./tmp"; then
+    echo "No HTML files found in S3. Continuing..."
+fi
+echo "Successfully checked and downloaded all HTML files (if any)"
 
 # Step 3: Compare the computed sha1sum to the list
-if find ./tmp -name "*.html" -exec sha1sum {} + | grep "$COMPUTED_SHA1"; then
+if find ./tmp -name "*.html" -exec sha1sum {} + | grep -q "$COMPUTED_SHA1"; then
   echo "SHA1sum found in the list. HTML file will not be uploaded."
   exit 0
 fi
