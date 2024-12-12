@@ -8,7 +8,7 @@ MC_ALIAS="${S3_ALIAS}"
 S3_BUCKET="${S3_BUCKET}"
 SHA1_LIST_FILE="sha1sums.txt"
 LOCAL_SHA1_LIST="/tmp/$SHA1_LIST_FILE"
-REMOTE_PATH="$MC_ALIAS/$S3_BUCKET/papers/party-papers/$SHA1_LIST_FILE"
+REMOTE_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/$SHA1_LIST_FILE"
 FLAG_FILE="uploaded_true"
 
 # Ensure the normalized file is provided
@@ -57,7 +57,7 @@ fi
 NEWFILEPATH="$(echo "$FILE_TO_UPLOAD" | sed -e 's/\.pdf$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.pdf/g')"
 cp "$FILE_TO_UPLOAD" "$NEWFILEPATH" # rename to include date and short commit
 NEWFILE=$(basename "$NEWFILEPATH")
-REMOTE_UPLOAD_PATH="$MC_ALIAS/$S3_BUCKET/papers/party-papers/$NEWFILE"
+REMOTE_UPLOAD_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/$NEWFILE"
 
 echo "Uploading non-normalized file to S3: $REMOTE_UPLOAD_PATH"
 mc cp "$NEWFILEPATH" "$REMOTE_UPLOAD_PATH"

@@ -6,7 +6,7 @@ set -e  # Stop script execution on any unexpected error
 NEW_HTML_FILE=$1
 MC_ALIAS="${S3_ALIAS}"
 S3_BUCKET="${S3_BUCKET}"
-REMOTE_PATH="$MC_ALIAS/$S3_BUCKET/papers/party-papers/"
+REMOTE_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/"
 
 # Ensure the html file is provided
 if [ -z "$NEW_HTML_FILE" ]; then
@@ -40,17 +40,17 @@ fi
 NEWFILEPATH="$(echo "$NEW_HTML_FILE" | sed -e 's/\.html$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.html/g')"
 cp "$NEW_HTML_FILE" "$NEWFILEPATH" # rename to include date and short commit
 NEWFILE=$(basename "$NEWFILEPATH")
-REMOTE_UPLOAD_PATH="$MC_ALIAS/$S3_BUCKET/papers/party-papers/$NEWFILE"
+REMOTE_UPLOAD_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/$NEWFILE"
 
 echo "Uploading html file to S3: $REMOTE_UPLOAD_PATH"
 mc cp "$NEWFILEPATH" "$REMOTE_UPLOAD_PATH"
 # Replace questionnaire.html with the latest version
-mc cp "$NEW_HTML_FILE" "$MC_ALIAS/$S3_BUCKET/papers/party-papers/questionnaire.html"
+mc cp "$NEW_HTML_FILE" "$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/questionnaire.html"
 
 # Step 5: Update questionnaire.csv
 echo "Updating csv file in S3: $REMOTE_PATH/questionnaire.csv"
 echo 'filename,url' > questionnaire.csv
-mc ls "$REMOTE_PATH" -r | awk '{print $6}' | grep ".html$" | sed -e 's@.*@"&","https://dl.dsri.org/papers/party-papers/&"@g' >> questionnaire.csv
+mc ls "$REMOTE_PATH" -r | awk '{print $6}' | grep ".html$" | sed -e 's@.*@"&","https://dl.dsri.org/papers/benchmarks-benchmark/&"@g' >> questionnaire.csv
 mc cp questionnaire.csv "$REMOTE_PATH/questionnaire.csv"
 echo "questionnaire.csv uploaded successfully."
 

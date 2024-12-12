@@ -1,7 +1,7 @@
 VENV ?= venv
 PYTHON ?= $(VENV)/bin/python3
 PYTHON_VERSION ?= 3.11
-IMAGE ?= party-paper
+IMAGE ?= benchmarks-benchmark
 
 # Define directories
 LATEX_DIR := latex

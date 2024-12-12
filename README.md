@@ -1,4 +1,4 @@
-# Welcome to the party-paper repo
+# Welcome to the benchmarks-benchmark repo
 
 ## Setup
 
@@ -25,7 +25,7 @@ sudo apt install texlive-latex-extra
 ## Building
 
 Run `make`. This will build the static site, and build all LaTeX (`*.tex`) files
-in the `party-paper/latex` directory.
+in the `benchmarks-benchmark/latex` directory.
 
 You can view the built site by running `make serve` and visiting the URL listed
 in the output:
@@ -47,4 +47,4 @@ INFO    -  [11:38:17] Serving on http://localhost:8888/
 ## Adding LaTeX Files
 
 Place the `.tex` files that will be made available on the site in the
-`party-paper/latex` directory.
+`benchmarks-benchmark/latex` directory.
