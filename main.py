@@ -65,8 +65,12 @@ def define_env(env):
     @env.macro
     def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/benchmarks-benchmark/index.csv"):
 
-        response = requests.get(csv_url)
-        response.raise_for_status()  # Raise an error if the request fails
+        try:
+            response = requests.get(csv_url)
+            response.raise_for_status()  # Raise an error if the request fails
+        except requests.exceptions.RequestException as e:
+            print(f"Debug: failed to fetch CSV from {csv_url}. Error: {e}")
+            return ""
 
         # Decode the CSV content
         content = response.text
@@ -75,8 +79,12 @@ def define_env(env):
         # Parse the CSV content
         reader = csv.reader(content.splitlines())
 
-        # Skip header in CSV content
-        next(reader)
+        try:
+            # Skip header in CSV content
+            next(reader)
+        except StopIteration:
+            print(f"Debug: The CSV fiel at {csv_url} is empty or impropperly formatted.")
+            return ""
 
         for row in reader:
             if len(row) != 2:
