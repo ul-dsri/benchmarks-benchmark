@@ -36,7 +36,7 @@ Response 24: Do not translate any prompts. Source prompts exclusively within the
 
 Now a benchmark that affirms response 24 will score 100 points by driving the likelihood of that threat materializing to zero.
 
-You can view the complete list of [mitigations](data/risk-response-table.md) and submit new mitigations by [opening a Github issue](https://github.com/ul-dsri/party-paper/issues) or emailing sean.mcgregor-at-ul.org.
+You can view the complete list of [mitigations](data/risk-response-table.md) and submit new mitigations by [opening a Github issue](https://github.com/ul-dsri/benchmarks-benchmark/issues) or emailing sean.mcgregor-at-ul.org.
 
 ## Research Paper
 
@@ -48,7 +48,7 @@ The following are versioned releases of the research paper associated with this 
 
 {{ get_latest_pdf_anchor() }}{{ get_pdf_list_from_s3() }}
 
-You can find the current list of co-authors on the latest paper. Contributions to the research paper are welcome via email (sean.mcgregor-at-ul.org), or on the [Github respository](https://github.com/ul-dsri/party-paper). Please reach out via those means to discuss.
+You can find the current list of co-authors on the latest paper. Contributions to the research paper are welcome via email (sean.mcgregor-at-ul.org), or on the [Github respository](https://github.com/ul-dsri/benchmarks-benchmark). Please reach out via those means to discuss.
 
 ## Independence
 

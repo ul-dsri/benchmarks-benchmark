@@ -35,7 +35,7 @@ container-docker:
   stage: test
 
 mkdocs-build:
-  image: registry.gitlab.com/ul-dsri/party-paper
+  image: registry.gitlab.com/ul-dsri/benchmarks-benchmark
   script:
     - apt-get update -y
     - apt-get install -y --no-install-recommends git make

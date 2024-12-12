@@ -58,12 +58,12 @@ def define_env(env):
 
 
     @env.macro
-    def get_questionnaire_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/questionnaire.csv"):
+    def get_questionnaire_list_from_s3(csv_url="https://dl.dsri.org/papers/benchmarks-benchmark/questionnaire.csv"):
         return get_pdf_list_from_s3(csv_url)
 
 
     @env.macro
-    def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/party-papers/index.csv"):
+    def get_pdf_list_from_s3(csv_url="https://dl.dsri.org/papers/benchmarks-benchmark/index.csv"):
 
         response = requests.get(csv_url)
         response.raise_for_status()  # Raise an error if the request fails
