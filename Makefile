@@ -64,7 +64,7 @@ all: build
 .PHONY: build
 build: $(PDFS) $(TABLE_MD) $(TABLE_TEX) $(QUESTIONNAIRE_HTML) $(VENV)/requirements.txt
 	@echo "Building MkDocs site..."
-	$(VENV)/bin/mkdocs build
+	$(VENV)/bin/mkdocs build --strict
 
 # Rule to generate the markdown tables
 $(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
