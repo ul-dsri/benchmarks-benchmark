@@ -25,7 +25,7 @@ Response 23: Validate all machine-translated prompts with highly qualified speak
 
 Now by affirming response number 23 is in place, all benchmark maintainers can score points proportionate to the reduced risk as determined by `likelihood*severity` (post response) - `likelihood*severity` (before). So response 23 provides `(0.1*0.3) - (1.0*1.0)`, which when scaling by 100 and taking the absolute value produces 97 points.
 
-Now all other benchmarks can similarly score these points by either affirming they have response 23 in place. Alternatively, they can also register their own response, such as,
+Now all other benchmarks can similarly score these points by affirming they have response 23 in place. Alternatively (or additionally), they can register their own response, such as,
 
 **(2) Register the Response:**
 ```
