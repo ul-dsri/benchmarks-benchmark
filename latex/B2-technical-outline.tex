@@ -100,7 +100,7 @@
 \maketitle
 
 \begin{abstract}
-Large language model (LLM) benchmarks enable system use decisions informed by LLM properties, but benchmarks may be rendered unreliable for real world decision making by a variety of threats to benchmark longevity, correctness, coverage, consistency, and intelligibility. Motivated by emerging LLM safety benchmarks, on whose scores people rely on to make decisions impacting real world safety, this work presents a benchmark for LLM benchmarks inspired by National Institute of Standards and Technology risk management processes. High scores indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark.
+Large language model (LLM) benchmarks enable system use decisions informed by LLM properties, but benchmarks may be rendered unreliable for real world decision making by a variety of threats to benchmark longevity, correctness, coverage, consistency, and intelligibility. Motivated by emerging LLM safety benchmarks, on whose scores people rely on to make decisions impacting real world safety, this work presents a benchmark for LLM benchmarks inspired by National Institute of Standards and Technology risk management processes. High scores indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark. A variety of benchmarks designed for real world reliability and research purposes are scored and found to vary wildly in their reliability properties.
 \end{abstract}
 
 
@@ -145,9 +145,9 @@ Large language model (LLM) benchmarks enable system use decisions informed by LL
 
 
 \section{Introduction}
-Benchmarks have played a central role in the rapid development of machine learning systems. New benchmarks are produced, researchers optimize models to the benchmarks, and the capabilities of AI systems advance \cite{deng2009,srivastava2022}. While benchmarks as \textit{optimization} targets have greatly advanced the capacity for ML systems to perform useful tasks, the operational, statistical, and communication requirements for producing benchmarks to influence real world decisions differ from the requirements imposed by benchmarks used in optimization. People who then rely on a benchmark produced for optimization purposes (e.g., by making a decision about what is a safe use case) may harm themselves or others.
+Benchmarks have played a central role in the rapid development of machine learning systems. New benchmarks are produced, researchers optimize models to the benchmarks, and the capabilities of AI systems advance \cite{deng2009,srivastava2022}. While benchmarks as \textit{optimization} targets have greatly advanced the capacity for ML systems to perform useful tasks, the operational, statistical, and communication requirements for producing benchmarks influencing real world decisions differ from the requirements imposed by benchmarks used in optimization. People who then rely on a benchmark produced for optimization purposes (e.g., by making a decision about what is a safe use case) may harm themselves or others.
 
-A means of separating those benchmarks intended for research and engineering purposes (i.e., "optimization benchmarks", see definition \ref{dfn:optimization_benchmark}) from benchmarks intended to express performance properties in the real world (i.e., "decision benchmarks", see definition \ref{dfn:decision_benchmark}) is required. This work therefore presents the benchmarks' benchmark, \bb, as a means of identifying large language model (LLM) decision benchmarks. Benchmarks score highly on \bb by adopting risk management processes inspired by the National Institute of Standards and Technology (NIST) information security risk management practices \cite{nist80030r1}. In this realization of risk management, we identify threats to benchmark reliability (definition \ref{dfn:benchmark_reliability}) and invite the benchmark community to express process controls and risk mitigations (i.e., "responses" to the threats) that are likely to reduce the severity or likelihood of those threats materializing into inappropriate reliance. A high \bb score indicates the scored benchmark is more reliable for real world decision making.
+A means of separating those benchmarks intended for research and engineering purposes (i.e., "optimization benchmarks," see definition \ref{dfn:optimization_benchmark}) from benchmarks intended to express performance properties in the real world (i.e., "decision benchmarks," see definition \ref{dfn:decision_benchmark}) is required before one might reasonably rely upon benchmarks for decisions involving risk. This work therefore presents the benchmarks' benchmark, "\bb", as a means of identifying large language model (LLM) decision benchmarks. Benchmarks score highly on \bb by adopting risk management processes inspired by the National Institute of Standards and Technology (NIST) information security risk management practices (\cite{nist80030r1}). In the \bb realization of risk management, we identify threats to benchmark reliability (definition \ref{dfn:benchmark_reliability}) and invite the benchmark community to express process controls and risk mitigations (i.e., "responses" to the threats) likely to reduce the severity or likelihood of those threats materializing into inappropriate reliance. A high \bb score indicates the scored benchmark is more reliable for real world decision making.
 
 \begin{dfn}
 \label{dfn:optimization_benchmark}
@@ -191,7 +191,30 @@ This research is the product of a large number of independent individuals engage
 \end{itemize}
     \end{tcolorbox}
 \end{center}
-\section{Related Work and Risk Assessment}
+
+\section{Related work}
+
+todo. Talk about SafetyPrompts, contrast with BetterBench's notion of ``high quality'' that is researcher centered, talk about how human evaluation is not a panacea, and fill out this section more broadly.
+
+SafetyPrompts: a Systematic Review of Open Datasets for Evaluating and Improving Large Language Model Safety
+
+https://arxiv.org/abs/2404.05399
+
+
+BetterBench: Assessing AI Benchmarks, Uncovering Issues, and Establishing Best Practices
+
+https://arxiv.org/abs/2411.12990
+
+
+Challenges in Trustworthy Human Evaluation of Chatbots
+
+https://arxiv.org/abs/2412.04363
+
+AI and the Everything in the Whole Wide World Benchmark
+
+https://arxiv.org/abs/2111.15366
+
+\section{Risk Assessment}
 The AI Risk Management Framework (AI RMF) details, among other things, the distinctive risks of AI systems, including ``Underdeveloped software testing standards and inability to document AI-based practices to the standard expected of traditionally engineered software for all but the simplest of cases" and ``Difficulty in performing regular AI-based software testing, or determining what to test, since AI systems are not subject to the same controls as traditional code development" \cite{nistAI_RMF}.
 
 We treat these challenges as opportunities to identify reliability risks and develop controls
@@ -203,16 +226,16 @@ as inspired by NIST's Guide for Conducting Risk Assessments for Information Secu
     \end{tcolorbox}
 \end{center}
 
-Per NIST guidance, preparing for a risk assessment involves the following steps, which we extend with how these steps are realized in LLM benchmark benchmarking.
+Per NIST guidance, preparing for a risk assessment involves the following steps, which scope the \bb benchmark.
 
-\begin{itemize}
-    \item {\bf Identify the purpose of the assessment:} to identify and mitigate threats to the reliability of the LLM benchmark
-    \item {\bf Identify the scope of the assessment:} all threats likely to lead a person to make a false inference about the properties of an LLM along with their mitigations.
-    \item {\bf Identify the assumptions and constraints associated with the assessment:} the benchmark organization will faithfully indicate the properties of their benchmark program.
-    \item {\bf Identify the sources of information to be used as inputs to the assessment:} insider knowledge about the operations of the benchmarking organization and the properties of the benchmark.
-\end{itemize}
+\begin{enumerate}
+    \item {\bf Identify the purpose of the assessment:} \textit{to identify and mitigate threats to the reliability of the LLM benchmark}
+    \item {\bf Identify the scope of the assessment:} \textit{all threats likely to lead a person to make a false inference about the properties of an LLM along with their mitigations.}
+    \item {\bf Identify the assumptions and constraints associated with the assessment:} \textit{the benchmark organization will faithfully indicate the properties of their benchmark program.}
+    \item {\bf Identify the sources of information to be used as inputs to the assessment:} \textit{insider knowledge about the operations of the benchmarking organization and the properties of the benchmark.}
+\end{enumerate}
 
-The final step is to, {\bf identify the risk model and analytic approaches (i.e., assessment and analysis approaches) to be employed during the assessment.}. The analytic approach adopted by \bb is to populate threats to reliability from the ground up through the identification of threats and their responses within prominent benchmarking efforts. As a combination of techniques from several typically disjunct communities \bb requires the statement of a large number of definitions to produce a shared understanding. These include the following.
+The final step is to, (5) {\bf identify the risk model and analytic approaches (i.e., assessment and analysis approaches) to be employed during the assessment.}. The analytic approach adopted by \bb is to populate threats to reliability from the ground up through the identification of threats and their responses within prominent benchmarking efforts. As a combination of techniques from several typically disjunct communities, \bb requires the statement of a large number of definitions to produce a shared understanding. These include the following.
 
 \begin{dfn}
 {\bf (Benchmark) User.} A person who makes decisions on whether to apply an LLM for a particular purpose on the basis of information conveyed by a benchmark and its associated documentation.
@@ -220,18 +243,18 @@ The final step is to, {\bf identify the risk model and analytic approaches (i.e.
 \begin{dfn}
 {\bf System Under Test (SUT).} The system being benchmarked.
 \end{dfn}
+% \begin{dfn}
+% {\bf Threat.} ``Any circumstance or event with the potential to adversely impact organizational operations (including mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation through an information system via unauthorized access, destruction, disclosure, or modification of information, and/or denial of service." \cite{cnssi4009}\\
+% \end{dfn}
 \begin{dfn}
-{\bf Threat.} ``Any circumstance or event with the potential to adversely impact organizational operations (including mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation through an information system via unauthorized access, destruction, disclosure, or modification of information, and/or denial of service." \cite{cnssi4009}\\
+{\bf Threat to Reliability.} A threat that may lead a person to believe the benchmark is substantiating a claim (e.g., ``the system has been benchmarked as safe according to <name>") that is unsubstantiated or incorrect. Adapted from \cite{cnssi4009}.
 \end{dfn}
 \begin{dfn}
-{\bf Threat to Reliability.} A threat that may lead a person to believe the benchmark is substantiating a claim (e.g., ``the system has been benchmarked as safe according to <name>") that is unsubstantiated or incorrect.
-\end{dfn}
-\begin{dfn}
-{\bf Severity.} ``An assessment of the relative importance of mitigating/remediating the vulnerability." \cite{nist80030r1}
+{\bf Severity.} An assessment of the relative importance of mitigating/remediating the [threat]. Adapted from \cite{nist80030r1}
 \end{dfn}
 
 For the purpose of \bb, we graduate severities according to the levels of table \ref{tab:severity}.
-\begin{table}[h!]
+\begin{table}[!ht]
   \caption{The severity levels assigned to every threat to reliability in the threat register.}
 \label{tab:severity}
   \centering
@@ -250,7 +273,7 @@ For the purpose of \bb, we graduate severities according to the levels of table 
 \end{table}
 
 \begin{dfn}
-{\bf Likelihood.} ``A weighted factor based on a subjective analysis of the probability that a given threat is capable of exploiting a given vulnerability or a set of vulnerabilities."\cite{cnssi4009} The term likelihood ``...is not likelihood in the strict sense of the term; rather, it is a likelihood score. Risk assessors do not define a likelihood function in the statistical sense. Instead, risk assessors assign a score (or likelihood assessment) based on available evidence, experience, and expert judgment. Combinations of factors such as targeting, intent, and capability thus can be used to produce a score representing the likelihood of threat initiation; combinations of factors such as capability and vulnerability severity can be used to produce a score representing the likelihood of adverse impacts; and combinations of these scores can be used to produce an overall likelihood score." \cite{nist80030r1}
+{\bf Likelihood.} A weighted factor based on a subjective analysis of the probability that a given threat will materialize to impact reliability. (adapted from \cite{cnssi4009}) The term likelihood ``...is not likelihood in the strict sense of the term; rather, it is a likelihood score. Risk assessors do not define a likelihood function in the statistical sense. Instead, risk assessors assign a score (or likelihood assessment) based on available evidence, experience, and expert judgment. Combinations of factors such as targeting, intent, and capability thus can be used to produce a score representing the likelihood of threat initiation; combinations of factors such as capability and vulnerability severity can be used to produce a score representing the likelihood of adverse impacts; and combinations of these scores can be used to produce an overall likelihood score." \cite{nist80030r1}
 \end{dfn}
 
 For the purposes of \bb, all threats to reliability are assigned an initial likelihood of $1.0$. Benchmark authors can then score points within \bb by reducing either severity or likelihood, which jointly determine ``risk."
@@ -263,9 +286,9 @@ For the purposes of \bb, all threats to reliability are assigned an initial like
 {\bf Risk Response and Mitigation.} ``Accepting, avoiding, mitigating, sharing, or transferring risk to organizational operations (i.e., mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation." \cite{joint2011sp} with a mitigation ``Prioritizing, evaluating, and implementing the appropriate risk-reducing controls/countermeasures recommended from the risk management process. A subset of Risk Response." \cite{cnssi4009}
 \end{dfn}
 
-In information security, these terms are associated with outcomes such as exposed user data, service outages, or worse. For LLM benchmarks, reliability may be impaired along several distinct dimensions.
+In information security, these terms are associated with outcomes such as exposed user data, service outages, or worse outcomes. For LLM benchmarks, reliability may be impaired along several distinct dimensions.
 \section{\texorpdfstring{\bb}{B2} Dimensions}
-The analytic frame for ``reliability" is broader than statistical measures since how benchmarks communicate their results may lead the relying human to make mistakes. For safety benchmarks in particular, ``human error" as an explanation for inappropriate decision making is not consistent with an engineering ethos that looks to prevent harm by improving systems and processes. In aviation safety, for example, when a pilot fails to safely land a plane, ``human error" as colloquially understood dismisses a causative chain that may have been set in motion years earlier. Human error is typically the last of a series of failures in design, maintenance, and other processes leading to a bad decision. Did the pilot stall the plane in mid flight, or did the avionics fail to provide a stall warning at an actionable time? Similarly, producing benchmarks such that the user makes appropriate inferences about benchmarked systems requires careful benchmark preparation and presentation to avoid inappropriate decisions. Careful production and maintenance of benchmarks respond to (i.e., mitigate) threats to reliability as categorized in Table \ref{tab:dimensions}.
+The analytic frame for ``reliability" is broader than purely statistical properties. For safety benchmarks in particular, ``human error" as an explanation for inappropriate decision making is not consistent with an engineering ethos that looks to prevent harm. In aviation safety, for example, when a pilot fails to safely land a plane, ``human error" as colloquially understood dismisses a causative chain that may have been set in motion years earlier. Human error as a singular explanation of an accident obscures a series of failures in design, maintenance, and other processes leading to a bad decision as the last point of failure. Did the pilot stall the plane in mid flight, or did the avionics fail to provide a stall warning at an actionable time? Similarly, producing benchmarks such that the user makes appropriate inferences about benchmarked systems requires careful benchmark preparation and presentation to avoid inappropriate decisions. Careful production and maintenance of benchmarks respond to (i.e., mitigate) threats to reliability as categorized in Table \ref{tab:dimensions}.
 
 \begin{table}[h!]
   \caption{Benchmark Reliability Dimensions. The longevity dimension requires solutions to Goodhart's law as well as practices to actively maintain the benchmark. The correctness and consistency dimensions are related to standard statistical methods and metrology. ``Comprehensiveness" is related to the coverage of the benchmark. Finally, ``intelligibility" is determined by how these dimensions are expressed to people making decisions.}
@@ -285,9 +308,9 @@ The analytic frame for ``reliability" is broader than statistical measures since
   \end{tabular}
 \end{table}
 
-These dimensions are determined by operational, statistical, and communication factors that jointly inform whether a user may rely on a benchmark when making decisions. High scores on \bb are achieved by means of mitigating or controlling risk and indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark.
+These dimensions are determined by operational, statistical, and communication factors that jointly inform whether a user may rely on a benchmark when making decisions. High scores on \bb are achieved by means of mitigating or controlling risk, and indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark.
 
-Let $d$ be a reliability dimension within the set of reliability dimensions defined in Table \ref{tab:dimensions}. A dimension $d$ is degraded by threat $t$ in the set of threats $T_d$. Each threat has a severity $t_s\in{[0,1]}$ and an assumed likelihood $t_l$ of $1.0$ prior to mitigation. Mitigation $m$ is among the set of adopted responses $R_{d,t}$ to threat $t$ and it reduces threat likelihood by $m_l$ and severity by $m_s$ for the associated threat. Each response stacks, such if you mitigate threat likelihood by $0.5$ for two different mitigations, the resulting likelihood is $0.25$. The calculation for \bb is now given in \ref{alg:b2}.
+Stated formally, let $d$ be a reliability dimension within the set of reliability dimensions defined in Table \ref{tab:dimensions}. A dimension $d$ is degraded by threat $t$ in the set of threats $T_d$. Each threat has a severity $t_s\in{[0,1]}$ and an assumed likelihood $t_l$ of $1.0$ prior to mitigation. Mitigation $m$ is among the set of adopted responses $R_{d,t}$ to threat $t$ and it reduces threat likelihood by $m_l$ and severity by $m_s$ for the associated threat. Each response stacks, such if you mitigate threat likelihood by $0.5$ for two different mitigations, the resulting likelihood is $0.25$. The calculation for \bb is now given in \ref{alg:b2}.
 
 \begin{algorithm}
 \label{alg:b2}
