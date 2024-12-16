@@ -81,7 +81,7 @@ def generate_colored_markdown_table(data, thresholds, color_mapping):
             # Get the color for the current value
             color = get_color_for_value(category, value, thresholds, color_mapping)
             if color:
-                row_data.append(f'<span style="background-color:{color};">{value}</span>')  # Apply color
+                row_data.append(f'<span style="background-color:{color}; color:black;">{value}</span>')  # Apply color
             else:
                 row_data.append(str(value))  # No color if the value is outside the thresholds
 
