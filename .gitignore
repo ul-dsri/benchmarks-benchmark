@@ -22,7 +22,7 @@ docs/pdf/
 *.blg
 
 # temporary csv files used by scripts
-scripts/*.csv
+csv/*.csv
 
 # container
 .bash_history

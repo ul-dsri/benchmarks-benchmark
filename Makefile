@@ -13,6 +13,9 @@ IMAGES_DIR := $(MKDOCS_DIR)/images
 TABLE_MD := $(DATA_DIR)/table.md
 TABLE_TEX := $(LATEX_DIR)/table.tex
 SCRIPTS_DIR := scripts
+CSV_DIR := csv
+DOWNLOAD_CSV_SCRIPT := $(SCRIPTS_DIR)/download_csv_data.py
+TABLE_INPUT_FILE := table_list.csv
 NORMALIZER := $(SCRIPTS_DIR)/insert-normalization-lines.sh
 DENORMALIZER := $(SCRIPTS_DIR)/remove-normalization-lines.sh
 TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
@@ -21,7 +24,6 @@ QUESTIONNAIRE_SCRIPT := $(SCRIPTS_DIR)/generate_questionnaire.py
 QUESTIONNAIRE_HTML := $(DATA_DIR)/questionnaire.html
 QUESTIONNAIRE_INPUT1:= $(SCRIPTS_DIR)/threat-registry-table.csv
 QUESTIONNAIRE_INPUT2:= $(SCRIPTS_DIR)/risk-response-table.csv
-TABLE_INPUT_FILE := table_list.csv
 FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
 FIRST_PAGE_PNG := $(IMAGES_DIR)/first_page.png
 
@@ -67,22 +69,22 @@ build: $(PDFS) $(TABLE_MD) $(TABLE_TEX) $(QUESTIONNAIRE_HTML) $(VENV)/requiremen
 	$(VENV)/bin/mkdocs build --strict
 
 # Rule to generate the markdown tables
-$(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+$(TABLE_MD): $(TABLE_GEN_SCRIPT) | $(CSV_DIR) $(DATA_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
 	@echo "Generating markdown tables..."
 	# Iterate through each line in the input file
 	@while IFS=',' read -r doc_id gid output_file; do \
-		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
-		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format markdown --filename $(SCRIPTS_DIR)/$$output_file > $(DATA_DIR)/$$output_file.md; \
+		echo "Generating markdown table: $$output_file..."; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --format markdown --filename $(CSV_DIR)/$$output_file.csv > $(DATA_DIR)/$$output_file.md; \
 	done < $(TABLE_INPUT_FILE)
-	$(VENV)/bin/python $(TABLE_COLOR_SCRIPT) $(SCRIPTS_DIR)/thresholds-table.csv $(SCRIPTS_DIR)/absolute-risk-summary-table.csv $(TABLE_MD)
+	$(VENV)/bin/python $(TABLE_COLOR_SCRIPT) $(CSV_DIR)/thresholds-table.csv $(CSV_DIR)/absolute-risk-summary-table.csv $(TABLE_MD)
 
 # Rule to generate the latex tables
-$(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(LATEX_TABLE_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
+$(TABLE_TEX): $(TABLE_GEN_SCRIPT) | $(CSV_DIR) $(LATEX_TABLE_DIR) $(VENV)/requirements.txt $(TABLE_INPUT_FILE)
 	@echo "Generating LaTeX tables..."
 	# Iterate through each line in the input file
 	@while IFS=',' read -r doc_id gid output_file; do \
-		echo "Generating table for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
-		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --sheet_id $$doc_id --gid $$gid --format latex --filename $(SCRIPTS_DIR)/$$output_file > $(LATEX_TABLE_DIR)/$$output_file.tex; \
+		echo "Generating LaTeX table: $$output_file..."; \
+		$(VENV)/bin/python $(TABLE_GEN_SCRIPT) --format latex --filename $(CSV_DIR)/$$output_file.csv > $(LATEX_TABLE_DIR)/$$output_file.tex; \
 	done < $(TABLE_INPUT_FILE)
 
 # Rule to generate the HTML questionnaire table
@@ -97,6 +99,15 @@ $(DATA_DIR):
 # Ensure the latex table directory exists
 $(LATEX_TABLE_DIR):
 	mkdir -p $(LATEX_TABLE_DIR)
+
+# Ensure the csv directory exists and is populated
+$(CSV_DIR): $(TABLE_INPUT_FILE) $(VENV) $(DOWNLOAD_CSV_SCRIPT)
+	mkdir -p $(CSV_DIR)
+	# Iterate through each line of the input file
+	@while IFS=',' read -r doc_id gid output_file; do \
+		echo "Downloading CSV data for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
+		$(VENV)/bin/python $(DOWNLOAD_CSV_SCRIPT) --sheet_id $$doc_id --gid $$gid --filename $(CSV_DIR)/$$output_file; \
+	done < $(TABLE_INPUT_FILE)
 
 # Rule to build PDFs from LaTeX files
 $(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
@@ -138,6 +149,7 @@ clean:
 	-find -name \*.pyc -type f -exec rm -f '{}' \;
 	-find -name \*.pdf -type f -exec rm -f '{}' \;
 	-rm -rf ./tmp
+	-rm -rf $(CSV_DIR)
 	-rm -f $(FIRST_PAGE_PNG)
 	-rm -rf $(SCRIPTS_DIR)/*.csv
 
