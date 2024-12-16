@@ -6,7 +6,7 @@ set -e  # Stop script execution on any unexpected error
 NEW_HTML_FILE=$1
 MC_ALIAS="${S3_ALIAS}"
 S3_BUCKET="${S3_BUCKET}"
-REMOTE_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/"
+REMOTE_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark"
 
 # Ensure the html file is provided
 if [ -z "$NEW_HTML_FILE" ]; then
