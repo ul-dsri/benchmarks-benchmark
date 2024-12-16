@@ -22,8 +22,8 @@ TABLE_GEN_SCRIPT := $(SCRIPTS_DIR)/generate_table.py
 TABLE_COLOR_SCRIPT := $(SCRIPTS_DIR)/color_md_table.py
 QUESTIONNAIRE_SCRIPT := $(SCRIPTS_DIR)/generate_questionnaire.py
 QUESTIONNAIRE_HTML := $(DATA_DIR)/questionnaire.html
-QUESTIONNAIRE_INPUT1:= $(SCRIPTS_DIR)/threat-registry-table.csv
-QUESTIONNAIRE_INPUT2:= $(SCRIPTS_DIR)/risk-response-table.csv
+QUESTIONNAIRE_INPUT1:= $(CSV_DIR)/threat-registry-table.csv
+QUESTIONNAIRE_INPUT2:= $(CSV_DIR)/risk-response-table.csv
 FIRST_PAGE_SCRIPT := $(SCRIPTS_DIR)/generate_first_page_image.py
 FIRST_PAGE_PNG := $(IMAGES_DIR)/first_page.png
 
