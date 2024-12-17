@@ -3,7 +3,7 @@
 !!! warning
     You are viewing pre-release benchmark documentation. This benchmark of LLM benchmark reliability is not currently reliable.
 
-If you are viewing this, you are likely a benchmark author that has graciously agreed to score their benchmark with B~2~. The process should be quick and painless. We recommend reading the "about" section below, then reading proceeding to the [questionnaire](questionnaire).
+If you are viewing this, you are likely a benchmark author that has graciously agreed to score their benchmark with B~2~. The process should be quick and painless. We recommend reading the "about" section below, then reading proceeding to the [questionnaire](questionnaire.md).
 
 ## About ##
 
