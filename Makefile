@@ -106,7 +106,10 @@ $(CSV_DIR): $(TABLE_INPUT_FILE) $(VENV) $(DOWNLOAD_CSV_SCRIPT)
 	# Iterate through each line of the input file
 	@while IFS=',' read -r doc_id gid output_file; do \
 		echo "Downloading CSV data for document ID $$doc_id with GID $$gid, saving to $$output_file..."; \
-		$(VENV)/bin/python $(DOWNLOAD_CSV_SCRIPT) --sheet_id $$doc_id --gid $$gid --filename $(CSV_DIR)/$$output_file; \
+		$(VENV)/bin/python $(DOWNLOAD_CSV_SCRIPT) --sheet_id $$doc_id --gid $$gid --filename $(CSV_DIR)/$$output_file || { \
+			echo "Error: Failed to download CSV data for document ID $$doc_id, GID $$gid."; \
+			exit 1; \
+		}; \
 	done < $(TABLE_INPUT_FILE)
 
 # Rule to build PDFs from LaTeX files
