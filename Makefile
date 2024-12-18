@@ -110,7 +110,7 @@ $(CSV_DIR): $(TABLE_INPUT_FILE) $(VENV) $(DOWNLOAD_CSV_SCRIPT)
 	done < $(TABLE_INPUT_FILE)
 
 # Rule to build PDFs from LaTeX files
-$(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt
+$(PDF_DIR)/%.pdf: $(LATEX_DIR)/%.tex $(VENV)/requirements.txt | $(TABLE_TEX)
 	@echo "Compiling $<..."
 	mkdir -p $(PDF_DIR)
 	mkdir -p $(IMAGES_DIR)
@@ -151,7 +151,6 @@ clean:
 	-rm -rf ./tmp
 	-rm -rf $(CSV_DIR)
 	-rm -f $(FIRST_PAGE_PNG)
-	-rm -rf $(SCRIPTS_DIR)/*.csv
 
 .PHONY: distclean
 distclean: clean

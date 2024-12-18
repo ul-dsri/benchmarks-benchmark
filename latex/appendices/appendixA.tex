@@ -2,62 +2,7 @@
 Threats to reliability and responses may be submitted for inclusion in the benchmark by opening an issue on the associated repository. Discussion will follow to seek consensus on the risk and mitigations inclusion, whereupon the benchmark may be updated. Currently adopted threats and mitigations may also be adopted in this manner.
 
 \subsection{Threat Registry}
-\begin{longtable}{|p{1cm}|p{3.5cm}|p{3cm}|p{4.5cm}|p{1.5cm}|}
-\caption{Threats to Reliability}
-\label{tab:threats-to-reliability} \\
-    \hline
-    \textbf{ID} & \textbf{Stage} & \textbf{Category} & \textbf{Threat to Reliability} & \textbf{Severity}\\
-    \hline
-    \endfirsthead
-    \hline
-    \textbf{ID} & \textbf{Stage} & \textbf{Category} & \textbf{Threat to Reliability} & \textbf{Severity}\\
-    \hline
-    \endhead
-    \hline
-    \endfoot
-    \hline
-    \#001 & (1) Task Definition & Intelligibility & Specified task does not match task performed for user & 1.0 \\
-    \#002 & (2) Prompt Generation & Correctness & Prompt writers produce prompts with LLMs & 1.0\\
-    \#003 & (2) Prompt Generation & Correctness & Prompts are collected from publicly available sources and presented as novel & 0.9\\
-    \#004 & (2) Prompt Generation & Correctness & Prompt vendor licenses private data that is available to other parties & 1.0\\
-    \#005 & (2) Prompt Generation & Correctness & Prompt vendor sells same prompts to multiple organizations & 1.0\\
-    \#006 & (2) Prompt Generation & Comprehensiveness & Singular prompts without a distributional tie lack a capacity for detecting distributional harms & 0.9\\
-    \#007 & (2) Prompt Generation & Comprehensiveness & Prompt writers produce prompts with inadequate variability & 0.9\\
-    \#008 & (2) Prompt Generation & Comprehensiveness & Adversarial prompt bulking (increasing the number of prompts by taking cross product with tactics) & 0.9\\
-    \#009 & (2) Prompt Generation & Comprehensiveness & Prompt perturbation bulking (increasing the number of prompts by making small changes to root prompts) & 0.9\\
-    \#010 & (2) Prompt Generation & Comprehensiveness & Overreliance on adversarial prompts & 1.0\\
-    \#011 & (2) Prompt Generation & Correctness & Adversarial prompts are a guide to bad actors and increase risks & 1.0\\
-    \#012 & (2) Prompt Generation & Comprehensiveness & Ambiguous prompts are not present within the test set to make grading easier & 0.2\\
-    \#013 & (2) Prompt Generation & Comprehensiveness & No prompts sourced from production systems & 0.6\\
-    \#014 & (2) Prompt Generation & Correctness & Prompts have known properties allowing for artificial segmentation during test (e.g., prompts are of particular and known lengths) & 0.5\\
-    \#015 & (2) Prompt Generation & Comprehensiveness & An inadequate number of prompts are produced to identify rare critical events & 1.0\\
-    \#016 & (2) Prompt Generation & Consistency & Prompts are ambiguous and thus don’t produce responses that are “easy” to grade & 0.4\\
-    \#017 & (2) Prompt Generation & Comprehensiveness & No coverage for target language slang/idiomatic expressions & 0.7\\
-    \#018 & (2) Prompt Generation & Comprehensiveness & Cultural norms do not translate between cultural contexts (languages, geographies, etc.) & 0.7\\
-    \#019 & (2) Prompt Generation & Correctness & Machine translation introduces errors & 1.0\\
-    \#020 & (3) Prompt Inferencing & Correctness & Prompts are sent to model vendors when inferencing & 1.0\\
-    \#021 & (3) Prompt Inferencing & Correctness & SUT is tested under conditions not matching deployment conditions & 1.0\\
-    \#022 & (3) Prompt Inferencing & Correctness & SUT developer trains against validation prompt set & 1.0\\
-    \#023 & (4) Output Evaluation & Correctness & SUT developers place evaluator within system chain & 1.0\\
-    \#024 & (4) Output Evaluation & Correctness & Evaluator tuned on translated outputs with substantial errors & 1.0\\
-    \#025 & (4) Output Evaluation & Consistency & Low interrater reliability of ground truth data used to tune the evaluator model & 1.0\\
-    \#026 & (4) Output Evaluation & Correctness & Evaluator tuned to SUT unsafe outputs and cannot generalize to new SUTs & 1.0\\
-    \#027 & (4) Output Evaluation & Correctness & SUT developers produce training data from evaluator & 1.0\\
-    \#028 & (5) Scoring & Consistency & Inadequate sample size for identifying performance & 1.0\\
-    \#029 & (5) Scoring & Intelligibility & Failure to propagate uncertainty or confidence from lower level measures to higher level grades & 0.7\\
-    \#030 & (6) Grade Presentation & Intelligibility & Presentation without uncertainty or confidence of the scores & 0.7\\
-    \#031 & (6) Grade Presentation & Intelligibility & User does not read disclaimers & 0.8\\
-    \#032 & (6) Grade Presentation & Intelligibility & User does not understand visual representation of scores & 0.7\\
-    \#033 & (6) Grade Presentation & Intelligibility & User misunderstands the scope of the benchmark & 1.0\\
-    \#034 & (7) Maintenance & Longevity & SUT developer tunes safety program to benchmark sample set & 0.7\\
-    \#035 & (7) Maintenance & Longevity & SUT developer trains SUT against test set & 1.0\\
-    \#036 & (7) Maintenance & Longevity & User behavior shifts through time & 0.8\\
-    \#037 & (7) Maintenance & Longevity & Test set leaks out to the general internet & 1.0\\
-    \#038 & (1) Task Definition & Comprehensiveness & The task is defined too broadly to achieve any reasonable degree of coverage over the use case & 1.0\\
-    \#039 & (7) Maintenance & Longevity & SUT developers update the SUT without changing the name or version of the SUT & 1.0\\
-    \#040 &   (3) Prompt Inferencing & Correctness & Temperature of SUT does not match the default temperature presented to users & 0.7\\
-    \#041 &   (6) Grade Presentation & Intelligibility & Different cultures viewing the benchmark have different interpretations of the information conveyed & 0.6\\
-\end{longtable}
+\input{latex/tables/threat-registry-table}
 
 \subsection{Risk Response Measures}
 \begin{longtable}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{4cm}|p{4cm}}

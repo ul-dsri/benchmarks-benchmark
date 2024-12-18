@@ -34,6 +34,8 @@ def fetch_data(google_sheet_id='1TBwja07SuVgp3I9MB95MLdjKtrTqsQ-tFe7GFfLhmYw', g
                 row for row in data_list if len([value for value in row.values() if value and value.strip() not in ["", "#N/A", "null"]]) >= 3
             ]
             return filtered_data
+        else:
+            print(f"Google sheet data not loaded on attempt {attempt}. Waiting {delay} seconds and retrying")
 
         time.sleep(delay)
 
