@@ -31,8 +31,9 @@ def generate_markdown_table(data):
 
 def threat_registry_start():
     return r"""
-\begin{longtable}{|p{1cm}|p{3cm}|p{2.5cm}|p{4.5cm}|p{1.5cm}|}
-\caption{Threats to Reliability}
+\renewcommand{\arraystretch}{1.3} % Increases row height by 30%
+\begin{longtable}{|p{0.7cm}|p{0.7cm}|p{2.7cm}|p{7.8cm}|p{1.1cm}|}
+\caption{\textbf{Threats to Reliability:}\\ Stage Column Key - \textbf{1:}Task Definition, \textbf{2:}Prompt Generation, \textbf{3:}Prompt Inference, \textbf{4:}Output Evaluation, \textbf{5:}Scoring, \textbf{6:}Grading Presentation, \textbf{7:}Maintenance}
 \label{tab:threats-to-reliability} \\
 \hline
 \textbf{ID} & \textbf{Stage} & \textbf{Category} & \textbf{Threat to Reliability} & \textbf{Severity}\\
@@ -54,15 +55,26 @@ def threat_registry_headers():
 
 def risk_response_start():
     return r"""
-\begin{longtable}{|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{4cm}|p{4cm}}
+\renewcommand{\arraystretch}{1.3} % Increases row height by 30%
+\begin{longtable}{|p{0.8cm}|p{0.4cm}|p{0.7cm}|p{0.7cm}|p{5cm}|p{5cm}|}
 \caption{Risk Response Measures}
 \label{tab:risk-response-measures} \\
 \hline
-\rotatebox{75}{\textbf{Risk ID Mitigated}} & \rotatebox{75}{\textbf{Mitigation Number}} & \rotatebox{75}{\textbf{Reduction in Likelihood (Percent)}} & \rotatebox{75}{\textbf{Reduction in Severity (Percent)}} & \textbf{Risk Short Description} & \textbf{Response Measure Description}\\
+\rotatebox{90}{\textbf{\makecell{Risk ID\\Mitigated}}} &
+\rotatebox{90}{\textbf{\makecell{Mitigation \#}}} &
+\rotatebox{90}{\textbf{\makecell{Reduction in\\Likelihood \%}}} &
+\rotatebox{90}{\textbf{\makecell{Reduction in\\Severity \%}}} &
+\textbf{Risk Short Description} &
+\textbf{\makecell{Response Measure\\Description}}\\
 \hline
 \endfirsthead
 \hline
-\rotatebox{75}{\textbf{Risk ID Mitigated}} & \rotatebox{75}{\textbf{Mitigation Number}} & \rotatebox{75}{\textbf{Reduction in Likelihood (Percent)}} & \rotatebox{75}{\textbf{Reduction in Severity (Percent)}} & \textbf{Risk Short Description} & \textbf{Response Measure Description}\\
+\rotatebox{90}{\textbf{\makecell{Risk ID\\Mitigated}}} &
+\rotatebox{90}{\textbf{\makecell{Mitigation \#}}} &
+\rotatebox{90}{\textbf{\makecell{Reduction in\\Likelihood \%}}} &
+\rotatebox{90}{\textbf{\makecell{Reduction in\\Severity \%}}} &
+\textbf{Risk Short Description} &
+\textbf{\makecell{Response Measure\\Description}}\\
 \hline
 \endhead
 \hline
@@ -108,6 +120,13 @@ def load_data_from_csv(filename):
         return None
 
 
+def modify_threat_registry_data(data):
+    for row in data:
+        # Change the stage entry from "(1) Task Definition" to "1"
+        row['Stage'] = row['Stage'].removeprefix('(').split(')')[0]
+    return data
+
+
 def main():
     # Parse CLI arguments
     parser = argparse.ArgumentParser(description='Generate a markdown or latex formatted table from a csv file.')
@@ -131,6 +150,7 @@ def main():
         if filename == "threat-registry-table.csv":
             table_start = threat_registry_start()
             headers = threat_registry_headers()
+            data_dict = modify_threat_registry_data(data_dict)
         elif filename == "risk-response-table.csv":
             table_start = risk_response_start()
             headers = risk_response_headers()
