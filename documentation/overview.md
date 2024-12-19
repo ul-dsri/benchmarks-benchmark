@@ -37,7 +37,7 @@ documentId,tabId,csvFileName
 <GOOGLE_DOC_ID>,<TAB_ID>,mitigations.csv
 '''
 
-The `Makefile` reads this mapping and passes the arguments to `scripts/generate_table.py` to download each tab’s data, storing it locally. The CSVs become the authoritative source for building markdown tables, summary tables, and the questionnaire.
+The `Makefile` reads this mapping and passes the arguments to `scripts/download_csv_data.py` to download each tab’s data, storing it locally. The CSVs become the authoritative source for building markdown tables, summary tables, and the questionnaire.
 
 
 ## Tables & Questionnaire Integration:
@@ -78,22 +78,33 @@ The project uses a variety of shell and Python scripts to fetch data, generate a
 # Common Pitfalls and Known Issues
 
 ## Circular Dependency in Updates:
+
 One of the more confusing issues is the circular dependency between building the site and uploading updated PDFs or questionnaires to S3. The mkdocs site is built first, which means that at build time, the site references either the old PDFs on S3 or the locally built ones that haven’t been uploaded yet. Only after the site is built does the S3 upload occur. This prevents an updated PDF from being hosted from S3 immediately. To sidestep this issue we choose to host the most recent version of the PDF directly from the static site.
 
+There are two unfortunate side effect of this circular dependency related to any potential bugs in the index.csv or questionnaire.csv (the source files for the PDF history and questionnaire history respectively). The first is that it will take two builds before a bug manifests itself. The build that introduces a bug into the files isn't shown until the second build makes use of it. And the second side effect is that when a bug fix lands the bug will still appear to be impacting the PDF or questionnaire history. Directly inspecting the contents of the index.csv or questionnaire.csv on S3 is recommended to confirm that the bug was or was not fixed.
+
 ## Changes to Sheet Structure:
+
 If the Google Sheets’ tab names, column headers, or shape of the google sheets tables defined by named ranges change without updating `table_list.csv`, the google sheet named ranges, or table and questionnaire scripts, data retrieval and table generation can fail. Such changes must be coordinated to keep the pipeline running smoothly.
 
 ## Google Sheets Data Accuracy:
-Each run of the CI downloads the contents of the google sheet anew. We are relying on an unauthenticated http `get` request to a publicly readable google sheet. The tabs being downloaded consist of named ranges from other tabs. The contents of those tabs are calculated values which are not always cached on the google sheets side. When download the CSV in `scripts/generate_table.py` there is logic that checks for all known values which indicate the calculated values are still loading. If a single cell is indicated as still loading, there is retry logic to wait a few seconds and try the download again. So far the only data accuracy failures that have occurred are when a previously unknown temporary placeholder was discovered. If an accuracy issue is encountered and there is an obvious placeholder being used, just add it to the list of checks in `scripts/generate_table.py`:
+
+Each run of the CI downloads the contents of the google sheet anew. We are relying on an unauthenticated http `get` request to a publicly readable google sheet. The tabs being downloaded consist of named ranges from other tabs. The contents of those tabs are calculated values which are not always cached on the google sheets side. When download the CSV in `scripts/download_csv_data.py` there is logic that checks for all known values which indicate the calculated values are still loading. If a single cell is indicated as still loading, there is retry logic to wait a few seconds and try the download again. So far the only data accuracy failures that have occurred are when a previously unknown temporary placeholder was discovered. If an accuracy issue is encountered and there is an obvious placeholder being used, just add it to the list of checks in `scripts/download_csv_data.py`:
 
 '''
 if '#NAME?' not in csv_data and "Loading..." not in csv_data and "#ERROR!" not in csv_data: # make sure calculated fields have loaded
 '''
 
-## Multiple LaTeX files:
-Note that the system is currently setup to build a pdf for each `*.tex` file (with some exclusions, see the `LATEX_SRC` assignment in the Makefile for details). Right now there is only one intended PDF to be built. This means that while the system should in theory supports building and uploading multiple PDFs, this has not explicitly been tested. If the ability to support multiple PDFs is not desired, there is a decent amount of logic simplification in the makefile and .gitlab-ci.yml scripts that could be achieved. However, the system is verified to be working as it is currently configured.
+## Google Sheets Data Unavailable:
 
-## High-Level Process Overview
+Occasionaly the `scripts/download_csv_data.py` script will timeout after detecting that the data hasn't loaded. In this case, the issue is on Google's side. For whatever reason, the appscript calculated values aren't available. The issue has always been transient and beyond the control of this repo. If for some reason this issue becomes a common problem the only way to potentially improve the reliability of the CSV data acquisition is to perform the fetch from Google from an authenticated context. Even an authenticated request is unlikely to resolve the problem. When we have seen sheet values not loading for extended periods (upwards of 15 minutes), the problem was replicated by multiple people in multiple authenticated accounts.
+
+The unavailability may be triggered by a rate limiting mechanism on the server side. For this reason it is recommended to comment out the `make clean` line which deletes local CSV files. This prevents excessive requests from piling up and triggering potential rate limiting protection.
+
+
+## Multiple LaTeX files:
+
+Note that the system is currently setup to build a pdf for each `*.tex` file (with some exclusions, see the `LATEX_SRC` assignment in the Makefile for details). Right now there is only one intended PDF to be built. This means that while the system should in theory supports building and uploading multiple PDFs, this has not explicitly been tested. If the ability to support multiple PDFs is not desired, there is a decent amount of logic simplification in the makefile and .gitlab-ci.yml scripts that could be achieved. However, the system is verified to be working as it is currently configured.
 
 # From Commit to Deployed Site (Bird’s-Eye View):
 
