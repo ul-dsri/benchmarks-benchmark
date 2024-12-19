@@ -372,7 +372,8 @@ def build_html_table(data):
     '''
     Returns a list of html table elements
     '''
-    html = ["<table border='1'>"]
+    instruction = "This questionnaire is intended to be filled out after copy & paste into a Google Doc. For each threat please indicate if each mitigation has been adopted, the date, and name of the person making the affirmation. The to-be-populated fields are all on the right hand side of the table."
+    html = [instruction, "<table border='1'>"]
 
     # Add table header
     html.extend(build_html_table_header())
