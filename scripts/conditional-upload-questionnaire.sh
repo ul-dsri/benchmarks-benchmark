@@ -27,7 +27,7 @@ echo "Computed sha1sum for new HTML file: $COMPUTED_SHA1"
 # Step 2: Try downloading all HTML files from s3
 mkdir -p ./tmp # make tmp dir if it doesn't already exist
 echo "Downloading all HTML files from S3..."
-if ! mc find $REMOTE_PATH --name "*.html" --exec "mc get {} ./tmp"; then
+if ! mc find "$REMOTE_PATH/" --name "*.html" --exec "mc get {} ./tmp"; then
     echo "No HTML files found in S3. Continuing..."
 fi
 echo "Successfully checked and downloaded all HTML files (if any)"
@@ -39,15 +39,14 @@ if find ./tmp -name "*.html" -exec sha1sum {} + | grep -q "$COMPUTED_SHA1"; then
 fi
 
 # Step 4: Upload the html file to S3
-NEWFILEPATH="$(echo "$NEW_HTML_FILE" | sed -e 's/\.html$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.html/g')"
-cp "$NEW_HTML_FILE" "$NEWFILEPATH" # rename to include date and short commit
-NEWFILE=$(basename "$NEWFILEPATH")
-REMOTE_UPLOAD_PATH="$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/$NEWFILE"
+LONG_FILENAME="$(echo "$NEW_HTML_FILE" | sed -e 's/\.html$/_'$(date +%Y-%m-%d)'_'${CI_COMMIT_SHORT_SHA}'.html/g')"
+cp "$NEW_HTML_FILE" "$LONG_FILENAME" # rename to include date and short commit
+NEWFILE=$(basename "$LONG_FILENAME")
 
-echo "Uploading html file to S3: $REMOTE_UPLOAD_PATH"
-mc cp "$NEWFILEPATH" "$REMOTE_UPLOAD_PATH"
+echo "Uploading html file to S3: $REMOTE_PATH/$LONG_FILENAME"
+mc cp "$LONG_FILENAME" "$REMOTE_PATH/$LONG_FILENAME"
 # Replace questionnaire.html with the latest version
-mc cp "$NEW_HTML_FILE" "$MC_ALIAS/$S3_BUCKET/papers/benchmarks-benchmark/questionnaire.html"
+mc cp "$NEW_HTML_FILE" "$REMOTE_PATH/questionnaire.html"
 
 # Step 5: Update questionnaire.csv
 echo "Updating csv file in S3: $REMOTE_PATH/questionnaire.csv"
