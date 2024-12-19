@@ -43,8 +43,8 @@ LONG_FILENAME="$(echo "$NEW_HTML_FILE" | sed -e 's/\.html$/_'$(date +%Y-%m-%d)'_
 cp "$NEW_HTML_FILE" "$LONG_FILENAME" # rename to include date and short commit
 NEWFILE=$(basename "$LONG_FILENAME")
 
-echo "Uploading html file to S3: $REMOTE_PATH/$LONG_FILENAME"
-mc cp "$LONG_FILENAME" "$REMOTE_PATH/$LONG_FILENAME"
+echo "Uploading html file to S3: $REMOTE_PATH/$NEWFILE"
+mc cp "$LONG_FILENAME" "$REMOTE_PATH/$NEWFILE"
 # Replace questionnaire.html with the latest version
 mc cp "$NEW_HTML_FILE" "$REMOTE_PATH/questionnaire.html"
 
