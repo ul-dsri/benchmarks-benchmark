@@ -83,7 +83,7 @@ def define_env(env):
             # Skip header in CSV content
             next(reader)
         except StopIteration:
-            print(f"Debug: The CSV fiel at {csv_url} is empty or impropperly formatted.")
+            print(f"Debug: The CSV file at {csv_url} is empty or improperly formatted.")
             return ""
 
         for row in reader:
