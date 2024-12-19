@@ -51,7 +51,7 @@ mc cp "$NEW_HTML_FILE" "$REMOTE_PATH/questionnaire.html"
 # Step 5: Update questionnaire.csv
 echo "Updating csv file in S3: $REMOTE_PATH/questionnaire.csv"
 echo 'filename,url' > questionnaire.csv
-mc ls "$REMOTE_PATH" -r | awk '{print $6}' | grep ".html$" | sed -e 's@.*@"&","https://dl.dsri.org/papers/benchmarks-benchmark/&"@g' >> questionnaire.csv
+mc ls "$REMOTE_PATH/" -r | awk '{print $6}' | grep ".html$" | sed -e 's@.*@"&","https://dl.dsri.org/papers/benchmarks-benchmark/&"@g' >> questionnaire.csv
 mc cp questionnaire.csv "$REMOTE_PATH/questionnaire.csv"
 echo "questionnaire.csv uploaded successfully."
 
