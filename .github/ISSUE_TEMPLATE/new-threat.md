@@ -9,13 +9,13 @@ assignees: smcgregor
 
 ## Stage (Choose 1)
 
-* (1) Task Definition
-* (2) Prompt Generation
-* (3) Prompt Inferencing
-* (4) Output Evaluation
-* (5) Scoring
-* (6) Grade Presentation
-* (7) Maintenance
+- [ ] (1) Task Definition
+- [ ] (2) Prompt Generation
+- [ ] (3) Prompt Inferencing
+- [ ] (4) Output Evaluation
+- [ ] (5) Scoring
+- [ ] (6) Grade Presentation
+- [ ] (7) Maintenance
 
 ## Category
 
