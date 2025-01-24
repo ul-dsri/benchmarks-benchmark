@@ -1,5 +1,7 @@
 # Welcome to the benchmarks-benchmark repo
 
+You can find a live hosted version of this repository's website, paper, and questionnaire at [b2.dsri.org](https://b2.dsri.org/).
+
 ## Setup
 
 You'll need to install `uv`, a replacement for `pip`, `venv`, and `pip-tools`:
