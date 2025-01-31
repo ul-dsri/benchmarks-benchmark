@@ -31,6 +31,6 @@ nav:
     - "Scores (Relative)": scores-relative.md
     - "Scores (Absolute)": scores-absolute.md
   - "Submitting a Benchmark to be Benchmarked":
-    - "Threat Registry": threat-registry.md
-    - "Available Threat Responses": risk-response.md
+    - "Failure Mode Registry": threat-registry.md
+    - "Available Mitigations": risk-response.md
     - "Questionnaire": questionnaire.md
