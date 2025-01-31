@@ -1,8 +1,8 @@
 ---
-name: New Threat
-about: Suggest a new threat to reliability for benchmarks
-title: New Threat SHORT DESCRIPTION
-labels: Threats
+name: New Failure Mode
+about: Suggest a new failure mode for benchmarks
+title: New Failure Mode SHORT DESCRIPTION
+labels: FailureMode
 assignees: smcgregor
 
 ---
@@ -15,7 +15,7 @@ assignees: smcgregor
 - [ ] (4) Output Evaluation
 - [ ] (5) Scoring
 - [ ] (6) Grade Presentation
-- [ ] (7) Maintenance
+- [ ] (7) Upkeep
 
 ## Category
 
@@ -27,7 +27,7 @@ assignees: smcgregor
 
 ## Short Description
 
-_Replace this text with a sentence describing this threat to reliability. Example: "Prompt vendor sells same prompts to multiple organizations"_
+_Replace this text with a sentence describing this failure mode. Example: "Prompt vendor sells same prompts to multiple organizations"_
 
 ## Severity
 
@@ -35,4 +35,4 @@ _A suggested initial unmitigated severity value for the threat between 0.0 and 1
 
 ## Notes, References, and Justifications
 
-_Add any details that may be needed to understand what this threat is about. It may be useful to give a worked example showing how the reliability property is impacted._
+_Add any details that may be needed to understand what this failure mode is about. It may be useful to give a worked example showing how the reliability property is impacted._
