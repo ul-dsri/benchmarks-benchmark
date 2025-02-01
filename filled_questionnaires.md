@@ -17,6 +17,10 @@
 
 * [BetterBench](https://docs.google.com/spreadsheets/d/1mwmb1vKvAgwFZOII8_W_wb6NB0mmcD4XedtQZMfaws4/edit?gid=1651313665#gid=1651313665)
 
+**In Process by Maintainer**
+
+* [GeoSAFE](https://docs.google.com/document/d/1cqxuUFJ8PdniZwKexgVc6O8Zx3xTDC_wVBISkCIG2a4/edit?tab=t.0)
+
 **In Process Not by Maintainer**
 
 * [Agentbench](https://docs.google.com/document/d/1LAgQF1OJjf0zOWgQ8bSaltpW05_bFDwPJPEqmVRX-Dg/edit?tab=t.0)
