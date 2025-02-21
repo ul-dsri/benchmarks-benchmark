@@ -101,7 +101,7 @@
 \maketitle
 
 \begin{abstract}
-Large language model (LLM) benchmarks enable system use decisions informed by LLM properties, but benchmarks may be rendered unreliable for real world decision making by a variety of risks to benchmark longevity, correctness, coverage, consistency, and intelligibility. Motivated by emerging LLM safety benchmarks, on whose scores people rely on to make decisions impacting real world safety, this work presents a benchmark for LLM benchmarks inspired by National Institute of Standards and Technology risk management processes and the field of reliability engineering. High scores indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark. A variety of benchmarks designed for real world reliability and research purposes are scored and found to vary wildly in their reliability properties.
+Large language model (LLM) benchmarks enable system use decisions informed by LLM properties, but benchmarks may be rendered unreliable for real-world decision making by a variety of risks to benchmark longevity, correctness, coverage, consistency, and intelligibility. Motivated by emerging LLM safety benchmarks, on whose scores people rely on to make decisions impacting real world safety, this work presents a benchmark for LLM benchmarks inspired by National Institute of Standards and Technology risk management processes and the field of reliability engineering. High scores indicate a reduced likelihood and/or severity of inappropriate reliance on a benchmark. A variety of benchmarks designed for real world reliability and research purposes are scored and found to vary wildly in their reliability properties.
 \end{abstract}
 
 
@@ -179,13 +179,13 @@ LLM benchmarks are already evidencing real world use decisions (\cite{rottger202
 
 % As a relatively new science, LLM benchmarking poses many unidentified modes of failure that can reduce benchmark reliability, increasing the risk of reaching inappropriate conclusions regarding the systems under test.  Therefore, we treat the identification of LLM benchmark failure mode, coupled with an approach to aggregate the failure modes into a quantified risk score, as an opportunity to advance the practice of LMM benchmarking.
 
-The following paper introduces \bb and provides the current reliability scores of prominent benchmarks. The appendices provide the \bb failure mode and mitigation registry allowing for its easy application to new benchmarks. All LLM benchmarks are invited to self-score and submit their own scores, failure modes, and mitigations, from which we hope to collaboratively advance the practice of reliable benchmarking. The absence of a \bb score for a benchmark indicates the benchmark is produced for research (i.e., not real world reliable) purposes only or the benchmark organization has chosen to not score their benchmarks.
+This work introduces \bb and provides the current reliability scores of prominent benchmarks. The appendices provide the \bb failure mode and mitigation registry, allowing for its easy application to new benchmarks. All LLM benchmarks are invited to self-score and submit their own scores, failure modes, and mitigations, from which we hope to collaboratively advance the practice of reliable benchmarking. The absence of a \bb score for a benchmark indicates (a) the benchmark was produced for research (i.e., not real-world reliable) purposes, (b) the benchmark is not yet aware of \bb or has not yet had the time to create a \bb score, or (c), the benchmark organization has chosen not to score their benchmark.
 
 \begin{center}
     \begin{tcolorbox}[colback=blue!10, colframe=blue!50, width=\textwidth, boxrule=0.5mm, sharp corners, coltext=black, halign=left]
 \textbf{Disclaimers}
 \begin{itemize}
-\item \bb is being actively developed and updated through time. For the most up to date paper and presentation of the benchmark, please visit \url{https://b2.dsri.org/}.
+\item \bb is being actively developed and updated through time. For the most up-to-date paper and presentation of the benchmark, please visit \url{https://b2.dsri.org/}.
 \item \bb is only as reliable as the representations made by organizations publishing the associated benchmarks.
 \item \bb is intended to serve as a guide for producing and adopting best-in-class LLM benchmarks, but this work and its associated scores are not a substitute for learning more about the covered benchmarks and developing an independent sense for their reliability.
 \end{itemize}
@@ -194,7 +194,14 @@ The following paper introduces \bb and provides the current reliability scores o
 
 \section{Related work}
 
-Hundreds of AI safety benchmarks are being used to influence decision making (\cite{rottger2024safetyprompts,bommasani2024foundation}), but the reliability of these benchmarks is being called into question as a result of developers training (intentionally or inadvertently) against benchmark datasets, the size of the datasets are too small to provide accurate measurement, the scope of the benchmarks are not clearly defined or the benchmark is being used in ways contrary to their published purpose, etc. (See \cite{raji2021ai,liao2023rethinking,mcintosh2024inadequacies,banerjee2024vulnerability,balloccu2024leak,nytimesAIMeasurement,hardy2024more,themarkupEveryoneJudging,anthropicChallengesEvaluating}, among others).
+% //
+% // todo: process https://arxiv.org/abs/2502.03461v1
+% // "Do Large Language Model Benchmarks Test Reliability?"
+% //
+% // todo: process https://arxiv.org/abs/2502.06559
+% // "Can We Trust AI Benchmarks? An Interdisciplinary Review of Current Issues in AI Evaluation"
+
+Hundreds of AI safety benchmarks are being used to influence decision making (\cite{rottger2024safetyprompts,bommasani2024foundation}), but the reliability of these benchmarks is being called into question as a result of developers training (intentionally or inadvertently) against benchmark datasets(\cite{li2024opensourcedatacontamination,magar-schwartz-2022-data,zhou2023dontmakellmevaluation,balloccu2024leak}), the size of the datasets are too small to provide accurate measurement, the scope of the benchmarks are not clearly defined(\cite{raji2021ai}) or the benchmark is being used in ways contrary to their published purpose, etc. (See \cite{liao2023rethinking,mcintosh2024inadequacies,banerjee2024vulnerability,nytimesAIMeasurement,hardy2024more,themarkupEveryoneJudging,anthropicChallengesEvaluating}, among others).
 
 Towards improving the scientific reliability of LLM benchmarks, a variety of recent studies examine the gaps in benchmark quality giving rise to these issues. BetterBench from \cite{reuel2024betterbench} is focused on benchmark ``quality''; how well a benchmark was designed, implemented, documented and how well it will be maintained. Better Bench is designed in collaboration with users, regulators, benchmark developers, and model providers, but the authors adopt the definition of \cite{raji2021ai} for ``benchmark,'' which calls benchmarks ``...a particular combination of a dataset or sets of datasets (at least test data, sometimes also training data), and a metric, conceptualized as representing one or more specific tasks or sets of abilities, \textbf{picked up by a community of researchers as a shared framework for the comparison of methods.}'' \bb defines benchmarks differently (i.e., as a measurement informing decision making), which substantially expands the responsibilities of the benchmark developer. We are concerned with how \textit{reliable} a benchmark is; that is to say, how well the benchmark informs a decision maker of the properties intended to be measured by the benchmark's developers.
 
@@ -221,7 +228,7 @@ The difference may center on the selection of the benchmark user (researcher vs.
 Benchmark reliability for each of these dimensions can be enhanced by the adoption of best practices introduced in other works (e.g., \cite{reuel2024betterbench,cao2025should}), but \bb's contribution is to shift the analytic frame from one of best practices, to one of quantified risks. We view existing scholarship as having identified what should be done, but the risks these best practices are addressing remain informal without evaluating a risk calculation in terms of likelihood and severity. Such a framing is required for evaluating benchmark reliability and advancing the practice of real world reliable benchmarks.
 
 \section{Risk Assessment}
-\bb's approach to assessing risk to benchmark reliability is influenced by the NIST's AI Risk Management Framework (AI RMF) \cite{nistAI_RMF} and the NIST's Guide for Conducting Risk Assessments for Information Security \cite{nist80030r1}. The AI RMF is an in-development resource for managing risks related to AI systems. Among the AI RMF documents are a collection of generative AI risks and suggested actions. Organizations may elect to associate their own in-house severity and likelihood values to each of the risks, which could then be used to score the organization across all identified risks. We have yet to encounter such a computation for AI-related risks, but this sort of analysis is more common in the practice of information security -- an older and more developed risk mitigation context.
+\bb's approach to assessing risk to benchmark reliability is influenced by the NIST's AI Risk Management Framework (AI RMF) \cite{nistAI_RMF} and the NIST's Guide for Conducting Risk Assessments for Information Security \cite{nist80030r1}. Risk assessment is a process that determines possible failure modes, along with their likelihood and consequences\cite{rausand2020risk}. Risk assessments help decision makers develop mitigations and response priorities. It is not sector dependent and is use by organizations providing services or products.  The AI RMF is an AI-specific guidance and a resource for managing risks related to AI systems. Among the AI RMF documents are a collection of generative AI risks and suggested actions. Organizations may elect to associate their own in-house severity and likelihood values to each of the risks, which could then be used to score the organization across all identified risks. We have yet to encounter such a computation for AI-related risks, but this sort of analysis is more common in the practice of information security -- an older and more developed risk mitigation context.
 
 \bb replaces the ``threats'' of information security risk assessments with the ``failure modes'' of reliability engineering. Each failure mode presents a risk of mistaken reliance.
 
@@ -235,7 +242,7 @@ Re-purposing the NIST cybersecurity guidance (\cite{nist80030r1}), \bb is produc
 
 \begin{enumerate}
     \item {\bf Identify the purpose of the assessment:} \textit{to identify and mitigate failure modes presenting risk to the reliability of the LLM benchmark}
-    \item {\bf Identify the scope of the assessment:} \textit{to identify a) all failure modes likely to lead a person to make a false inference about the properties of an LLM along with b) failure mode mitigations.}
+    \item {\bf Identify the scope of the assessment:} \textit{to identify: --a) all failure modes likely to lead a person to make a false inference about the properties of an LLM along with --b) failure mode mitigations.}
     \item {\bf Identify the assumptions and constraints associated with the assessment:} \textit{the benchmark organization will faithfully indicate the properties of their benchmark program.}
     \item {\bf Identify the sources of information to be used as inputs to the assessment:} \textit{public statements and insider knowledge about the operations of the benchmarking organization and the properties of the benchmark.}
     \item  {\bf identify the risk model and analytic approaches (i.e., assessment and analysis approaches) to be employed during the assessment.}.
@@ -261,7 +268,7 @@ The analytic approach adopted by \bb is to identify failure modes that present r
 
 For the purpose of \bb, we graduate severities according to the levels of table \ref{tab:severity}. \footnote{This process of describing severity rankings is a common risk assessment process across sectors. It is seen in systems reliability theory \cite{Rausand2004}. cybersecurity, and natural disasters \cite{NaturalDisasterSeverity} }
 \begin{table}[!ht]
-  \caption{The severity levels assigned to every failure mode to reliability in the failure mode register.}
+  \caption{The graduated severity levels with descriptions.}
 \label{tab:severity}
   \centering
   \begin{tabular}{lp{10cm}}
@@ -289,7 +296,7 @@ For \bb, all failure modes that present a risk to a benchmark's reliability are 
 \end{dfn}
 
 \begin{dfn}
-{\bf Risk Mitigation.} ``Accepting, avoiding, mitigating, sharing, or transferring risk to organizational operations (i.e., mission, functions, image, or reputation), organizational assets, individuals, other organizations, or the Nation.'' \cite{joint2011sp} with a mitigation ``Prioritizing, evaluating, and implementing the appropriate risk-reducing controls/countermeasures recommended from the risk management process. A subset of Risk Response.'' \cite{cnssi4009}
+{\bf Risk Mitigation.} ``Accepting, avoiding, reducing, sharing, or transferring risk'' \cite{raji2021ai}. Often, it is achieved by either reducing the likelihood of a failure mode occurring or by reducing the severity of that failure mode \cite{rausand2020risk} As part of a risk assessment or risk management it can incorporate ``Prioritizing, evaluating, and implementing the appropriate risk-reducing controls/countermeasures.'' \cite{cnssi4009}
 \end{dfn}
 
 In information security, these terms are associated with outcomes such as exposed user data, service outages, or worse outcomes. For LLM benchmarks, reliability may be impaired along several distinct dimensions.
@@ -334,11 +341,11 @@ A benchmark provider identifies a failure mode that presents a risk to benchmark
 
 The \bb maintainers collectively review the submitted failure mode and accept it into the next version of the \bb benchmark with the identifier \#002. Benchmarked benchmarks will be notified of the new failure mode and invited to submit their mitigations for scoring.
 
-Benchmark developers may optionally discuss the severity of the new failure mode, but the more active maintainers of \bb propose an initial severity of 1. The severity is so high because the impact is not currently known to benchmarking science. All failure modes, including \#002, are assigned probability of 1 unless mitigated.
+Benchmark developers may optionally discuss the severity of the new failure mode, but the more active maintainers of \bb propose an initial severity of 1. The severity is so high because the impact is not currently known to benchmarking science. All failure modes, including \#002, are assigned a probability of 1 unless mitigated.
 
 \textbf{Mitigation Acceptance}
 
-Next the benchmark developers submit mitigations as identified in Table \ref{tab:reduction-measures}. The reductions in likelihood and severity are discussed and adopted via discussion on the GitHub issue.
+Next the benchmark developers submit mitigations as identified in Table \ref{tab:reduction-measures}. The reductions in likelihood and severity are discussed and adopted via a discussion on the GitHub issue.
 
 \begin{table}[h!]
   \caption{Candidate mitigation to failure mode \#002, ``Prompt writers produce prompts with LLMs.''}
@@ -388,7 +395,7 @@ Although inspired by the reliability requirements posed by safety benchmarks, we
 
 \textbf{(7,8,9) TruthfulQA, AIRBench, GPQA} - Other Benchmarks
 
-Having scored 5 benchmarks and processed one research paper, the next three benchmarks (\cite{lin2021truthfulqa,zeng2024air,rein2023gpqa}) scored produced far fewer additions to the failure mode and mitigations registry. At this point we were sufficiently confident to shift from scoring benchmarks on the basis of their publicly available materials, to asking benchmarks to self-score.
+Having scored 5 benchmarks and processed one research paper, the next three scored benchmarks (\cite{lin2021truthfulqa,zeng2024air,rein2023gpqa}) produced far fewer additions to the failure mode and mitigations registry. At this point, we were sufficiently confident to shift from scoring benchmarks on the basis of their publicly available materials to asking benchmarks to self-score.
 
 \textbf{(9) Self Scoring} - The list of submitting
 
@@ -396,7 +403,7 @@ We then sent the \bb questionnaire to the maintainers of the benchmarks we score
 
 \textbf{(10) Future} - Continuing improvement in response to the evolving science
 
-\bb is not a static benchmark. As new information pertaining to reliability improves our understanding of LLM benchmarking, the failure modes, mitigations, and their scores should be updated. As such, the repository hosting this paper includes a collection of issue templates for publicly submitting new failure modes, responses, and suggested amendments to these \bb components. After discussion and acceptance by the \bb maintainers, amendments and additions will be announced and a new version of \bb will become available for scoring.
+\bb is not a static benchmark. As new information pertaining to reliability improves our understanding of LLM benchmarking, the failure modes, mitigations, and their scores should be updated. As such, the repository hosting this paper includes a collection of issue templates for publicly submitting new failure modes, mitigations, and suggested amendments to these \bb components. After discussion and acceptance by the \bb maintainers, amendments and additions will be announced and a new version of \bb will become available for scoring.
 
 \section{Results}
 todo
@@ -406,10 +413,10 @@ todo
 
 \section{Conclusion}
 
-LLM benchmarking is an evolving science. Benchmark developer and users are continually identifying, characterizing, and mitigating failure modes that present risk to reliability. As such, \bb is designed to track progress in developing highly-reliable benchmarks, whose adopted mitigations against failure modes for benchmark reliability provide the means for benchmark developers to increase their scores. As unknown risks and failure modes are identified along with mitigations, the maximum score increases along with the sophistication of LLM benchmarking as a reliable practice. The current list of failure modes affecting reliability and their candidate mitigations are given in Appendix B. We expect the list to grow through time.
+LLM benchmarking is an evolving science. Benchmark developers and users are continually identifying, characterizing, and mitigating failure modes that present risk to benchmark reliability. As such, \bb is designed to track progress in developing highly-reliable benchmarks, whose adopted mitigations against failure modes for benchmark reliability provide the means for benchmark developers to increase their scores. As unknown risks and failure modes are identified along with mitigations, the maximum score increases along with the sophistication of LLM benchmarking as a reliable practice. The current list of failure modes affecting reliability and their candidate mitigations are given in Appendix B. We expect the list to grow through time.
 
 \section{Acknowledgments}
-The following people have given significant feedback to this document: Daniel Reichert, Jesse Hostetler, Rebecca Weiss, Peter Mattson, and Ryan Tovcimak.
+The following people have given significant feedback to this document: Daniel Reichert, Jesse Hostetler, Rebecca Weiss, Peter Mattson, and Ryan Tovcimak. Thanks to Joy Braithwaite, whose discussions on applying reliability engineering methods to AI-systems informed this effort.
 
 \begin{center}
     \begin{tcolorbox}[colback=blue!10, colframe=blue!50, width=\textwidth, boxrule=0.5mm, sharp corners, coltext=black, halign=left]
